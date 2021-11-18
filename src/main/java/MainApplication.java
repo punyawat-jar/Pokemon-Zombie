@@ -21,7 +21,8 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0;
-
+ 
+    Tutorial Tframe;
     // main method
     public static void main(String[] args) {
         new MainApplication();
@@ -56,24 +57,42 @@ public class MainApplication extends JFrame {
         // main menu button
         JButton button1 = new JButton("Start");
         JButton button2 = new JButton("Credit");
-        JButton button3 = new JButton("Exit");
+        JButton button3 = new JButton("Tutorial");
+        JButton button4 = new JButton("Exit");
         button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 100, 50);
-        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 25, 100, 50);
-        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 50, 100, 50);
+        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 33, 100, 50);
+        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 33, 100, 50);
+        button4.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 100, 100, 50);
         drawpane.add(button1);
         drawpane.add(button2);
         drawpane.add(button3);
+        drawpane.add(button4);
 
         // Cbutton_main.add(button1);
         // Cbutton_main.add(button2);
         // Cbutton_main.add(button3);
 
         // mode button
-        JButton button4 = new JButton("Beginner");
-        JButton button5 = new JButton("Easy");
-        JButton button6 = new JButton("Normal");
-        JButton button7 = new JButton("Hard");
-        JButton button8 = new JButton("Nightmare");
+        JButton button5 = new JButton("Beginner");
+        JButton button6 = new JButton("Easy");
+        JButton button7 = new JButton("Normal");
+        JButton button8 = new JButton("Hard");
+        JButton button9 = new JButton("Nightmare");
+
+
+
+        button3.addActionListener(new ActionListener() {     //Tutorial button3
+            public void actionPerformed(ActionEvent e){
+                if(Tframe == null){
+                    Tframe = new Tutorial();
+                }
+                else{
+                    Tframe.setVisible(true);
+                }
+            }
+        });
+            
+        
 
         validate();
     }
