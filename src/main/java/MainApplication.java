@@ -46,6 +46,7 @@ public class MainApplication extends JFrame {
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
+        contentpane.add(drawpane, BorderLayout.CENTER);
 
         // sound fx and bg music
         // hitSound = new MySoundEffect("resources/beep.wav");
@@ -56,22 +57,23 @@ public class MainApplication extends JFrame {
         JButton button1 = new JButton("Start");
         JButton button2 = new JButton("Credit");
         JButton button3 = new JButton("Exit");
-        JPanel Cbutton_main = new JPanel();
-        Cbutton_main.add(button1);
-        Cbutton_main.add(button2);
-        Cbutton_main.add(button3);
+        button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 100, 50);
+        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 25, 100, 50);
+        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 50, 100, 50);
+        drawpane.add(button1);
+        drawpane.add(button2);
+        drawpane.add(button3);
+
+        // Cbutton_main.add(button1);
+        // Cbutton_main.add(button2);
+        // Cbutton_main.add(button3);
 
         // mode button
-        JButton button4 = new JButton("Start");
-        JButton button5 = new JButton("Credit");
-        JButton button6 = new JButton("Exit");
-        JPanel Cbutton_mode = new JPanel();
-        Cbutton_mode.add(button4);
-        Cbutton_mode.add(button5);
-        Cbutton_mode.add(button6);
-
-        contentpane.add(Cbutton_main, BorderLayout.CENTER);
-        contentpane.add(Cbutton_mode, BorderLayout.SOUTH);
+        JButton button4 = new JButton("Beginner");
+        JButton button5 = new JButton("Easy");
+        JButton button6 = new JButton("Normal");
+        JButton button7 = new JButton("Hard");
+        JButton button8 = new JButton("Nightmare");
 
         validate();
     }
