@@ -92,7 +92,12 @@ public class MainApplication extends JFrame {
             }
         });
             
-        
+        button4.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        });
+
 
         validate();
     }
