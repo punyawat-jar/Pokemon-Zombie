@@ -1,12 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public class Tutorial extends JFrame{
 
     private JPanel Tcontentpane;
     private JLabel Tdrawpane,bgImg;
     private String[] p = {"tutorial/p1.jpg","tutorial/p2.jpg","tutorial/p3.jpg"};
+    private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
     private int count = 0;
     private int frameWidth = 800, frameHeight = 600;
 
@@ -47,23 +49,29 @@ public class Tutorial extends JFrame{
         Tdrawpane.add(button1);
         Tdrawpane.add(button2);
 
-        JLabel label = new JLabel(new ImageIcon(p[count]));
-        label.setBounds(170,40,500,250);
-        Tdrawpane.add(label);
+        readpic();
+        Tdrawpane.add(pic_AL.get(0));
 
         button1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 //Tdrawpane.remove(label);
-                if(count<3){
+                if(count<pic_AL.size()-1){
+                    Tdrawpane.remove(pic_AL.get(count));
+                    count+=1;
+                    Tdrawpane.add(pic_AL.get(count));
+                    
                     ///Use arraylist to create list picture label then use add/remove
                 }
+                
             }
         });
 
         button2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if(count>=0){
-                  
+                if(count>0){
+                    Tdrawpane.remove(pic_AL.get(count));
+                    count-=1;
+                    Tdrawpane.add(pic_AL.get(count));
                 }
             }
         });
@@ -71,7 +79,13 @@ public class Tutorial extends JFrame{
         validate();
     }
 
-
+    public void readpic(){
+        for(int i=0;i<p.length;i++){
+            JLabel label = new JLabel(new ImageIcon(p[i]));
+            label.setBounds(170,40,500,250);
+            pic_AL.add(label);
+        }
+    }
 
 }
 
