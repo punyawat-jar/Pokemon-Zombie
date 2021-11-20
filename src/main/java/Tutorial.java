@@ -8,6 +8,7 @@ public class Tutorial extends JFrame{
     private JPanel Tcontentpane;
     private JLabel Tdrawpane,bgImg;
     private String[] p = {"tutorial/p1.jpg","tutorial/p2.jpg","tutorial/p3.jpg"};
+    private MyImageIcon bg;
     private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
     private int count = 0;
     private int frameWidth = 800, frameHeight = 600;
@@ -35,11 +36,8 @@ public class Tutorial extends JFrame{
         Tdrawpane = new JLabel();
         Tdrawpane.setLayout(null);
         Tcontentpane.add(Tdrawpane,BorderLayout.CENTER);
-        //Tcontentpane.setLayout(null);
-        bgImg = new JLabel("", new ImageIcon("pokemon/view.gif"),JLabel.CENTER);
-        bgImg.setBounds(0,0,frameWidth,frameHeight);
-        Tcontentpane.add(bgImg);
 
+        Tdrawpane.setIcon(new ImageIcon("pokemon/view.gif"));
         JButton button1 = new JButton("Next");
         JButton button2 = new JButton("Previous");
 
@@ -54,12 +52,14 @@ public class Tutorial extends JFrame{
 
         button1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                //Tdrawpane.remove(label);
                 if(count<pic_AL.size()-1){
+                    System.out.println("Count = " + count);
+                    System.out.println("size = " + pic_AL.size());
                     Tdrawpane.remove(pic_AL.get(count));
                     count+=1;
                     Tdrawpane.add(pic_AL.get(count));
                     
+                    repaint();
                     ///Use arraylist to create list picture label then use add/remove
                 }
                 
@@ -72,11 +72,14 @@ public class Tutorial extends JFrame{
                     Tdrawpane.remove(pic_AL.get(count));
                     count-=1;
                     Tdrawpane.add(pic_AL.get(count));
+                    
+                    repaint();
                 }
             }
         });
-
+        
         validate();
+        repaint();
     }
 
     public void readpic(){
@@ -88,6 +91,7 @@ public class Tutorial extends JFrame{
     }
 
 }
+
 
 
 

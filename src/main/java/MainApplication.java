@@ -85,6 +85,7 @@ public class MainApplication extends JFrame {
             public void actionPerformed(ActionEvent e){
                 if(Tframe == null){
                     Tframe = new Tutorial();
+                    
                 }
                 else{
                     Tframe.setVisible(true);
