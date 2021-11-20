@@ -3,7 +3,9 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.net.ssl.CertPathTrustManagerParameters;
 import javax.sound.sampled.*; // for sounds
+import java.util.*;
 import java.util.Random;
+import java.io.*;
 import javax.swing.border.*;
 
 public class MainApplication extends JFrame {
@@ -24,6 +26,9 @@ public class MainApplication extends JFrame {
 
     Tutorial Tframe;
 
+    private String[] mode = { "Vocab/easy.txt" };
+    ArrayList<Mode> modeList = new ArrayList<Mode>();
+
     // main method
     public static void main(String[] args) {
         new MainApplication();
@@ -39,6 +44,9 @@ public class MainApplication extends JFrame {
         contentpane.setLayout(new BorderLayout());
 
         AddComponents();
+
+        // add Vocab
+        readFile(mode);
     }
 
     public void AddComponents() {
@@ -109,6 +117,51 @@ public class MainApplication extends JFrame {
     public void mode_panel() {
 
     }
+
+    // Add Vocab
+    public void readFile(String[] mode) {
+        for (int i = 0; i < mode.length; i++) {
+            enforceFile(mode[i]);
+        }
+        // System.out.printf("---------------\n");
+        // printReadFile();
+    }
+
+    public void enforceFile(String fname) {
+        String fileName = fname;
+        int countLine = 0;
+        boolean opensuccess = false;
+        ArrayList<String> vList = new ArrayList<String>();
+        String name = "";
+
+        while (!opensuccess) {
+            try (Scanner filescan = new Scanner(new File(fileName));) {
+                opensuccess = true;
+                while (filescan.hasNext()) {
+                    String line = filescan.nextLine();
+                    String[] buf = line.split(",");
+                    if (countLine == 0) {
+                        name = buf[0].trim();
+                        countLine++;
+                    } else {
+                        vList.add(buf[0].trim());
+                    }
+                }
+                Mode m = new Mode(name, vList);
+                modeList.add(m);
+            }
+
+            catch (FileNotFoundException e) {
+                System.out.println(e);
+            }
+        } // end while
+    }
+
+    public void printReadFile() { // print read file
+        for (int i = 0; i < modeList.size(); i++) {
+            modeList.get(i).printFileWord();
+        }
+    }
 }
 
 class MyImageIcon extends ImageIcon {
@@ -126,3 +179,36 @@ class MyImageIcon extends ImageIcon {
         return new MyImageIcon(newimg);
     }
 };
+
+class Mode {
+    private String mode;
+    private int sizeList;
+    private ArrayList<String> vocabList = new ArrayList<String>();
+    private Random random = new Random();
+
+    public Mode() {
+    }
+
+    public Mode(String m, ArrayList<String> li) {
+        mode = m;
+        vocabList = li;
+        sizeList = vocabList.size();
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public String randomWord() { // Random word
+        int ran = random.nextInt(sizeList);
+        return vocabList.get(ran);
+    }
+
+    public void printFileWord() { // check Reading File
+        System.out.printf("====== Mode %-9s reading... =====\n", mode);
+        for (int i = 0; i < vocabList.size(); i++) {
+            System.out.printf("\t %-15s \n", vocabList.get(i));
+        }
+        System.out.println("");
+    }
+}
