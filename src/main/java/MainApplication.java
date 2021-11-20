@@ -21,8 +21,9 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0;
- 
+
     Tutorial Tframe;
+
     // main method
     public static void main(String[] args) {
         new MainApplication();
@@ -68,10 +69,6 @@ public class MainApplication extends JFrame {
         drawpane.add(button3);
         drawpane.add(button4);
 
-        // Cbutton_main.add(button1);
-        // Cbutton_main.add(button2);
-        // Cbutton_main.add(button3);
-
         // mode button
         JButton button5 = new JButton("Beginner");
         JButton button6 = new JButton("Easy");
@@ -79,28 +76,38 @@ public class MainApplication extends JFrame {
         JButton button8 = new JButton("Hard");
         JButton button9 = new JButton("Nightmare");
 
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                button1.setVisible(false);
+                button2.setVisible(false);
+                button3.setVisible(false);
+                button4.setVisible(false);
+                mode_panel();
+            }
+        });
 
-
-        button3.addActionListener(new ActionListener() {     //Tutorial button3
-            public void actionPerformed(ActionEvent e){
-                if(Tframe == null){
+        button3.addActionListener(new ActionListener() { // Tutorial button3
+            public void actionPerformed(ActionEvent e) {
+                if (Tframe == null) {
                     Tframe = new Tutorial();
-                    
-                }
-                else{
+
+                } else {
                     Tframe.setVisible(true);
                 }
             }
         });
-            
-        button4.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+
+        button4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
 
-
         validate();
+    }
+
+    public void mode_panel() {
+
     }
 }
 
