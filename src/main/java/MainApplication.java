@@ -50,8 +50,12 @@ public class MainApplication extends JFrame {
     }
 
     public void AddComponents() {
-        bgImg = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
-        in_gamebg1Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
+        bgImg = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
+        in_gamebg1Img = new MyImageIcon("pokemon/cheerful_bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg2Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg3Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg4Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
+        in_gamebg5Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
@@ -76,13 +80,6 @@ public class MainApplication extends JFrame {
         drawpane.add(button2);
         drawpane.add(button3);
         drawpane.add(button4);
-
-        // mode button
-        JButton button5 = new JButton("Beginner");
-        JButton button6 = new JButton("Easy");
-        JButton button7 = new JButton("Normal");
-        JButton button8 = new JButton("Hard");
-        JButton button9 = new JButton("Nightmare");
 
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -115,6 +112,60 @@ public class MainApplication extends JFrame {
     }
 
     public void mode_panel() {
+        // mode button
+        String[] mode = { "--- Please select difficulty ---", "Beginner", "Easy", "Normal", "Hard", "Nightmare" };
+        combo = new JComboBox(mode);
+        combo.setBounds(frameWidth / 4, frameHeight / 4, 200, 50);
+
+        // Play button
+        JButton play = new JButton("Play!!");
+        play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
+        play.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if ((String) combo.getSelectedItem() != "--- Please select difficulty ---") {
+                    combo.setVisible(false);
+                    play.setVisible(false);
+                    main_game((String) combo.getSelectedItem());
+                }
+            }
+        });
+
+        drawpane.add(combo);
+        drawpane.add(play);
+    }
+
+    public void main_game(String mode) {
+        switch (mode) {
+
+        case "Beginner":
+
+            drawpane.setIcon(in_gamebg1Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Easy":
+            drawpane.setIcon(in_gamebg2Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Normal":
+            drawpane.setIcon(in_gamebg3Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Hard":
+            drawpane.setIcon(in_gamebg4Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Nightmare":
+            drawpane.setIcon(in_gamebg5Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+
+            break;
+
+        }
 
     }
 
