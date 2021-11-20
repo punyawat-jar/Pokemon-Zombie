@@ -26,7 +26,7 @@ public class MainApplication extends JFrame {
  
     Tutorial Tframe;
 
-    private String []mode = {"Vocab/easy.txt"};
+    private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
     ArrayList<Mode> modeList = new ArrayList<Mode>();  
     // main method
     public static void main(String[] args) {
@@ -152,6 +152,7 @@ public class MainApplication extends JFrame {
         for(int i = 0 ; i<modeList.size();i++){
           modeList.get(i).printFileWord();
         }
+        System.out.println("");
       }
 }
 
@@ -193,7 +194,7 @@ class Mode{
     public void printFileWord(){ //check Reading File
       System.out.printf("====== Mode %-9s reading... =====\n",mode);
       for(int i = 0 ;i<vocabList.size();i++){
-        System.out.printf("\t %-15s \n",vocabList.get(i));
+        System.out.printf("\t [%8s] %-15s \n",mode,vocabList.get(i));
       }
       System.out.println("");
     }
