@@ -1,14 +1,17 @@
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
 public class Tutorial extends JFrame{
 
     private JPanel Tcontentpane;
-    private JLabel Tdrawpane;
-    
-    private MyImageIcon bgImg;
-
-    private int frameWidth = 800, frameHeight = 700;
+    private JLabel Tdrawpane,bgImg;
+    private String[] p = {"tutorial/p1.jpg","tutorial/p2.jpg","tutorial/p3.jpg"};
+    private MyImageIcon bg;
+    private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
+    private int count = 0;
+    private int frameWidth = 800, frameHeight = 600;
 
     
 
@@ -29,50 +32,67 @@ public class Tutorial extends JFrame{
     }
 
     public void AddComponents(){
-        //bgImg = new ImagePanel_gif("pokemon/ILTQq.png");
-        // Tdrawpane = new JLabel();
-        // Tdrawpane.setIcon(bgImg);
-        // Tdrawpane.setLayout(null);
-        // Tcontentpane.add(Tdrawpane,BorderLayout.CENTER);
-
         
-        Tcontentpane.add(new ImagePanel_gif());
+        Tdrawpane = new JLabel();
+        Tdrawpane.setLayout(null);
+        Tcontentpane.add(Tdrawpane,BorderLayout.CENTER);
 
+        Tdrawpane.setIcon(new ImageIcon("pokemon/view.gif"));
+        JButton button1 = new JButton("Next");
+        JButton button2 = new JButton("Previous");
 
+        button1.setBounds((frameWidth / 2) + 120, (frameHeight / 2) + 150, 150, 50);     ///Size and position of btn
+        button2.setBounds((frameWidth / 2) - 220, (frameHeight / 2) + 150, 150, 50);
 
-        validate();
-    
-    }
+        Tdrawpane.add(button1);
+        Tdrawpane.add(button2);
 
+        readpic();
+        Tdrawpane.add(pic_AL.get(0));
 
-
-    class MyImageIcon extends ImageIcon {
-        public MyImageIcon(String fname) {
-            super(fname);
-        }
-    
-        public MyImageIcon(Image image) {
-            super(image);
-        }
-    
-        public MyImageIcon resize(int width, int height) {
-            Image oldimg = this.getImage();
-            Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-            return new MyImageIcon(newimg);
-        }
-    }
-
-    class ImagePanel_gif extends JPanel{
-        Image img;
-        public ImagePanel_gif(){
-            img = Toolkit.getDefaultToolkit().createImage("pokemon/train.gif");
-        }
-        public void paintComponent(Graphics g){
-            super.paintComponent(g);
-            if(img != null){
-                g.drawImage(img,0,0,frameWidth,frameHeight,this);
+        button1.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if(count<pic_AL.size()-1){
+                    System.out.println("Count = " + count);
+                    System.out.println("size = " + pic_AL.size());
+                    Tdrawpane.remove(pic_AL.get(count));
+                    count+=1;
+                    Tdrawpane.add(pic_AL.get(count));
+                    
+                    repaint();
+                    ///Use arraylist to create list picture label then use add/remove
+                }
+                
             }
+        });
+
+        button2.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                if(count>0){
+                    Tdrawpane.remove(pic_AL.get(count));
+                    count-=1;
+                    Tdrawpane.add(pic_AL.get(count));
+                    
+                    repaint();
+                }
+            }
+        });
+        
+        validate();
+        repaint();
+    }
+
+    public void readpic(){
+        for(int i=0;i<p.length;i++){
+            JLabel label = new JLabel(new ImageIcon(p[i]));
+            label.setBounds(170,40,500,250);
+            pic_AL.add(label);
         }
     }
 
 }
+
+
+
+
+
