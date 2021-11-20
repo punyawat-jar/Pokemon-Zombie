@@ -23,7 +23,7 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0;
- 
+
     Tutorial Tframe;
 
     private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
@@ -44,13 +44,17 @@ public class MainApplication extends JFrame {
 
         AddComponents();
 
-        //add Vocab 
+        // add Vocab
         readFile(mode);
     }
 
     public void AddComponents() {
-        bgImg = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
-        in_gamebg1Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
+        bgImg = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
+        in_gamebg1Img = new MyImageIcon("pokemon/cheerful_bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg2Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg3Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg4Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
+        in_gamebg5Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
@@ -76,81 +80,136 @@ public class MainApplication extends JFrame {
         drawpane.add(button3);
         drawpane.add(button4);
 
-        // Cbutton_main.add(button1);
-        // Cbutton_main.add(button2);
-        // Cbutton_main.add(button3);
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                button1.setVisible(false);
+                button2.setVisible(false);
+                button3.setVisible(false);
+                button4.setVisible(false);
+                mode_panel();
+            }
+        });
 
-        // mode button
-        JButton button5 = new JButton("Beginner");
-        JButton button6 = new JButton("Easy");
-        JButton button7 = new JButton("Normal");
-        JButton button8 = new JButton("Hard");
-        JButton button9 = new JButton("Nightmare");
-
-
-
-        button3.addActionListener(new ActionListener() {     //Tutorial button3
-            public void actionPerformed(ActionEvent e){
-                if(Tframe == null){
+        button3.addActionListener(new ActionListener() { // Tutorial button3
+            public void actionPerformed(ActionEvent e) {
+                if (Tframe == null) {
                     Tframe = new Tutorial();
-                }
-                else{
+
+                } else {
                     Tframe.setVisible(true);
                 }
             }
         });
-            
-        button4.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+
+        button4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
 
-
         validate();
     }
 
-    //Add Vocab
-    public void readFile(String []mode){
-        for(int i =0;i<mode.length;i++){
-          enforceFile(mode[i]);
+    public void mode_panel() {
+        // mode button
+        String[] mode = { "--- Please select difficulty ---", "Beginner", "Easy", "Normal", "Hard", "Nightmare" };
+        combo = new JComboBox(mode);
+        combo.setBounds(frameWidth / 4, frameHeight / 4, 200, 50);
+
+        // Play button
+        JButton play = new JButton("Play!!");
+        play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
+        play.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if ((String) combo.getSelectedItem() != "--- Please select difficulty ---") {
+                    combo.setVisible(false);
+                    play.setVisible(false);
+                    main_game((String) combo.getSelectedItem());
+                }
+            }
+        });
+
+        drawpane.add(combo);
+        drawpane.add(play);
+    }
+
+    public void main_game(String mode) {
+        switch (mode) {
+
+        case "Beginner":
+
+            drawpane.setIcon(in_gamebg1Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Easy":
+            drawpane.setIcon(in_gamebg2Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Normal":
+            drawpane.setIcon(in_gamebg3Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Hard":
+            drawpane.setIcon(in_gamebg4Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+            break;
+        case "Nightmare":
+            drawpane.setIcon(in_gamebg5Img);
+            drawpane.setLayout(null);
+            contentpane.add(drawpane, BorderLayout.CENTER);
+
+            break;
+
         }
-        //System.out.printf("---------------\n");
-        //printReadFile();
-      }
-      public void enforceFile(String fname){
-         String fileName = fname;
-         int countLine = 0;
-         boolean opensuccess = false;
-         ArrayList<String> vList = new ArrayList<String> ();
-         String name = "";
-   
-         while(!opensuccess){
-           try(Scanner filescan = new Scanner(new File(fileName));){
-             opensuccess = true;
-               while(filescan.hasNext()){
-                 String line = filescan.nextLine();
-                 String []buf = line.split(",");
-                 if(countLine ==0){
-                   name = buf[0].trim();
-                   countLine++;
-                 }
-                 else{              
-                    vList.add(buf[0].trim());
-                  }
-             }
-             Mode m = new Mode(name,vList); 
-             modeList.add(m);
-           }
-   
-           catch(FileNotFoundException e){
-             System.out.println(e);
-           }
-         }//end while
-      }
-      public void printReadFile(){ //print read file 
-        for(int i = 0 ; i<modeList.size();i++){
-          modeList.get(i).printFileWord();
+
+    }
+
+    // Add Vocab
+    public void readFile(String[] mode) {
+        for (int i = 0; i < mode.length; i++) {
+            enforceFile(mode[i]);
+        }
+        // System.out.printf("---------------\n");
+        // printReadFile();
+    }
+
+    public void enforceFile(String fname) {
+        String fileName = fname;
+        int countLine = 0;
+        boolean opensuccess = false;
+        ArrayList<String> vList = new ArrayList<String>();
+        String name = "";
+
+        while (!opensuccess) {
+            try (Scanner filescan = new Scanner(new File(fileName));) {
+                opensuccess = true;
+                while (filescan.hasNext()) {
+                    String line = filescan.nextLine();
+                    String[] buf = line.split(",");
+                    if (countLine == 0) {
+                        name = buf[0].trim();
+                        countLine++;
+                    } else {
+                        vList.add(buf[0].trim());
+                    }
+                }
+                Mode m = new Mode(name, vList);
+                modeList.add(m);
+            }
+
+            catch (FileNotFoundException e) {
+                System.out.println(e);
+            }
+        } // end while
+    }
+
+    public void printReadFile() { // print read file
+        for (int i = 0; i < modeList.size(); i++) {
+            modeList.get(i).printFileWord();
         }
         System.out.println("");
       }
@@ -172,7 +231,7 @@ class MyImageIcon extends ImageIcon {
     }
 };
 
-class Mode{
+class Mode {
     private String mode;
     private int sizeList;
     private ArrayList<String> vocabList = new ArrayList<String>();
