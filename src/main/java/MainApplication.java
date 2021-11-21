@@ -8,16 +8,24 @@ import java.util.Random;
 import java.io.*;
 import javax.swing.border.*;
 
+//Main Frame
 public class MainApplication extends JFrame {
-
+    //------------------------------- Component -------------------------------
     private JPanel contentpane;
     private JLabel drawpane;
     private JComboBox combo;
     private JToggleButton[] tb;
     private JTextField scoreText;
     private JLabel Label;
-    private MyImageIcon bgImg, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
+    private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
+    private MyImageIcon startButton, creditButton, tutorialButton, exitButton;
     private ButtonGroup bgroup;
+
+    private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
+    private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound, usedItemSound;
+
+    private JLabel zomb1Label, zomb2Label, zomb3Label;
+    private MyImageIcon zomb1Img, zomb2Img, zomb3Img;
     // private MySoundEffect hitSound, themeSound;
 
     private int frameWidth = 1366, frameHeight = 768;
@@ -30,7 +38,8 @@ public class MainApplication extends JFrame {
 
     private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
     ArrayList<Mode> modeList = new ArrayList<Mode>();  
-    // main method
+
+    //------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
         new MainApplication();
     }
@@ -45,38 +54,66 @@ public class MainApplication extends JFrame {
         contentpane.setLayout(new BorderLayout());
 
         AddComponents();
-
         // add Vocab
         readFile(mode);
-    }
+    }//end MainApplication Constructor;
 
     public void AddComponents() {
-        bgImg = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
-        in_gamebg1Img = new MyImageIcon("pokemon/cheerful_bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg2Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg3Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg4Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
-        in_gamebg5Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
+        bgImg = new MyImageIcon("pokemon/menu_bg.png").resize(frameWidth, frameHeight);
+        bgImg2 = new MyImageIcon("pokemon/cleanMenu_bg.png").resize(frameWidth, frameHeight);
+        in_gamebg1Img = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
+        in_gamebg2Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
+        in_gamebg3Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
+        in_gamebg4Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg5Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
+
+        startButton = new MyImageIcon("pokemon/StartButton.png").resize(138,50);
+        creditButton = new MyImageIcon("pokemon/CreditButton.png").resize(138,50);
+        tutorialButton = new MyImageIcon("pokemon/TutorialButton.png").resize(138,50);
+        exitButton = new MyImageIcon("pokemon/ExitButton.png").resize(138,50);
+
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
         contentpane.add(drawpane, BorderLayout.CENTER);
 
-        // sound fx and bg music
-        // hitSound = new MySoundEffect("resources/beep.wav");
-        // themeSound = new MySoundEffect("resources/theme.wav");
-        // themeSound.playLoop();
+        //------------------------------- Pokemon -----------------------------------
+        
+        
+        //---------------------------- Sound --------------------------------------
+        buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
+	    normalHitSound   = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
+	    softHitSound   = new MySoundEffect("sound_effect/SoftHit_soundeffect.wav");
+        criHitSound   = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
+        hurtSound   = new MySoundEffect("sound_effect/Hurt_soundeffect.wav");
+        gameOverSound   = new MySoundEffect("sound_effect/GameOver_soundeffect.wav");
+        winSound   = new MySoundEffect("sound_effect/Win_soundeffect.wav");
+        usedItemSound   = new MySoundEffect("sound_effect/UsedItem_soundeffect.wav");
+        
+	    menuSong = new MySoundEffect("song/menu_song.wav"); 
+	    creditSong = new MySoundEffect("song/credit_song.wav"); 
+	    beginnerSong = new MySoundEffect("song/beginner_and_tutorial_song.wav"); 
+	    mediumSong = new MySoundEffect("song/medium_song.wav"); 
+	    hardSong = new MySoundEffect("song/hard_song.wav");
+	    nightmareSong = new MySoundEffect("song/nightmare_song.wav"); 
+	    bossSong = new MySoundEffect("song/boss_song.wav"); 
+
+        menuSong.playLoop();
 
         // main menu button
         JButton button1 = new JButton("Start");
         JButton button2 = new JButton("Credit");
         JButton button3 = new JButton("Tutorial");
         JButton button4 = new JButton("Exit");
-        button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 100, 50);
-        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 33, 100, 50);
-        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 33, 100, 50);
-        button4.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 100, 100, 50);
+        button1.setIcon(startButton);
+        button2.setIcon(creditButton);
+        button3.setIcon(tutorialButton);
+        button4.setIcon(exitButton);
+        button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 138,50 );
+        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 33, 138,50);
+        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 33, 138,50);
+        button4.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 100, 138,50);
         drawpane.add(button1);
         drawpane.add(button2);
         drawpane.add(button3);
@@ -84,16 +121,19 @@ public class MainApplication extends JFrame {
 
         button1.addActionListener(new ActionListener() {    // Start button1
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 button1.setVisible(false);
                 button2.setVisible(false);
                 button3.setVisible(false);
                 button4.setVisible(false);
+                drawpane.setIcon(bgImg2);
                 mode_panel();
             }
         });
 
         button3.addActionListener(new ActionListener() {    // Tutorial button3
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 if (Tframe == null) {
                     Tframe = new Tutorial();
 
@@ -105,12 +145,13 @@ public class MainApplication extends JFrame {
 
         button4.addActionListener(new ActionListener() {    // Exit button4
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 System.exit(0);
             }
         });
 
         validate();
-    }
+    }//end AddComponent
 
     public void mode_panel() {
         // mode button
@@ -123,6 +164,7 @@ public class MainApplication extends JFrame {
         play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 if ((String) combo.getSelectedItem() != "--- Please select difficulty ---") {
                     combo.setVisible(false);
                     play.setVisible(false);
@@ -130,18 +172,18 @@ public class MainApplication extends JFrame {
                 }
             }
         });
-
         drawpane.add(combo);
         drawpane.add(play);
-    }
+    }//end mode Panel
 
     public void main_game(String mode) {
+        menuSong.stop();
         switch (mode) {
         case "Beginner":
-
             drawpane.setIcon(in_gamebg1Img);
             drawpane.setLayout(null);
-            contentpane.add(drawpane, BorderLayout.CENTER);
+            contentpane.add(drawpane, BorderLayout.CENTER);  
+            beginnerSong.playLoop();
             break;
         case "Easy":
             drawpane.setIcon(in_gamebg2Img);
@@ -164,6 +206,8 @@ public class MainApplication extends JFrame {
             contentpane.add(drawpane, BorderLayout.CENTER);
             break;
         }
+
+
         player = new Player();
         player.draw_player(drawpane);
 
@@ -172,6 +216,9 @@ public class MainApplication extends JFrame {
 
 
     // Add Vocab
+    
+
+    //----------------------------------- Read File ----------------------------------
     public void readFile(String[] mode) {
         for (int i = 0; i < mode.length; i++) {
             enforceFile(mode[i]);
@@ -215,8 +262,8 @@ public class MainApplication extends JFrame {
             modeList.get(i).printFileWord();
         }
         System.out.println("");
-      }
-}
+    }
+}//end Class MainApplication
 
 class MyImageIcon extends ImageIcon {
     public MyImageIcon(String fname) {
@@ -264,17 +311,17 @@ class Mode {
 
 class Player{
     private int HP,Score;
-    private int playerwidth = 400,playerhight = 266;
+    private int playerwidth = 200,playerhight = 165;
     private MyImageIcon player;
     private JLabel playerLabel;
     // String[] HP_bar = {"asd"};
     public void player() {}
     public void draw_player(JLabel x){
-        player = new MyImageIcon("pokemon/Player.png").resize(playerwidth, playerhight);
+
+        player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
-        playerLabel.setBounds(-30,450,playerwidth,playerhight);
+        playerLabel.setBounds(0,440,playerwidth,playerhight);
         x.add(playerLabel);
-        System.out.println("Help");
         x.validate();
     }
 
@@ -284,6 +331,24 @@ class Player{
     public void setscore(int x){
         this.Score = x;
     }
-
+}
     
+class MySoundEffect
+{
+    private Clip clip;
+
+    public MySoundEffect(String filename)
+    {
+	try
+	{
+            java.io.File file = new java.io.File(filename);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
+	}
+	catch (Exception e) { e.printStackTrace(); }
+    }
+    public void playOnce()   { clip.setMicrosecondPosition(0); clip.start(); }
+    public void playLoop()   { clip.loop(Clip.LOOP_CONTINUOUSLY); }
+    public void stop()       { clip.stop(); }
 }

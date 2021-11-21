@@ -12,6 +12,7 @@ public class Tutorial extends JFrame{
     private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
     private int count = 0;
     private int frameWidth = 800, frameHeight = 600;
+    private MySoundEffect buttonSound;
 
     
 
@@ -41,6 +42,8 @@ public class Tutorial extends JFrame{
         JButton button1 = new JButton("Next");
         JButton button2 = new JButton("Previous");
 
+        buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
+
         button1.setBounds((frameWidth / 2) + 120, (frameHeight / 2) + 150, 150, 50);     ///Size and position of btn
         button2.setBounds((frameWidth / 2) - 220, (frameHeight / 2) + 150, 150, 50);
 
@@ -52,6 +55,7 @@ public class Tutorial extends JFrame{
 
         button1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                buttonSound.playOnce();
                 if(count<pic_AL.size()-1){
                     System.out.println("Count = " + count);
                     System.out.println("size = " + pic_AL.size());
@@ -68,6 +72,7 @@ public class Tutorial extends JFrame{
 
         button2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
+                buttonSound.playOnce();
                 if(count>0){
                     Tdrawpane.remove(pic_AL.get(count));
                     count-=1;
@@ -91,8 +96,3 @@ public class Tutorial extends JFrame{
     }
 
 }
-
-
-
-
-
