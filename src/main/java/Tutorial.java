@@ -56,13 +56,10 @@ public class Tutorial extends JFrame{
         button1.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 buttonSound.playOnce();
-                if(count<pic_AL.size()-1){
-                    System.out.println("Count = " + count);
-                    System.out.println("size = " + pic_AL.size());
+                if(count<pic_AL.size()-1){;
                     Tdrawpane.remove(pic_AL.get(count));
                     count+=1;
                     Tdrawpane.add(pic_AL.get(count));
-                    
                     repaint();
                     ///Use arraylist to create list picture label then use add/remove
                 }
