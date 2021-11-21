@@ -13,7 +13,6 @@ public class MainApplication extends JFrame {
     //------------------------------- Component -------------------------------
     private JPanel contentpane;
     private JLabel drawpane;
-    private JLabel zomb1Label, zomb2Label, zomb3Label;
     private JComboBox combo;
     private JToggleButton[] tb;
     private JTextField scoreText;
@@ -22,9 +21,12 @@ public class MainApplication extends JFrame {
     private ButtonGroup bgroup;
 
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
-    private MySoundEffect normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound, usedItemSound;
+    private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound, usedItemSound;
 
-    private MyImageIcon zomb1Img, zomb2Img, zomb3Img; 
+    private JLabel zomb1Label, zomb2Label, zomb3Label;
+    private JLabel pikaReadyLabel;
+    private MyImageIcon zomb1Img, zomb2Img, zomb3Img;
+    private MyImageIcon pikaReadyImg;
     // private MySoundEffect hitSound, themeSound;
 
     private int frameWidth = 1366, frameHeight = 768;
@@ -53,7 +55,7 @@ public class MainApplication extends JFrame {
         AddComponents();
         // add Vocab
         readFile(mode);
-    }
+    }//end MainApplication Constructor;
 
     public void AddComponents() {
         bgImg = new MyImageIcon("pokemon/menu_bg.png").resize(frameWidth, frameHeight);
@@ -70,7 +72,13 @@ public class MainApplication extends JFrame {
         drawpane.setLayout(null);
         contentpane.add(drawpane, BorderLayout.CENTER);
 
+        //------------------------------- Pokemon -----------------------------------
+        
+        pikaReadyImg = new MyImageIcon("pokemon/pikachuready.png").resize(200, 165);
+        pikaReadyLabel = new JLabel(pikaReadyImg);
+        pikaReadyLabel.setBounds(0,440, 200, 165);
         //---------------------------- Sound --------------------------------------
+        buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
 	    normalHitSound   = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
 	    softHitSound   = new MySoundEffect("sound_effect/SoftHit_soundeffect.wav");
         criHitSound   = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
@@ -86,11 +94,6 @@ public class MainApplication extends JFrame {
 	    hardSong = new MySoundEffect("song/hard_song.wav");
 	    nightmareSong = new MySoundEffect("song/nightmare_song.wav"); 
 	    bossSong = new MySoundEffect("song/boss_song.wav"); 
-
-        // sound fx and bg music
-        // hitSound = new MySoundEffect("resources/beep.wav");
-        // themeSound = new MySoundEffect("resources/theme.wav");
-        // themeSound.playLoop();
 
         menuSong.playLoop();
 
@@ -110,6 +113,7 @@ public class MainApplication extends JFrame {
 
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 button1.setVisible(false);
                 button2.setVisible(false);
                 button3.setVisible(false);
@@ -121,6 +125,7 @@ public class MainApplication extends JFrame {
 
         button3.addActionListener(new ActionListener() { // Tutorial button3
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 if (Tframe == null) {
                     Tframe = new Tutorial();
 
@@ -132,12 +137,13 @@ public class MainApplication extends JFrame {
 
         button4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 System.exit(0);
             }
         });
 
         validate();
-    }
+    }//end AddComponent
 
     public void mode_panel() {
         // mode button
@@ -150,6 +156,7 @@ public class MainApplication extends JFrame {
         play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
                 if ((String) combo.getSelectedItem() != "--- Please select difficulty ---") {
                     combo.setVisible(false);
                     play.setVisible(false);
@@ -159,7 +166,7 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(combo);
         drawpane.add(play);
-    }
+    }//end mode Panel
 
     public void main_game(String mode) {
         menuSong.stop();
@@ -168,7 +175,9 @@ public class MainApplication extends JFrame {
         case "Beginner":
             drawpane.setIcon(in_gamebg1Img);
             drawpane.setLayout(null);
-            contentpane.add(drawpane, BorderLayout.CENTER);      
+            drawpane.add(pikaReadyLabel);
+            contentpane.add(drawpane, BorderLayout.CENTER);   
+            repaint();   
             beginnerSong.playLoop();
             break;
         case "Easy":
@@ -240,8 +249,8 @@ public class MainApplication extends JFrame {
             modeList.get(i).printFileWord();
         }
         System.out.println("");
-      }
-}
+    }
+}//end Class MainApplication
 
 class MyImageIcon extends ImageIcon {
     public MyImageIcon(String fname) {
@@ -306,36 +315,3 @@ class MySoundEffect
     public void playLoop()   { clip.loop(Clip.LOOP_CONTINUOUSLY); }
     public void stop()       { clip.stop(); }
 }
-
-  /*class ZombieThread{
-	Thread zombieThread = new Thread() {
-        public void run()
-        {
-            while (slothMove)
-            {
-                // (7) Add/modify code to switch between indoor and outdoor scenes
-                //     - Check condition & change drawpane's icon
-                slothLabel.setLocation(slothCurX, slothCurY);
-                if (slothLeft)
-                {
-        slothCurX = slothCurX - 10;
-                    if (slothCurX < -100) { 
-                        if((MyImageIcon)drawpane.getIcon()== indoorImg) drawpane.setIcon(outdoorImg);
-                        else drawpane.setIcon(indoorImg);
-                        slothCurX = frameWidth; } 			
-                }
-                else
-                {
-        slothCurX = slothCurX + 10;
-                    if (slothCurX > frameWidth - 100) { 
-                        if((MyImageIcon)drawpane.getIcon()== indoorImg) drawpane.setIcon(outdoorImg);
-                        else drawpane.setIcon(indoorImg);
-                        slothCurX = 0;  }			
-                }
-                repaint(); 
-                try { Thread.sleep(slothSpeed); } 
-                catch (InterruptedException e) { e.printStackTrace(); }
-    } // end while
-        } // end run
-} // end thread creation
-  }*/
