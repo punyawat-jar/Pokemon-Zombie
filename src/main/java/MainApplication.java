@@ -25,14 +25,14 @@ public class MainApplication extends JFrame {
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound, usedItemSound;
 
     private JLabel zomb1Label, zomb2Label, zomb3Label;
-    private JLabel pikaReadyLabel;
     private MyImageIcon zomb1Img, zomb2Img, zomb3Img;
-    private MyImageIcon pikaReadyImg;
     // private MySoundEffect hitSound, themeSound;
 
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0;
+
+    private Player player;
 
     Tutorial Tframe;
 
@@ -80,9 +80,7 @@ public class MainApplication extends JFrame {
 
         //------------------------------- Pokemon -----------------------------------
         
-        pikaReadyImg = new MyImageIcon("pokemon/pikachuready.png").resize(200, 165);
-        pikaReadyLabel = new JLabel(pikaReadyImg);
-        pikaReadyLabel.setBounds(0,440, 200, 165);
+        
         //---------------------------- Sound --------------------------------------
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
 	    normalHitSound   = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
@@ -121,7 +119,7 @@ public class MainApplication extends JFrame {
         drawpane.add(button3);
         drawpane.add(button4);
 
-        button1.addActionListener(new ActionListener() {
+        button1.addActionListener(new ActionListener() {    // Start button1
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
                 button1.setVisible(false);
@@ -133,7 +131,7 @@ public class MainApplication extends JFrame {
             }
         });
 
-        button3.addActionListener(new ActionListener() { // Tutorial button3
+        button3.addActionListener(new ActionListener() {    // Tutorial button3
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
                 if (Tframe == null) {
@@ -145,7 +143,7 @@ public class MainApplication extends JFrame {
             }
         });
 
-        button4.addActionListener(new ActionListener() {
+        button4.addActionListener(new ActionListener() {    // Exit button4
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
                 System.exit(0);
@@ -181,13 +179,10 @@ public class MainApplication extends JFrame {
     public void main_game(String mode) {
         menuSong.stop();
         switch (mode) {
-
         case "Beginner":
             drawpane.setIcon(in_gamebg1Img);
             drawpane.setLayout(null);
-            drawpane.add(pikaReadyLabel);
-            contentpane.add(drawpane, BorderLayout.CENTER);   
-            repaint();   
+            contentpane.add(drawpane, BorderLayout.CENTER);  
             beginnerSong.playLoop();
             break;
         case "Easy":
@@ -214,9 +209,17 @@ public class MainApplication extends JFrame {
             contentpane.add(drawpane, BorderLayout.CENTER);
             bossSong.playLoop();
             break;
-
         }
+
+
+        player = new Player();
+        player.draw_player(drawpane);
+        player.draw_healthbar(drawpane);
     }
+
+
+    // Add Vocab
+    
 
     //----------------------------------- Read File ----------------------------------
     public void readFile(String[] mode) {
@@ -309,6 +312,48 @@ class Mode {
     }
   }
 
+class Player{
+    private int HP,Score;
+    private int playerwidth = 200, playerhight = 165,healthbarwidth = 150,healthbarhight = 25;
+    private MyImageIcon player,healthbar_pic;
+    private JLabel playerLabel,HP_Label;
+    private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
+    String[] HP_bar = {"health bar/H0.png","health bar/1.png","health bar/H2.png","health bar/H3.png","health bar/H4.png","health bar/H5.png"};
+    public void player() {}
+    public void draw_player(JLabel x){
+
+        player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth, playerhight);
+        playerLabel = new JLabel(player);
+        playerLabel.setBounds(0,440,playerwidth,playerhight);
+        x.add(playerLabel);
+        x.validate();
+    }
+
+    public void draw_healthbar(JLabel x){
+        for(int i=0;i<HP_bar.length;i++){
+            healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth,healthbarhight);
+            HP_Label = new JLabel(healthbar_pic);
+            HP_Label.setBounds(45,420,healthbarwidth,healthbarhight);
+            HP_AL.add(HP_Label);
+        }
+        HP = HP_AL.size()-1;
+        x.add(HP_AL.get(5));
+    }
+
+    public void hitplayer(JLabel x){
+        x.remove(HP_AL.get(HP));
+        HP-=1;
+        x.add(HP_AL.get(HP));
+    }
+
+    public int getHP(){
+        return HP;
+    }
+    public void setscore(int x){
+        this.Score = x;
+    }
+}//end Player
+    
 class MySoundEffect
 {
     private Clip clip;
