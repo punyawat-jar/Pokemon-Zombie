@@ -210,8 +210,9 @@ public class MainApplication extends JFrame {
 
         player = new Player();
         player.draw_player(drawpane);
+        player.draw_healthbar(drawpane);
 
-
+    
     }
 
 
@@ -311,10 +312,11 @@ class Mode {
 
 class Player{
     private int HP,Score;
-    private int playerwidth = 200,playerhight = 165;
-    private MyImageIcon player;
-    private JLabel playerLabel;
-    // String[] HP_bar = {"asd"};
+    private int playerwidth = 200, playerhight = 165,healthbarwidth = 150,healthbarhight = 25;
+    private MyImageIcon player,healthbar_pic;
+    private JLabel playerLabel,HP_Label;
+    private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
+    String[] HP_bar = {"health bar/H0.png","health bar/1.png","health bar/H2.png","health bar/H3.png","health bar/H4.png","health bar/H5.png"};
     public void player() {}
     public void draw_player(JLabel x){
 
@@ -323,6 +325,23 @@ class Player{
         playerLabel.setBounds(0,440,playerwidth,playerhight);
         x.add(playerLabel);
         x.validate();
+    }
+
+    public void draw_healthbar(JLabel x){
+        for(int i=0;i<HP_bar.length;i++){
+            healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth,healthbarhight);
+            HP_Label = new JLabel(healthbar_pic);
+            HP_Label.setBounds(45,420,healthbarwidth,healthbarhight);
+            HP_AL.add(HP_Label);
+        }
+        HP = HP_AL.size()-1;
+        x.add(HP_AL.get(5));
+    }
+
+    public void hitplayer(JLabel x){
+        x.remove(HP_AL.get(HP));
+        HP-=1;
+        x.add(HP_AL.get(HP));
     }
 
     public int getHP(){
