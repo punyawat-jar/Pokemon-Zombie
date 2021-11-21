@@ -24,6 +24,8 @@ public class MainApplication extends JFrame {
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0;
 
+    private Player player;
+
     Tutorial Tframe;
 
     private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
@@ -80,7 +82,7 @@ public class MainApplication extends JFrame {
         drawpane.add(button3);
         drawpane.add(button4);
 
-        button1.addActionListener(new ActionListener() {
+        button1.addActionListener(new ActionListener() {    // Start button1
             public void actionPerformed(ActionEvent e) {
                 button1.setVisible(false);
                 button2.setVisible(false);
@@ -90,7 +92,7 @@ public class MainApplication extends JFrame {
             }
         });
 
-        button3.addActionListener(new ActionListener() { // Tutorial button3
+        button3.addActionListener(new ActionListener() {    // Tutorial button3
             public void actionPerformed(ActionEvent e) {
                 if (Tframe == null) {
                     Tframe = new Tutorial();
@@ -101,7 +103,7 @@ public class MainApplication extends JFrame {
             }
         });
 
-        button4.addActionListener(new ActionListener() {
+        button4.addActionListener(new ActionListener() {    // Exit button4
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
@@ -135,7 +137,6 @@ public class MainApplication extends JFrame {
 
     public void main_game(String mode) {
         switch (mode) {
-
         case "Beginner":
 
             drawpane.setIcon(in_gamebg1Img);
@@ -161,12 +162,14 @@ public class MainApplication extends JFrame {
             drawpane.setIcon(in_gamebg5Img);
             drawpane.setLayout(null);
             contentpane.add(drawpane, BorderLayout.CENTER);
-
             break;
-
         }
+        player = new Player();
+        player.draw_player(drawpane);
+
 
     }
+
 
     // Add Vocab
     public void readFile(String[] mode) {
@@ -258,3 +261,29 @@ class Mode {
       System.out.println("");
     }
   }
+
+class Player{
+    private int HP,Score;
+    private int playerwidth = 400,playerhight = 266;
+    private MyImageIcon player;
+    private JLabel playerLabel;
+    // String[] HP_bar = {"asd"};
+    public void player() {}
+    public void draw_player(JLabel x){
+        player = new MyImageIcon("pokemon/Player.png").resize(playerwidth, playerhight);
+        playerLabel = new JLabel(player);
+        playerLabel.setBounds(-30,450,playerwidth,playerhight);
+        x.add(playerLabel);
+        System.out.println("Help");
+        x.validate();
+    }
+
+    public int getHP(){
+        return HP;
+    }
+    public void setscore(int x){
+        this.Score = x;
+    }
+
+    
+}
