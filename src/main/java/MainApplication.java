@@ -332,7 +332,7 @@ class Mode {
   }
 
 class Player{
-    private int HP,Score;
+    private int HP, Score;
     private int playerwidth = 200, playerhight = 165,healthbarwidth = 180,healthbarhight = 30;
     private MyImageIcon player,healthbar_pic;
     private JLabel playerLabel,HP_Label;

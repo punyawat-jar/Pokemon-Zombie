@@ -33,7 +33,7 @@ public class Tutorial extends JFrame{
     }
 
     public void AddComponents(){
-        
+        setUpCursor(Tcontentpane);
         Tdrawpane = new JLabel();
         Tdrawpane.setLayout(null);
         Tcontentpane.add(Tdrawpane,BorderLayout.CENTER);
