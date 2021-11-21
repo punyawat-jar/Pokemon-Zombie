@@ -43,7 +43,6 @@ public class MainApplication extends JFrame {
         contentpane.setLayout(new BorderLayout());
 
         AddComponents();
-
         // add Vocab
         readFile(mode);
     }
