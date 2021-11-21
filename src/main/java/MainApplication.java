@@ -8,16 +8,23 @@ import java.util.Random;
 import java.io.*;
 import javax.swing.border.*;
 
+//Main Frame
 public class MainApplication extends JFrame {
-
+    //------------------------------- Component -------------------------------
     private JPanel contentpane;
     private JLabel drawpane;
+    private JLabel zomb1Label, zomb2Label, zomb3Label;
     private JComboBox combo;
     private JToggleButton[] tb;
     private JTextField scoreText;
     private JLabel Label;
-    private MyImageIcon bgImg, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
+    private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private ButtonGroup bgroup;
+
+    private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
+    private MySoundEffect normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound, usedItemSound;
+
+    private MyImageIcon zomb1Img, zomb2Img, zomb3Img; 
     // private MySoundEffect hitSound, themeSound;
 
     private int frameWidth = 1366, frameHeight = 768;
@@ -28,7 +35,8 @@ public class MainApplication extends JFrame {
 
     private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
     ArrayList<Mode> modeList = new ArrayList<Mode>();  
-    // main method
+
+    //------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
         new MainApplication();
     }
@@ -48,22 +56,43 @@ public class MainApplication extends JFrame {
     }
 
     public void AddComponents() {
-        bgImg = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
-        in_gamebg1Img = new MyImageIcon("pokemon/cheerful_bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg2Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg3Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg4Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
-        in_gamebg5Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
+        bgImg = new MyImageIcon("pokemon/menu_bg.png").resize(frameWidth, frameHeight);
+        bgImg2 = new MyImageIcon("pokemon/cleanMenu_bg.png").resize(frameWidth, frameHeight);
+        in_gamebg1Img = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
+        in_gamebg2Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
+        in_gamebg3Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
+        in_gamebg4Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg5Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
+
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
         contentpane.add(drawpane, BorderLayout.CENTER);
 
+        //---------------------------- Sound --------------------------------------
+	    normalHitSound   = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
+	    softHitSound   = new MySoundEffect("sound_effect/SoftHit_soundeffect.wav");
+        criHitSound   = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
+        hurtSound   = new MySoundEffect("sound_effect/Hurt_soundeffect.wav");
+        gameOverSound   = new MySoundEffect("sound_effect/GameOver_soundeffect.wav");
+        winSound   = new MySoundEffect("sound_effect/Win_soundeffect.wav");
+        usedItemSound   = new MySoundEffect("sound_effect/UsedItem_soundeffect.wav");
+        
+	    menuSong = new MySoundEffect("song/menu_song.wav"); 
+	    creditSong = new MySoundEffect("song/credit_song.wav"); 
+	    beginnerSong = new MySoundEffect("song/beginner_and_tutorial_song.wav"); 
+	    mediumSong = new MySoundEffect("song/medium_song.wav"); 
+	    hardSong = new MySoundEffect("song/hard_song.wav");
+	    nightmareSong = new MySoundEffect("song/nightmare_song.wav"); 
+	    bossSong = new MySoundEffect("song/boss_song.wav"); 
+
         // sound fx and bg music
         // hitSound = new MySoundEffect("resources/beep.wav");
         // themeSound = new MySoundEffect("resources/theme.wav");
         // themeSound.playLoop();
+
+        menuSong.playLoop();
 
         // main menu button
         JButton button1 = new JButton("Start");
@@ -85,6 +114,7 @@ public class MainApplication extends JFrame {
                 button2.setVisible(false);
                 button3.setVisible(false);
                 button4.setVisible(false);
+                drawpane.setIcon(bgImg2);
                 mode_panel();
             }
         });
@@ -127,19 +157,19 @@ public class MainApplication extends JFrame {
                 }
             }
         });
-
         drawpane.add(combo);
         drawpane.add(play);
     }
 
     public void main_game(String mode) {
+        menuSong.stop();
         switch (mode) {
 
         case "Beginner":
-
             drawpane.setIcon(in_gamebg1Img);
             drawpane.setLayout(null);
-            contentpane.add(drawpane, BorderLayout.CENTER);
+            contentpane.add(drawpane, BorderLayout.CENTER);      
+            beginnerSong.playLoop();
             break;
         case "Easy":
             drawpane.setIcon(in_gamebg2Img);
@@ -164,10 +194,9 @@ public class MainApplication extends JFrame {
             break;
 
         }
-
     }
 
-    // Add Vocab
+    //----------------------------------- Read File ----------------------------------
     public void readFile(String[] mode) {
         for (int i = 0; i < mode.length; i++) {
             enforceFile(mode[i]);
@@ -257,3 +286,56 @@ class Mode {
       System.out.println("");
     }
   }
+
+class MySoundEffect
+{
+    private Clip clip;
+
+    public MySoundEffect(String filename)
+    {
+	try
+	{
+            java.io.File file = new java.io.File(filename);
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+            clip = AudioSystem.getClip();
+            clip.open(audioStream);
+	}
+	catch (Exception e) { e.printStackTrace(); }
+    }
+    public void playOnce()   { clip.setMicrosecondPosition(0); clip.start(); }
+    public void playLoop()   { clip.loop(Clip.LOOP_CONTINUOUSLY); }
+    public void stop()       { clip.stop(); }
+}
+
+  /*class ZombieThread{
+	Thread zombieThread = new Thread() {
+        public void run()
+        {
+            while (slothMove)
+            {
+                // (7) Add/modify code to switch between indoor and outdoor scenes
+                //     - Check condition & change drawpane's icon
+                slothLabel.setLocation(slothCurX, slothCurY);
+                if (slothLeft)
+                {
+        slothCurX = slothCurX - 10;
+                    if (slothCurX < -100) { 
+                        if((MyImageIcon)drawpane.getIcon()== indoorImg) drawpane.setIcon(outdoorImg);
+                        else drawpane.setIcon(indoorImg);
+                        slothCurX = frameWidth; } 			
+                }
+                else
+                {
+        slothCurX = slothCurX + 10;
+                    if (slothCurX > frameWidth - 100) { 
+                        if((MyImageIcon)drawpane.getIcon()== indoorImg) drawpane.setIcon(outdoorImg);
+                        else drawpane.setIcon(indoorImg);
+                        slothCurX = 0;  }			
+                }
+                repaint(); 
+                try { Thread.sleep(slothSpeed); } 
+                catch (InterruptedException e) { e.printStackTrace(); }
+    } // end while
+        } // end run
+} // end thread creation
+  }*/
