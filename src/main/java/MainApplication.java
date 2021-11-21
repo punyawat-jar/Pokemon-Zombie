@@ -333,7 +333,7 @@ class Mode {
 
 class Player{
     private int HP,Score;
-    private int playerwidth = 200, playerhight = 165,healthbarwidth = 150,healthbarhight = 25;
+    private int playerwidth = 200, playerhight = 165,healthbarwidth = 180,healthbarhight = 30;
     private MyImageIcon player,healthbar_pic;
     private JLabel playerLabel,HP_Label;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
@@ -352,7 +352,9 @@ class Player{
         for(int i=0;i<HP_bar.length;i++){
             healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth,healthbarhight);
             HP_Label = new JLabel(healthbar_pic);
-            HP_Label.setBounds(45,420,healthbarwidth,healthbarhight);
+            
+            HP_Label.setBounds(45,50,healthbarwidth,healthbarhight);
+            //HP_Label.setBounds(45,420,healthbarwidth,healthbarhight);
             HP_AL.add(HP_Label);
         }
         HP = HP_AL.size()-1;
