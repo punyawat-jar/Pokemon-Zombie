@@ -26,9 +26,8 @@ public class MainApplication extends JFrame {
 
     Tutorial Tframe;
 
-    private String[] mode = { "Vocab/easy.txt" };
-    ArrayList<Mode> modeList = new ArrayList<Mode>();
-
+    private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
+    ArrayList<Mode> modeList = new ArrayList<Mode>();  
     // main method
     public static void main(String[] args) {
         new MainApplication();
@@ -212,7 +211,8 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < modeList.size(); i++) {
             modeList.get(i).printFileWord();
         }
-    }
+        System.out.println("");
+      }
 }
 
 class MyImageIcon extends ImageIcon {
@@ -236,30 +236,25 @@ class Mode {
     private int sizeList;
     private ArrayList<String> vocabList = new ArrayList<String>();
     private Random random = new Random();
-
-    public Mode() {
+  
+    public Mode(){}
+    public Mode(String m, ArrayList<String> li){
+      mode = m;
+      vocabList = li;
+      sizeList = vocabList.size();
     }
-
-    public Mode(String m, ArrayList<String> li) {
-        mode = m;
-        vocabList = li;
-        sizeList = vocabList.size();
+    public String getMode(){
+      return mode;
     }
-
-    public String getMode() {
-        return mode;
+    public String randomWord(){ //Random word
+      int ran = random.nextInt(sizeList);
+      return vocabList.get(ran);
     }
-
-    public String randomWord() { // Random word
-        int ran = random.nextInt(sizeList);
-        return vocabList.get(ran);
+    public void printFileWord(){ //check Reading File
+      System.out.printf("====== Mode %-9s reading... =====\n",mode);
+      for(int i = 0 ;i<vocabList.size();i++){
+        System.out.printf("\t [%8s] %-15s \n",mode,vocabList.get(i));
+      }
+      System.out.println("");
     }
-
-    public void printFileWord() { // check Reading File
-        System.out.printf("====== Mode %-9s reading... =====\n", mode);
-        for (int i = 0; i < vocabList.size(); i++) {
-            System.out.printf("\t %-15s \n", vocabList.get(i));
-        }
-        System.out.println("");
-    }
-}
+  }
