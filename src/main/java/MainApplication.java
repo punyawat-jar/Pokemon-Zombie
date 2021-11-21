@@ -18,6 +18,7 @@ public class MainApplication extends JFrame {
     private JTextField scoreText;
     private JLabel Label;
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
+    private MyImageIcon startButton, creditButton, tutorialButton, exitButton;
     private ButtonGroup bgroup;
 
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
@@ -66,6 +67,11 @@ public class MainApplication extends JFrame {
         in_gamebg4Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
         in_gamebg5Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
 
+        startButton = new MyImageIcon("pokemon/StartButton.png").resize(138,50);
+        creditButton = new MyImageIcon("pokemon/CreditButton.png").resize(138,50);
+        tutorialButton = new MyImageIcon("pokemon/TutorialButton.png").resize(138,50);
+        exitButton = new MyImageIcon("pokemon/ExitButton.png").resize(138,50);
+
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
@@ -102,10 +108,14 @@ public class MainApplication extends JFrame {
         JButton button2 = new JButton("Credit");
         JButton button3 = new JButton("Tutorial");
         JButton button4 = new JButton("Exit");
-        button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 100, 50);
-        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 33, 100, 50);
-        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 33, 100, 50);
-        button4.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 100, 100, 50);
+        button1.setIcon(startButton);
+        button2.setIcon(creditButton);
+        button3.setIcon(tutorialButton);
+        button4.setIcon(exitButton);
+        button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 138,50 );
+        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 33, 138,50);
+        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 33, 138,50);
+        button4.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 100, 138,50);
         drawpane.add(button1);
         drawpane.add(button2);
         drawpane.add(button3);
