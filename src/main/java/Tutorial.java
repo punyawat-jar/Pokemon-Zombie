@@ -8,7 +8,7 @@ public class Tutorial extends JFrame{
     private JPanel Tcontentpane;
     private JLabel Tdrawpane,bgImg;
     private String[] p = {"tutorial/p1.jpg","tutorial/p2.jpg","tutorial/p3.jpg"};
-    private MyImageIcon bg;
+    private MyImageIcon bg, prevButton, nextButton;
     private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
     private int count = 0;
     private int frameWidth = 800, frameHeight = 600;
@@ -39,13 +39,17 @@ public class Tutorial extends JFrame{
         Tcontentpane.add(Tdrawpane,BorderLayout.CENTER);
 
         Tdrawpane.setIcon(new ImageIcon("pokemon/view.gif"));
-        JButton button1 = new JButton("Next");
-        JButton button2 = new JButton("Previous");
+        prevButton = new MyImageIcon("pokemon/PreviousButton.png").resize(138, 50);
+        nextButton = new MyImageIcon("pokemon/NextButton.png").resize(138, 50);
 
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
 
-        button1.setBounds((frameWidth / 2) + 120, (frameHeight / 2) + 150, 150, 50);     ///Size and position of btn
-        button2.setBounds((frameWidth / 2) - 220, (frameHeight / 2) + 150, 150, 50);
+        JButton button1 = new JButton("Next");
+        JButton button2 = new JButton("Previous");
+        setUpButton(button1, nextButton);
+        setUpButton(button2, prevButton);
+        button1.setBounds((frameWidth / 2) + 120, (frameHeight / 2) + 150, 145, 50);     ///Size and position of btn
+        button2.setBounds((frameWidth / 2) - 220, (frameHeight / 2) + 150, 145, 50);
 
         Tdrawpane.add(button1);
         Tdrawpane.add(button2);
@@ -92,4 +96,19 @@ public class Tutorial extends JFrame{
         }
     }
 
+    //-------------------------------- Set up Cursor & Button ------------------------
+    public void setUpButton(JButton button, MyImageIcon img){
+        button.setIcon(img);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    public void setUpCursor(JPanel mainpane){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage("pokemon/normalCursor.png");
+        Cursor c = toolkit.createCustomCursor(image , new Point(mainpane.getX(), mainpane.getY()), "img");
+        mainpane.setCursor(c);
+    }
 }

@@ -18,7 +18,7 @@ public class MainApplication extends JFrame {
     private JTextField scoreText;
     private JLabel Label;
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
-    private MyImageIcon startButton, creditButton, tutorialButton, exitButton;
+    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton;
     private ButtonGroup bgroup;
 
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
@@ -73,7 +73,7 @@ public class MainApplication extends JFrame {
         creditButton = new MyImageIcon("pokemon/CreditButton.png").resize(138,50);
         tutorialButton = new MyImageIcon("pokemon/TutorialButton.png").resize(138,50);
         exitButton = new MyImageIcon("pokemon/ExitButton.png").resize(138,50);
-
+        playButton = new MyImageIcon("pokemon/PlayButton.png").resize(138,50);
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
@@ -163,6 +163,7 @@ public class MainApplication extends JFrame {
 
         // Play button
         JButton play = new JButton("Play!!");
+        setUpButton(play, playButton);
         play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
