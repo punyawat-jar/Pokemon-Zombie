@@ -194,22 +194,25 @@ public class MainApplication extends JFrame {
             drawpane.setIcon(in_gamebg2Img);
             drawpane.setLayout(null);
             contentpane.add(drawpane, BorderLayout.CENTER);
+            mediumSong.playLoop();
             break;
         case "Normal":
             drawpane.setIcon(in_gamebg3Img);
             drawpane.setLayout(null);
             contentpane.add(drawpane, BorderLayout.CENTER);
+            hardSong.playLoop();
             break;
         case "Hard":
             drawpane.setIcon(in_gamebg4Img);
             drawpane.setLayout(null);
             contentpane.add(drawpane, BorderLayout.CENTER);
+            nightmareSong.playLoop();
             break;
         case "Nightmare":
             drawpane.setIcon(in_gamebg5Img);
             drawpane.setLayout(null);
             contentpane.add(drawpane, BorderLayout.CENTER);
-
+            bossSong.playLoop();
             break;
 
         }
