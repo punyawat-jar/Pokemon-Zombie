@@ -59,6 +59,8 @@ public class MainApplication extends JFrame {
     }//end MainApplication Constructor;
 
     public void AddComponents() {
+        setUpCursor(contentpane);
+        
         bgImg = new MyImageIcon("pokemon/menu_bg.png").resize(frameWidth, frameHeight);
         bgImg2 = new MyImageIcon("pokemon/cleanMenu_bg.png").resize(frameWidth, frameHeight);
         in_gamebg1Img = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
@@ -106,14 +108,14 @@ public class MainApplication extends JFrame {
         JButton button2 = new JButton("Credit");
         JButton button3 = new JButton("Tutorial");
         JButton button4 = new JButton("Exit");
-        button1.setIcon(startButton);
-        button2.setIcon(creditButton);
-        button3.setIcon(tutorialButton);
-        button4.setIcon(exitButton);
-        button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 138,50 );
-        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 33, 138,50);
-        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 33, 138,50);
-        button4.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 100, 138,50);
+        setUpButton(button1,startButton);
+        setUpButton(button2,creditButton);
+        setUpButton(button3,tutorialButton);
+        setUpButton(button4,exitButton);
+        button1.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 100, 145,50 );
+        button2.setBounds((frameWidth / 2) - 50, (frameHeight / 2) - 33, 145,50);
+        button3.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 33, 145,50);
+        button4.setBounds((frameWidth / 2) - 50, (frameHeight / 2) + 100, 145,50);
         drawpane.add(button1);
         drawpane.add(button2);
         drawpane.add(button3);
@@ -216,7 +218,23 @@ public class MainApplication extends JFrame {
         player.draw_player(drawpane);
         player.draw_healthbar(drawpane);
     }
+    
+    //-------------------------------- Set up Cursor & Button ------------------------
 
+    public void setUpButton(JButton button, MyImageIcon img){
+        button.setIcon(img);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+    }
+
+    public void setUpCursor(JPanel mainpane){
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage("pokemon/normalCursor.png");
+        Cursor c = toolkit.createCustomCursor(image , new Point(mainpane.getX(), mainpane.getY()), "img");
+        mainpane.setCursor(c);
+    }
 
     // Add Vocab
     
