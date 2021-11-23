@@ -36,7 +36,7 @@ public class MainApplication extends JFrame {
 
     Tutorial Tframe;
 
-    private String []mode = {"Vocab/beginner.txt","Vocab/easy.txt"};
+    private String []mode = {"Vocab/beginner.txt","Vocab/easy.txt","Vocab/medium.txt"};
     ArrayList<Mode> modeList = new ArrayList<Mode>();  
 
     //------------------------------- Main Method -------------------------------
@@ -246,7 +246,7 @@ public class MainApplication extends JFrame {
             enforceFile(mode[i]);
         }
         // System.out.printf("---------------\n");
-        // printReadFile();
+        //printReadFile();
     }
 
     public void enforceFile(String fname) {
@@ -280,9 +280,9 @@ public class MainApplication extends JFrame {
     }
 
     public void printReadFile() { // print read file
-        for (int i = 0; i < modeList.size(); i++) {
-            modeList.get(i).printFileWord();
-        }
+        //for (int i = 0; i < modeList.size(); i++) {
+            modeList.get(2).printFileWord();
+        //}
         System.out.println("");
     }
 }//end Class MainApplication
