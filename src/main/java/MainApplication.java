@@ -27,6 +27,8 @@ public class MainApplication extends JFrame {
 
     private JLabel zomb1Label, zomb2Label, zomb3Label;
 
+    private JProgressBar PBar = new JProgressBar();
+
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0;
@@ -217,6 +219,14 @@ public class MainApplication extends JFrame {
         player = new Player();
         player.draw_player(drawpane);
         player.draw_healthbar(drawpane);
+
+        PBar.setValue(0);
+        PBar.setBounds(frameWidth-460,frameHeight-(50*2),420,50);
+        PBar.setStringPainted(false);
+        drawpane.add(PBar);
+
+        
+
     }
     
     //-------------------------------- Set up Cursor & Button ------------------------
