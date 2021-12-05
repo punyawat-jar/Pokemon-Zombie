@@ -19,14 +19,13 @@ public class MainApplication extends JFrame {
     private JLabel Label;
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton;
+    private MyImageIcon zomb1Img, zomb2Img, zomb3Img, zomb4Img;
     private ButtonGroup bgroup;
 
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound, usedItemSound;
 
     private JLabel zomb1Label, zomb2Label, zomb3Label;
-    private MyImageIcon zomb1Img, zomb2Img, zomb3Img;
-    // private MySoundEffect hitSound, themeSound;
 
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
@@ -61,27 +60,27 @@ public class MainApplication extends JFrame {
     public void AddComponents() {
         setUpCursor(contentpane);
         
-        bgImg = new MyImageIcon("pokemon/menu_bg.png").resize(frameWidth, frameHeight);
-        bgImg2 = new MyImageIcon("pokemon/cleanMenu_bg.png").resize(frameWidth, frameHeight);
-        in_gamebg1Img = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
-        in_gamebg2Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
-        in_gamebg3Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
-        in_gamebg4Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg5Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
+        bgImg = new MyImageIcon("bg/menu_bg.png").resize(frameWidth, frameHeight);
+        bgImg2 = new MyImageIcon("bg/cleanMenu_bg.png").resize(frameWidth, frameHeight);
+        in_gamebg1Img = new MyImageIcon("bg/nature-lu.png").resize(frameWidth, frameHeight);
+        in_gamebg2Img = new MyImageIcon("bg/bg2.jpg").resize(frameWidth, frameHeight);
+        in_gamebg3Img = new MyImageIcon("bg/night_bg2.png").resize(frameWidth, frameHeight);
+        in_gamebg4Img = new MyImageIcon("bg/bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg5Img = new MyImageIcon("bg/night_bg1.png").resize(frameWidth, frameHeight);
 
-        startButton = new MyImageIcon("pokemon/StartButton.png").resize(138,50);
-        creditButton = new MyImageIcon("pokemon/CreditButton.png").resize(138,50);
-        tutorialButton = new MyImageIcon("pokemon/TutorialButton.png").resize(138,50);
-        exitButton = new MyImageIcon("pokemon/ExitButton.png").resize(138,50);
-        playButton = new MyImageIcon("pokemon/PlayButton.png").resize(138,50);
+        startButton = new MyImageIcon("button_and_cursor/StartButton.png").resize(138,50);
+        creditButton = new MyImageIcon("button_and_cursor/CreditButton.png").resize(138,50);
+        tutorialButton = new MyImageIcon("button_and_cursor/TutorialButton.png").resize(138,50);
+        exitButton = new MyImageIcon("button_and_cursor/ExitButton.png").resize(138,50);
+        playButton = new MyImageIcon("button_and_cursor/PlayButton.png").resize(138,50);
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
         contentpane.add(drawpane, BorderLayout.CENTER);
 
-        //------------------------------- Pokemon -----------------------------------
-        
+        //------------------------------- Zombie -----------------------------------
+        //zomb1Img = new MyImageIcon()
         
         //---------------------------- Sound --------------------------------------
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
@@ -232,7 +231,7 @@ public class MainApplication extends JFrame {
 
     public void setUpCursor(JPanel mainpane){
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage("pokemon/normalCursor.png");
+        Image image = toolkit.getImage("button_and_cursor/normalCursor.png");
         Cursor c = toolkit.createCustomCursor(image , new Point(mainpane.getX(), mainpane.getY()), "img");
         mainpane.setCursor(c);
     }
