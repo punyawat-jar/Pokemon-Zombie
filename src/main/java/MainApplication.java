@@ -36,8 +36,8 @@ public class MainApplication extends JFrame {
 
     Tutorial Tframe;
 
-    private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
-    ArrayList<Mode> modeList = new ArrayList<Mode>();  
+    private String []mode = {"Vocab/Beginner.txt","Vocab/Easy.txt","Vocab/Medium.txt","Vocab/Hard.txt","Vocab/Nightmare.txt"};
+    ArrayList<Vocab> modeList = new ArrayList<Vocab>();  
 
     //------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
@@ -246,7 +246,7 @@ public class MainApplication extends JFrame {
             enforceFile(mode[i]);
         }
         // System.out.printf("---------------\n");
-        // printReadFile();
+        //printReadFile();
     }
 
     public void enforceFile(String fname) {
@@ -269,7 +269,7 @@ public class MainApplication extends JFrame {
                         vList.add(buf[0].trim());
                     }
                 }
-                Mode m = new Mode(name, vList);
+                Vocab m = new Vocab(name, vList);
                 modeList.add(m);
             }
 
@@ -280,9 +280,9 @@ public class MainApplication extends JFrame {
     }
 
     public void printReadFile() { // print read file
-        for (int i = 0; i < modeList.size(); i++) {
-            modeList.get(i).printFileWord();
-        }
+        //for (int i = 0; i < modeList.size(); i++) {
+            modeList.get(2).printFileWord();
+        //}
         System.out.println("");
     }
 }//end Class MainApplication
@@ -303,14 +303,14 @@ class MyImageIcon extends ImageIcon {
     }
 };
 
-class Mode {
+class Vocab{
     private String mode;
     private int sizeList;
     private ArrayList<String> vocabList = new ArrayList<String>();
     private Random random = new Random();
   
-    public Mode(){}
-    public Mode(String m, ArrayList<String> li){
+    public Vocab(){}
+    public Vocab(String m, ArrayList<String> li){
       mode = m;
       vocabList = li;
       sizeList = vocabList.size();
