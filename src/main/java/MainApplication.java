@@ -219,21 +219,31 @@ public class MainApplication extends JFrame {
             drawpane.setLayout(null);
             contentpane.add(drawpane, BorderLayout.CENTER);  
             beginnerSong.playLoop();
+            player = new Player(drawpane);
             
             for(int i=0; i<10; i++){
                 Random random = new Random();
                 int zombie = random.nextInt(4);
                 mobCurX.add(frameWidth);
+                System.out.println(zombie);
                 switch(zombie) {
                     case 1: mobLabel.add(zomb1Label); mobCurY.add(frameHeight - 275 - mobHeight.get(0)); break;
-                    case 2: mobLabel.add(zomb2Label); mobCurY.add(frameHeight - 275 - mobHeight.get(1));break;
-                    case 3: mobLabel.add(zomb3Label); mobCurY.add(frameHeight - 275 - mobHeight.get(2));break;
-                    case 4: mobLabel.add(zomb4Label); mobCurY.add(frameHeight - 275 - mobHeight.get(3));break;
+                    case 2: mobLabel.add(zomb2Label); mobCurY.add(frameHeight - 275 - mobHeight.get(1)); break;
+                    case 3: mobLabel.add(zomb3Label); mobCurY.add(frameHeight - 275 - mobHeight.get(2)); break;
+                    case 4: mobLabel.add(zomb4Label); mobCurY.add(frameHeight - 275 - mobHeight.get(3)); break;
                 }
             }
+
+
             for(int i=0; i<2; i++){
-                mobThread.add(new ZombieThread("Zombie"+ String.valueOf(i), mobLabel.get(i), mobCurX.get(i), mobCurY.get(i), player.getLabel(), zombSpeed));
+                //mobLabel.get(i).;
+                //mobLabel.get(i).setBounds(20,440,200,165);
+                //zomb1Label.setBounds();
+                //drawpane.add(mobLabel.get(i));
+                
+                mobThread.add(new ZombieThread("Zombie"+ String.valueOf(i), mobLabel.get(i), mobCurX.get(i), mobCurY.get(i), player.getLabel(), zombSpeed, drawpane));
             }
+
             break;
         case "Easy":
             drawpane.setIcon(in_gamebg2Img);
@@ -262,9 +272,9 @@ public class MainApplication extends JFrame {
         }
 
 
-        player = new Player();
-        player.draw_player(drawpane);
-        player.draw_healthbar(drawpane);
+        // player = new Player();
+        // player.draw_player(drawpane);
+        // player.draw_healthbar(drawpane);
 
         PBar.setValue(0);
         PBar.setBounds(frameWidth-460,frameHeight-(50*2),420,50);
@@ -273,7 +283,7 @@ public class MainApplication extends JFrame {
 
         keybar = new Keyboard_bar();
         keybar.setPane(drawpane);
-        keybar.getTypearea().grabFocus();
+        //keybar.getTypearea().grabFocus();
 
         
     }
@@ -415,17 +425,13 @@ class Player{
     private JLabel playerLabel,HP_Label;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
     String[] HP_bar = {"health bar/H0.png","health bar/1.png","health bar/H2.png","health bar/H3.png","health bar/H4.png","health bar/H5.png"};
-    public void player() {}
-    public void draw_player(JLabel x){
-
+    public Player(JLabel x) {
         player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
         playerLabel.setBounds(0,440,playerwidth,playerhight);
         x.add(playerLabel);
         x.validate();
-    }
 
-    public void draw_healthbar(JLabel x){
         for(int i=0;i<HP_bar.length;i++){
             healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth,healthbarhight);
             HP_Label = new JLabel(healthbar_pic);
@@ -437,6 +443,7 @@ class Player{
         HP = HP_AL.size()-1;
         x.add(HP_AL.get(5));
     }
+
 
     public void hitplayer(JLabel x){
         x.remove(HP_AL.get(HP));
@@ -462,13 +469,18 @@ class ZombieThread extends Thread{
     int zombSpeed;
     MainApplication program;
 
-    public ZombieThread(String n, JLabel zl, int x, int y, JLabel pl, int zs){
+    public ZombieThread(String n, JLabel zl, int x, int y, JLabel pl, int zs,JLabel pane){
         super(n);
         zombLabel = zl;
         zombCurX = x;
         zombCurY = y;
         playerLabel = pl;
         zombSpeed = zs;
+
+        zombLabel.setBounds(-200,440,200,165);
+        pane.add(zombLabel);
+        pane.validate();
+        
 /*
         //---------------- For randoming time Zombie Appear ----------
         Random r = new Random();
@@ -481,11 +493,12 @@ class ZombieThread extends Thread{
     
     public void run()
         {
+            System.out.println("thread = " + this.getName());
             //-------------------- If zombie not hit pikachu, it walks --------------------
-		   /*while (!(zombLabel.getBounds().intersects(playerLabel.getBounds())))
+		   while (!(zombLabel.getBounds().intersects(playerLabel.getBounds())))
 		    {
                     zombLabel.setLocation(zombCurX, zombCurY);
-                    if (!(program.getPauseGame()))
+                    if (true)
                     {
                         //Move Left
 			            zombCurX = zombCurX - 10;
@@ -497,7 +510,7 @@ class ZombieThread extends Thread{
                     zombLabel.repaint(); 
                     try { Thread.sleep(zombSpeed); } 
                     catch (InterruptedException e) { e.printStackTrace(); }
-		    } // end while*/
+		    } // end while
         } // end run
 }
 

@@ -1,1 +1,2 @@
-JTextArea
+
+    JLabel zombLabel = new JLabel();
