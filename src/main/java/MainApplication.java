@@ -576,7 +576,7 @@ public class MainApplication extends JFrame {
     // ---------------------------- Game Over ------------------------
     public void gameover(String mode){
         winGif = new MyImageIcon("gameOver/win.gif");
-        gameOverGif = new MyImageIcon("gameOver/game over.gif");
+        gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         JLabel winLabel = new JLabel(winGif);
         JLabel gameOverLabel = new JLabel(gameOverGif);
         winLabel.setBounds(frameWidth/2,(frameHeight/2)-75,frameWidth,frameHeight);
