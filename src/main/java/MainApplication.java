@@ -272,7 +272,7 @@ public class MainApplication extends JFrame {
         
         for (int i = 0; i < 10; i++) {
             mobThread.add(new ZombieThread("Zombie" + String.valueOf(i), mobLabel.get(i), player.getLabel(),
-                    zombSpeed, drawpane, hurtSound, readyGoLabel, readyGoSound));
+                    zombSpeed, drawpane, hurtSound));
             if(i==0){
                 readyGoSound.playOnce();
                 drawpane.add(readyGoLabel);
@@ -528,12 +528,12 @@ class ZombieThread extends Thread {
     int zombCurX, zombCurY;
     int zombWidth, zombHeight;
     int zombSpeed;
-    JLabel tempPane, readyGoLabel;
+    JLabel tempPane;
     MainApplication program;
-    MySoundEffect hurtSound, readyGoSound;
+    MySoundEffect hurtSound;
 
     //-------------------------------- Thread Constructor ------------------------------
-    public ZombieThread(String n, JLabel zl, JLabel pl, int zs, JLabel pane, MySoundEffect hs, JLabel rgl, MySoundEffect rgs){
+    public ZombieThread(String n, JLabel zl, JLabel pl, int zs, JLabel pane, MySoundEffect hs){
         super(n);
         zombLabel = zl;
         zombCurX = zl.getX();
@@ -544,8 +544,6 @@ class ZombieThread extends Thread {
         zombSpeed = zs;
         tempPane = pane;
         hurtSound = hs;
-        readyGoLabel = rgl;
-        readyGoSound = rgs;
         System.out.println("zombCur X = " + zombCurX + ", zombCurY = " + zombCurY + " zombWidth = " + zombWidth
                 + " , zombHeight" + zombHeight);
 
