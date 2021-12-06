@@ -52,7 +52,7 @@ public class MainApplication extends JFrame {
     Tutorial Tframe;
 
     // private String []mode =
-    // {"Vocab/Beginner.txt","Vocab/Easy.txt","Vocab/Medium.txt","Vocab/Hard.txt","Vocab/Nightmare.txt"};
+    // {"Vocab/Beginner.txt","Vocab/Medium.txt","Vocab/Hard.txt","Vocab/Nightmare.txt","Vocab/Boss.txt"};
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
@@ -237,7 +237,6 @@ public class MainApplication extends JFrame {
         drawpane.add(combo);
         drawpane.add(play);
     }// end mode Panel
-
 
     //---------------------------------- Add 10 Zombies to screen --------------------
     public void addZombieBeginner(){
@@ -653,40 +652,40 @@ class MySoundEffect {
     }
 }
 
-class Keyboard_bar {
-    private JTextArea typearea;
-    private int width, height;
+    class Keyboard_bar {
+        private JTextArea typearea;
+        private int width, height;
 
-    public Keyboard_bar() {
-        typearea = new JTextArea();
-        typearea.setBounds(50, 100, 500, 30);
-        typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
-        // typearea.grabFocus();
-        typearea.addKeyListener(new KeyListener() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    System.out.println("Hello world");
+        public Keyboard_bar() {
+            typearea = new JTextArea();
+            typearea.setBounds(50, 100, 500, 30);
+            typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
+            // typearea.grabFocus();
+            typearea.addKeyListener(new KeyListener() {
+                public void keyPressed(KeyEvent e) {
+                    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                        System.out.println("Hello world");
+                    }
                 }
-            }
 
-            public void keyTyped(KeyEvent e) {
-            }
+                public void keyTyped(KeyEvent e) {
+                }
 
-            public void keyReleased(KeyEvent e) {
-            }
-        });
+                public void keyReleased(KeyEvent e) {
+                }
+            });
+        }
+
+        public JTextArea getTypearea() {
+            return typearea;
+        }
+
+        public void setPane(JLabel x) {
+            x.add(typearea);
+        }
+
+        public void setposition(int x, int y) {
+            typearea.setBounds(x, y, width, height);
+        }
+
     }
-
-    public JTextArea getTypearea() {
-        return typearea;
-    }
-
-    public void setPane(JLabel x) {
-        x.add(typearea);
-    }
-
-    public void setposition(int x, int y) {
-        typearea.setBounds(x, y, width, height);
-    }
-
-}
