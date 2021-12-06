@@ -394,3 +394,48 @@ class MySoundEffect
     public void playLoop()   { clip.loop(Clip.LOOP_CONTINUOUSLY); }
     public void stop()       { clip.stop(); }
 }
+<<<<<<< Updated upstream
+=======
+
+class Zombie {
+    private String name;
+}
+
+class Keyboard_bar {
+    private JTextArea typearea;
+    private int width, height;
+
+    public Keyboard_bar() {
+        typearea = new JTextArea();
+        typearea.setBounds(50, 100, 500, 30);
+        typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
+        // typearea.grabFocus();
+        typearea.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    System.out.println("Hello world");
+                }
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+    }
+
+    public JTextArea getTypearea() {
+        return typearea;
+    }
+
+    public void setPane(JLabel x) {
+        x.add(typearea);
+    }
+
+    public void setposition(int x, int y) {
+        typearea.setBounds(x, y, width, height);
+    }
+
+}
+>>>>>>> Stashed changes
