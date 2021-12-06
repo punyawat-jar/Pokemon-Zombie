@@ -46,7 +46,7 @@ public class MainApplication extends JFrame {
 
     Tutorial Tframe;
 
-    //private String []mode = {"Vocab/Beginner.txt","Vocab/Easy.txt","Vocab/Medium.txt","Vocab/Hard.txt","Vocab/Nightmare.txt"};
+    //private String []mode = {"Vocab/Beginner.txt","Vocab/Medium.txt","Vocab/Hard.txt","Vocab/Nightmare.txt","Vocab/Boss.txt"};
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
     //------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
