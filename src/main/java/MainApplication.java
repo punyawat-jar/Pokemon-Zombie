@@ -529,8 +529,8 @@ public class MainApplication extends JFrame {
         keybar = new Keyboard_bar();
         //keybar.setPane(drawpane);
         // keybar.getTypearea().grabFocus();
-
-        gameover(mode);
+        
+        //gameover(mode);
     }
 
     // ------------------------------- Set Up Zombie Thread(Must in main because
