@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.Random;
 import java.io.*;
 import javax.swing.border.*;
+import java.util.stream.*;
 
 //Main Frame
 public class MainApplication extends JFrame {
@@ -19,6 +20,10 @@ public class MainApplication extends JFrame {
     private JLabel Label;
     private ButtonGroup bgroup;
     private boolean pauseGame = false;
+
+    private JRadioButton[] radio;
+    private String[] accessory = {"poke1","poke2","poke3","poke4","poke5"};
+
 
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
@@ -42,13 +47,14 @@ public class MainApplication extends JFrame {
     ArrayList<ZombieThread> mobThread = new ArrayList<ZombieThread>();
 
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
+    //ArrayList<String> poke_list_AL = new ArrayList<String>();
     private String[] poke_list = {"custom_poke/poke1.png","custom_poke/poke2.png","custom_poke/poke3.png","custom_poke/poke4.png","custom_poke/poke5.png"};
 
     private JProgressBar PBar = new JProgressBar();
     private Keyboard_bar keybar;
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
-    private int score = 0;
+    private int score = 0, count=0;;
 
     private Player player;
 
@@ -84,6 +90,8 @@ public class MainApplication extends JFrame {
     public void AddComponents() {
         setUpCursor(contentpane);
 
+        drawpane = new JLabel();
+
         bgImg = new MyImageIcon("bg/menu_bg.png").resize(frameWidth, frameHeight);
         bgImg2 = new MyImageIcon("bg/cleanMenu_bg.png").resize(frameWidth, frameHeight);
         in_gamebg1Img = new MyImageIcon("bg/nature-lu.png").resize(frameWidth, frameHeight);
@@ -100,10 +108,7 @@ public class MainApplication extends JFrame {
         backButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
         nextButton = new MyImageIcon("button_and_cursor/NextButton.png").resize(138, 50);
 
-        drawpane = new JLabel();
-        drawpane.setIcon(bgImg);
-        drawpane.setLayout(null);
-        contentpane.add(drawpane, BorderLayout.CENTER);
+        
 
         // ------------------------------- Zombie -----------------------------------
         readyGoImg = new MyImageIcon("sound_effect/321_Go.gif").resize(640, 360);
@@ -166,8 +171,17 @@ public class MainApplication extends JFrame {
         bossSong = new MySoundEffect("song/boss_song.wav");
 
         menuSong.playLoop();
-
+        mainmanu();
         // main menu button
+ 
+    }// end AddComponent
+
+    public void mainmanu(){
+       
+        drawpane.setIcon(bgImg);
+        drawpane.setLayout(null);
+        contentpane.add(drawpane, BorderLayout.CENTER);
+
         JButton button1 = new JButton("Start");
         JButton button2 = new JButton("Credit");
         JButton button3 = new JButton("Tutorial");
@@ -218,17 +232,76 @@ public class MainApplication extends JFrame {
         });
 
         validate();
-    }// end AddComponent
+    }
 
 
     public void custom(){
-        JButton nextbtn = new JButton("Next");
+        JButton nextbtn = new JButton();
         JButton backbtn = new JButton();
+        JLabel rlabel = new JLabel();
+        
+        rlabel.setLayout(new FlowLayout());
+        rlabel.setBounds(frameWidth-900, frameHeight/2, 400, 35);
+        rlabel.setOpaque(true);
+        rlabel.setBackground(Color.lightGray);
+
+        
+        radio = new JRadioButton[5];
+        ButtonGroup rgroup = new ButtonGroup();
+        for(int i=0;i<5;i++){
+            radio[i] = new JRadioButton(accessory[i]);
+            if(i == 0){
+                radio[i].setSelected(true);
+            }
+            rgroup.add(radio[i]);
+            rlabel.add(radio[i]);
+            
+            radio[i].addItemListener(new ItemListener(){
+                public void itemStateChanged(ItemEvent e ){
+                    JRadioButton x = (JRadioButton) e.getItem();
+                    if(x.isSelected()){
+                        // IntStream.range(0,poke_list_AL.size())
+                        //          .filter(arg->poke_list_AL.get(arg).contains(x.getText()))
+                        //          .forEach(arg->{
+                        //              drawpane.remove(custom_poke_AL.get(count));
+                        //              count = arg;
+                        //              drawpane.add(custom_poke_AL.get(arg));
+                                     
+                        //              repaint();
+                        //              });
+                        
+                        for(int i=0;i<poke_list.length;i++){
+                            if(poke_list[i].contains(x.getText())){
+                                drawpane.remove(custom_poke_AL.get(count));
+                                count = i;
+                                drawpane.add(custom_poke_AL.get(count));
+                                repaint();
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
         read_poke_custom();
         
+
+
+        //(custom_poke_AL)
+
         nextbtn.setBounds(frameWidth / 2, frameHeight-300 / 1, 200, 50);
         backbtn.setBounds(frameWidth / 4, frameHeight-300 / 1, 200, 50);
-        
+
+        backbtn.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e){
+                buttonSound.playOnce();
+                nextbtn.setVisible(false);
+                backbtn.setVisible(false);
+                mainmanu();
+                
+            }
+        });
+
         nextbtn.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e){
                 buttonSound.playOnce();
@@ -240,10 +313,12 @@ public class MainApplication extends JFrame {
 
         drawpane.add(nextbtn);
         drawpane.add(backbtn);
-
+        drawpane.add(custom_poke_AL.get(count));
+        drawpane.add(rlabel);
         setUpButton(backbtn,backButton);
         setUpButton(nextbtn,nextButton);
-
+        validate();
+        
     }
 
     public void mode_panel() {
@@ -254,20 +329,39 @@ public class MainApplication extends JFrame {
 
         // Play button
         JButton play = new JButton();
+        JButton backbtn = new JButton();
+
         setUpButton(play, playButton);
+        setUpButton(backbtn, backButton);
+
         play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
+        backbtn.setBounds(frameWidth / 4, frameHeight / 2, 500, 50);
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
                 if ((String) combo.getSelectedItem() != "--- Please select difficulty ---") {
                     combo.setVisible(false);
                     play.setVisible(false);
+                    backbtn.setVisible(false);
                     main_game((String) combo.getSelectedItem());
                 }
             }
         });
+        
+        backbtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
+                combo.setVisible(false);
+                play.setVisible(false);
+                backbtn.setVisible(false);
+                custom();
+            }
+        });
+
         drawpane.add(combo);
         drawpane.add(play);
+        drawpane.add(backbtn);
+
     }// end mode Panel
 
     //---------------------------------- Add 10 Zombies to screen --------------------
@@ -439,8 +533,9 @@ public class MainApplication extends JFrame {
     public void read_poke_custom(){
         for(int i=0;i<poke_list.length;i++){
             JLabel label = new JLabel(new ImageIcon(poke_list[i]));
-            label.setBounds(170,40,500,250);
+            label.setBounds(450,40,500,250);
             custom_poke_AL.add(label);
+            //poke_list_AL.add(poke_list[i]);
         }
     }
 
