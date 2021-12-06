@@ -23,7 +23,7 @@ public class MainApplication extends JFrame {
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
 
-    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton;
+    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton, nextButton, backButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound,
             usedItemSound;
 
@@ -36,6 +36,9 @@ public class MainApplication extends JFrame {
     ArrayList<Integer> mobWidth = new ArrayList<Integer>();
     ArrayList<Integer> mobHeight = new ArrayList<Integer>();
     ArrayList<ZombieThread> mobThread = new ArrayList<ZombieThread>();
+
+    ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
+    private String[] poke_list = {"custom_poke/poke1.png","custom_poke/poke2.png","custom_poke/poke3.png","custom_poke/poke4.png","custom_poke/poke5.png"};
 
     private JProgressBar PBar = new JProgressBar();
     private Keyboard_bar keybar;
@@ -90,6 +93,8 @@ public class MainApplication extends JFrame {
         tutorialButton = new MyImageIcon("button_and_cursor/TutorialButton.png").resize(138, 50);
         exitButton = new MyImageIcon("button_and_cursor/ExitButton.png").resize(138, 50);
         playButton = new MyImageIcon("button_and_cursor/PlayButton.png").resize(138, 50);
+        backButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
+        nextButton = new MyImageIcon("button_and_cursor/NextButton.png").resize(138, 50);
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
@@ -178,7 +183,8 @@ public class MainApplication extends JFrame {
                 button3.setVisible(false);
                 button4.setVisible(false);
                 drawpane.setIcon(bgImg2);
-                mode_panel();
+                //mode_panel();
+                custom();
             }
         });
 
@@ -204,6 +210,32 @@ public class MainApplication extends JFrame {
         validate();
     }// end AddComponent
 
+
+    public void custom(){
+        JButton nextbtn = new JButton("Next");
+        JButton backbtn = new JButton();
+        read_poke_custom();
+        
+        nextbtn.setBounds(frameWidth / 2, frameHeight-300 / 1, 200, 50);
+        backbtn.setBounds(frameWidth / 4, frameHeight-300 / 1, 200, 50);
+        
+        nextbtn.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e){
+                buttonSound.playOnce();
+                nextbtn.setVisible(false);
+                backbtn.setVisible(false);
+                mode_panel();
+            }
+        });
+
+        drawpane.add(nextbtn);
+        drawpane.add(backbtn);
+
+        setUpButton(backbtn,backButton);
+        setUpButton(nextbtn,nextButton);
+
+    }
+
     public void mode_panel() {
         // mode button
         String[] mode = { "--- Please select difficulty ---", "Beginner", "Easy", "Normal", "Hard", "Nightmare" };
@@ -211,7 +243,7 @@ public class MainApplication extends JFrame {
         combo.setBounds(frameWidth / 4, frameHeight / 4, 200, 50);
 
         // Play button
-        JButton play = new JButton("Play!!");
+        JButton play = new JButton();
         setUpButton(play, playButton);
         play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
         play.addActionListener(new ActionListener() {
@@ -383,6 +415,14 @@ public class MainApplication extends JFrame {
         }
         // System.out.printf("---------------\n");
         // printReadFile();
+    }
+
+    public void read_poke_custom(){
+        for(int i=0;i<poke_list.length;i++){
+            JLabel label = new JLabel(new ImageIcon(poke_list[i]));
+            label.setBounds(170,40,500,250);
+            custom_poke_AL.add(label);
+        }
     }
 
     public void enforceFile(String fname) {
@@ -602,41 +642,42 @@ class MySoundEffect {
         private String name;
     }
 
-    class Keyboard_bar {
-        private JTextArea typearea;
-        private int width, height;
-
-        public Keyboard_bar() {
-            typearea = new JTextArea();
-            typearea.setBounds(50, 100, 500, 30);
-            typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
-            // typearea.grabFocus();
-            typearea.addKeyListener(new KeyListener() {
-                public void keyPressed(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                        System.out.println("Hello world");
-                    }
-                }
-
-                public void keyTyped(KeyEvent e) {
-                }
-
-                public void keyReleased(KeyEvent e) {
-                }
-            });
-        }
-
-        public JTextArea getTypearea() {
-            return typearea;
-        }
-
-        public void setPane(JLabel x) {
-            x.add(typearea);
-        }
-
-        public void setposition(int x, int y) {
-            typearea.setBounds(x, y, width, height);
-        }
-
-    }
 }
+    class Keyboard_bar {
+    private JTextArea typearea;
+    private int width, height;
+
+    public Keyboard_bar() {
+        typearea = new JTextArea();
+        typearea.setBounds(50, 100, 500, 30);
+        typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
+        // typearea.grabFocus();
+        typearea.addKeyListener(new KeyListener() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    System.out.println("Hello world");
+                }
+            }
+
+            public void keyTyped(KeyEvent e) {
+            }
+
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+    }
+
+    public JTextArea getTypearea() {
+        return typearea;
+    }
+
+    public void setPane(JLabel x) {
+        x.add(typearea);
+    }
+
+    public void setposition(int x, int y) {
+        typearea.setBounds(x, y, width, height);
+    }
+
+}
+
