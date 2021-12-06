@@ -23,7 +23,7 @@ public class MainApplication extends JFrame {
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
 
-    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton;
+    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton,restartButton,menuButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound,
             usedItemSound;
 
@@ -40,6 +40,8 @@ public class MainApplication extends JFrame {
     ArrayList<Integer> mobWidth = new ArrayList<Integer>();
     ArrayList<Integer> mobHeight = new ArrayList<Integer>();
     ArrayList<ZombieThread> mobThread = new ArrayList<ZombieThread>();
+
+    private MyImageIcon winGif,gameOverGif;
 
     private JProgressBar PBar = new JProgressBar();
     private Keyboard_bar keybar;
@@ -94,6 +96,8 @@ public class MainApplication extends JFrame {
         tutorialButton = new MyImageIcon("button_and_cursor/TutorialButton.png").resize(138, 50);
         exitButton = new MyImageIcon("button_and_cursor/ExitButton.png").resize(138, 50);
         playButton = new MyImageIcon("button_and_cursor/PlayButton.png").resize(138, 50);
+        restartButton = new MyImageIcon("button_and_cursor/RestartButton.png").resize(138, 50);
+        menuButton = new MyImageIcon("button_and_cursor/MenuButton.png").resize(138, 50);
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
@@ -334,6 +338,7 @@ public class MainApplication extends JFrame {
         keybar.setPane(drawpane);
         // keybar.getTypearea().grabFocus();
 
+        gameover(mode);
     }
 
     // ------------------------------- Set Up Zombie Thread(Must in main because
@@ -376,6 +381,68 @@ public class MainApplication extends JFrame {
      * zombThread.start();}
      */
 
+    // ---------------------------- Game Over ------------------------
+    public void gameover(String mode){
+        winGif = new MyImageIcon("gameOver/win.gif");
+        gameOverGif = new MyImageIcon("gameOver/game over.gif");
+        JLabel winLabel = new JLabel(winGif);
+        JLabel gameOverLabel = new JLabel(gameOverGif);
+        winLabel.setBounds(frameWidth/2,(frameHeight/2)-75,frameWidth,frameHeight);
+        gameOverLabel.setBounds(frameWidth/2,(frameHeight/2)-75,frameWidth,frameHeight);
+
+        JButton button1 = new JButton();
+        JButton button2 = new JButton();
+        setUpButton(button1, restartButton);
+        setUpButton(button2,menuButton);
+        button1.setBounds((frameWidth/2)-225,(frameHeight/2)+50,200,50);
+        button2.setBounds((frameWidth/2)+25,(frameHeight/2)+50,200,50);
+        button1.addActionListener(new ActionListener() {  //Restart Game
+            public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
+                button1.setVisible(false);
+                button2.setVisible(false);
+                //drawpane.removeAll(); main_game(mode);
+            }
+        });
+
+        button2.addActionListener(new ActionListener() { //Back to Menu
+            public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
+                button1.setVisible(false);
+                button2.setVisible(false);
+                PBar.setVisible(false);
+
+                switch (mode) {
+                    case "Beginner":
+                        beginnerSong.stop();
+                        break;
+                    case "Easy":
+                        mediumSong.stop();
+                        break;
+                    case "Normal":
+                        hardSong.stop();
+                        break;
+                    case "Hard":
+                        nightmareSong.stop();
+                        break;
+                    case "Nightmare":
+                        bossSong.stop();
+                        break;
+                    }
+                //drawpane.removeAll();AddComponents();
+            }
+        });
+
+        if(score>=0) 
+            drawpane.add(winLabel);
+        else 
+            drawpane.add(gameOverLabel);
+
+        drawpane.add(button1); 
+        drawpane.add(button2);
+        validate();
+    }
+    
     // ---------------------------- Set up Cursor & Button ------------------------
 
     public void setUpButton(JButton button, MyImageIcon img) {
