@@ -33,14 +33,14 @@ public class Tutorial extends JFrame{
     }
 
     public void AddComponents(){
-        
+        setUpCursor(Tcontentpane);
         Tdrawpane = new JLabel();
         Tdrawpane.setLayout(null);
         Tcontentpane.add(Tdrawpane,BorderLayout.CENTER);
 
-        Tdrawpane.setIcon(new ImageIcon("pokemon/view.gif"));
-        prevButton = new MyImageIcon("pokemon/PreviousButton.png").resize(138, 50);
-        nextButton = new MyImageIcon("pokemon/NextButton.png").resize(138, 50);
+        Tdrawpane.setIcon(new ImageIcon("bg/view.gif"));
+        prevButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
+        nextButton = new MyImageIcon("button_and_cursor/NextButton.png").resize(138, 50);
 
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
 
@@ -107,7 +107,7 @@ public class Tutorial extends JFrame{
 
     public void setUpCursor(JPanel mainpane){
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage("pokemon/normalCursor.png");
+        Image image = toolkit.getImage("button_and_cursor/normalCursor.png");
         Cursor c = toolkit.createCustomCursor(image , new Point(mainpane.getX(), mainpane.getY()), "img");
         mainpane.setCursor(c);
     }

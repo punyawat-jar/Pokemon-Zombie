@@ -17,17 +17,27 @@ public class MainApplication extends JFrame {
     private JToggleButton[] tb;
     private JTextField scoreText;
     private JLabel Label;
-    private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
-    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton;
     private ButtonGroup bgroup;
+    private boolean pauseGame = false;
 
+    private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
+
+    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound, usedItemSound;
 
-    private JLabel zomb1Label, zomb2Label, zomb3Label;
-    private MyImageIcon zomb1Img, zomb2Img, zomb3Img;
-    // private MySoundEffect hitSound, themeSound;
+    private MyImageIcon zomb1Img, zomb2Img, zomb3Img, zomb4Img, zombBossImg;
+    private JLabel zomb1Label, zomb2Label, zomb3Label, zomb4Label, zombBossLabel;
+    private int zombSpeed = 250;
+    ArrayList<JLabel> mobLabel = new ArrayList<JLabel>();
+    ArrayList<Integer> mobCurX = new ArrayList<Integer>();
+    ArrayList<Integer> mobCurY = new ArrayList<Integer>();
+    ArrayList<Integer> mobWidth = new ArrayList<Integer>();
+    ArrayList<Integer> mobHeight = new ArrayList<Integer>();
+    ArrayList<ZombieThread> mobThread = new ArrayList<ZombieThread>();
 
+    private JProgressBar PBar = new JProgressBar();
+    private Keyboard_bar keybar;
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0;
@@ -36,12 +46,15 @@ public class MainApplication extends JFrame {
 
     Tutorial Tframe;
 
-    private String []mode = {"Vocab/easy.txt","Vocab/beginner.txt"};
-    ArrayList<Mode> modeList = new ArrayList<Mode>();  
-
+    //private String []mode = {"Vocab/Beginner.txt","Vocab/Medium.txt","Vocab/Hard.txt","Vocab/Nightmare.txt","Vocab/Boss.txt"};
+    ArrayList<Vocab> modeList = new ArrayList<Vocab>();
     //------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
         new MainApplication();
+    }
+
+    public boolean getPauseGame(){
+        return pauseGame;
     }
 
     public MainApplication() {
@@ -55,34 +68,53 @@ public class MainApplication extends JFrame {
 
         AddComponents();
         // add Vocab
-        readFile(mode);
+        //readFile(mode);
     }//end MainApplication Constructor;
 
     public void AddComponents() {
         setUpCursor(contentpane);
         
-        bgImg = new MyImageIcon("pokemon/menu_bg.png").resize(frameWidth, frameHeight);
-        bgImg2 = new MyImageIcon("pokemon/cleanMenu_bg.png").resize(frameWidth, frameHeight);
-        in_gamebg1Img = new MyImageIcon("pokemon/nature-lu.png").resize(frameWidth, frameHeight);
-        in_gamebg2Img = new MyImageIcon("pokemon/bg2.jpg").resize(frameWidth, frameHeight);
-        in_gamebg3Img = new MyImageIcon("pokemon/night_bg2.png").resize(frameWidth, frameHeight);
-        in_gamebg4Img = new MyImageIcon("pokemon/bg1.png").resize(frameWidth, frameHeight);
-        in_gamebg5Img = new MyImageIcon("pokemon/night_bg1.png").resize(frameWidth, frameHeight);
+        bgImg = new MyImageIcon("bg/menu_bg.png").resize(frameWidth, frameHeight);
+        bgImg2 = new MyImageIcon("bg/cleanMenu_bg.png").resize(frameWidth, frameHeight);
+        in_gamebg1Img = new MyImageIcon("bg/nature-lu.png").resize(frameWidth, frameHeight);
+        in_gamebg2Img = new MyImageIcon("bg/bg2.jpg").resize(frameWidth, frameHeight);
+        in_gamebg3Img = new MyImageIcon("bg/night_bg2.png").resize(frameWidth, frameHeight);
+        in_gamebg4Img = new MyImageIcon("bg/bg1.png").resize(frameWidth, frameHeight);
+        in_gamebg5Img = new MyImageIcon("bg/night_bg1.png").resize(frameWidth, frameHeight);
 
-        startButton = new MyImageIcon("pokemon/StartButton.png").resize(138,50);
-        creditButton = new MyImageIcon("pokemon/CreditButton.png").resize(138,50);
-        tutorialButton = new MyImageIcon("pokemon/TutorialButton.png").resize(138,50);
-        exitButton = new MyImageIcon("pokemon/ExitButton.png").resize(138,50);
-        playButton = new MyImageIcon("pokemon/PlayButton.png").resize(138,50);
+        startButton = new MyImageIcon("button_and_cursor/StartButton.png").resize(138,50);
+        creditButton = new MyImageIcon("button_and_cursor/CreditButton.png").resize(138,50);
+        tutorialButton = new MyImageIcon("button_and_cursor/TutorialButton.png").resize(138,50);
+        exitButton = new MyImageIcon("button_and_cursor/ExitButton.png").resize(138,50);
+        playButton = new MyImageIcon("button_and_cursor/PlayButton.png").resize(138,50);
 
         drawpane = new JLabel();
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
         contentpane.add(drawpane, BorderLayout.CENTER);
 
-        //------------------------------- Pokemon -----------------------------------
         
-        
+        //------------------------------- Zombie -----------------------------------
+        for(int i=0; i<5; i++){
+            switch(i){
+                case 0: mobWidth.add(87); mobHeight.add(157); break;
+                case 1: mobWidth.add(140); mobHeight.add(139); break;
+                case 2: mobWidth.add(138); mobHeight.add(153); break;
+                case 3: mobWidth.add(140); mobHeight.add(140); break;
+                case 4: mobWidth.add(182); mobHeight.add(223); break;
+            }
+        }
+        zomb1Img = new MyImageIcon("zombie/z01.png").resize(mobWidth.get(0), mobHeight.get(0));
+        zomb2Img = new MyImageIcon("zombie/z02.png").resize(mobWidth.get(1), mobHeight.get(1));
+        zomb3Img = new MyImageIcon("zombie/z03.png").resize(mobWidth.get(2), mobHeight.get(2));
+        zomb4Img = new MyImageIcon("zombie/z04.png").resize(mobWidth.get(3), mobHeight.get(3));
+        zombBossImg = new MyImageIcon("zombie/zboss.png").resize(mobWidth.get(4), mobHeight.get(4));
+        zomb1Label = new JLabel(zomb1Img);
+        zomb2Label = new JLabel(zomb2Img);
+        zomb3Label = new JLabel(zomb3Img);
+        zomb4Label = new JLabel(zomb4Img); 
+        zombBossLabel = new JLabel(zombBossImg);
+            
         //---------------------------- Sound --------------------------------------
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
 	    normalHitSound   = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
@@ -187,6 +219,31 @@ public class MainApplication extends JFrame {
             drawpane.setLayout(null);
             contentpane.add(drawpane, BorderLayout.CENTER);  
             beginnerSong.playLoop();
+            player = new Player(drawpane);
+            
+            for(int i=0; i<10; i++){
+                Random random = new Random();
+                int zombie = random.nextInt(4);
+                mobCurX.add(frameWidth);
+                System.out.println(zombie);
+                switch(zombie) {
+                    case 1: mobLabel.add(zomb1Label); mobCurY.add(frameHeight - 275 - mobHeight.get(0)); break;
+                    case 2: mobLabel.add(zomb2Label); mobCurY.add(frameHeight - 275 - mobHeight.get(1)); break;
+                    case 3: mobLabel.add(zomb3Label); mobCurY.add(frameHeight - 275 - mobHeight.get(2)); break;
+                    case 4: mobLabel.add(zomb4Label); mobCurY.add(frameHeight - 275 - mobHeight.get(3)); break;
+                }
+            }
+
+
+            for(int i=0; i<2; i++){
+                //mobLabel.get(i).;
+                //mobLabel.get(i).setBounds(20,440,200,165);
+                //zomb1Label.setBounds();
+                //drawpane.add(mobLabel.get(i));
+                
+                mobThread.add(new ZombieThread("Zombie"+ String.valueOf(i), mobLabel.get(i), mobCurX.get(i), mobCurY.get(i), player.getLabel(), zombSpeed, drawpane));
+            }
+
             break;
         case "Easy":
             drawpane.setIcon(in_gamebg2Img);
@@ -215,10 +272,56 @@ public class MainApplication extends JFrame {
         }
 
 
-        player = new Player();
-        player.draw_player(drawpane);
-        player.draw_healthbar(drawpane);
+        // player = new Player();
+        // player.draw_player(drawpane);
+        // player.draw_healthbar(drawpane);
+
+        PBar.setValue(0);
+        PBar.setBounds(frameWidth-460,frameHeight-(50*2),420,50);
+        PBar.setStringPainted(false);
+        drawpane.add(PBar);
+
+        keybar = new Keyboard_bar();
+        keybar.setPane(drawpane);
+        //keybar.getTypearea().grabFocus();
+
+        
     }
+
+    //------------------------------- Set Up Zombie Thread(Must in main because have to use "Pause");
+    //public void setZombieThread(String n, JLabel zl, int x, int y){
+        /*JLabel zombLabel = zl;
+        Thread zombThread = new Thread(n){
+        public void run()
+        {/*
+            int zombCurX = x;
+            int zombCurY = y;
+            //---------------- For randoming time Zombie Appear ----------
+            Random r = new Random();
+            int low = 1500;
+            int high = 4000;
+            int timeWait = r.nextInt(high-low) + low;
+	        try  { Thread.sleep(50); }  catch (InterruptedException e)  { }
+            //-------------------- If zombie not hit pikachu, it walks --------------------
+		    while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())))
+		    {
+                    zombLabel.setLocation(zombCurX, zombCurY);
+                    if (!pauseGame)
+                    {
+                        //Move Left
+			            zombCurX = zombCurX - 10;
+                    }
+                    else
+                    {
+                        System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
+                    }
+                    repaint(); 
+                    try { Thread.sleep(zombSpeed); } 
+                    catch (InterruptedException e) { e.printStackTrace(); }
+		    } // end while
+            } // end run
+	}; // end thread creation
+    zombThread.start();}*/
     
     //-------------------------------- Set up Cursor & Button ------------------------
 
@@ -232,7 +335,7 @@ public class MainApplication extends JFrame {
 
     public void setUpCursor(JPanel mainpane){
         Toolkit toolkit = Toolkit.getDefaultToolkit();
-        Image image = toolkit.getImage("pokemon/normalCursor.png");
+        Image image = toolkit.getImage("button_and_cursor/normalCursor.png");
         Cursor c = toolkit.createCustomCursor(image , new Point(mainpane.getX(), mainpane.getY()), "img");
         mainpane.setCursor(c);
     }
@@ -246,7 +349,7 @@ public class MainApplication extends JFrame {
             enforceFile(mode[i]);
         }
         // System.out.printf("---------------\n");
-        // printReadFile();
+        //printReadFile();
     }
 
     public void enforceFile(String fname) {
@@ -269,7 +372,7 @@ public class MainApplication extends JFrame {
                         vList.add(buf[0].trim());
                     }
                 }
-                Mode m = new Mode(name, vList);
+                Vocab m = new Vocab(name, vList);
                 modeList.add(m);
             }
 
@@ -280,37 +383,21 @@ public class MainApplication extends JFrame {
     }
 
     public void printReadFile() { // print read file
-        for (int i = 0; i < modeList.size(); i++) {
-            modeList.get(i).printFileWord();
-        }
+        //for (int i = 0; i < modeList.size(); i++) {
+            modeList.get(2).printFileWord();
+        //}
         System.out.println("");
     }
 }//end Class MainApplication
 
-class MyImageIcon extends ImageIcon {
-    public MyImageIcon(String fname) {
-        super(fname);
-    }
-
-    public MyImageIcon(Image image) {
-        super(image);
-    }
-
-    public MyImageIcon resize(int width, int height) {
-        Image oldimg = this.getImage();
-        Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-        return new MyImageIcon(newimg);
-    }
-};
-
-class Mode {
+class Vocab{
     private String mode;
     private int sizeList;
     private ArrayList<String> vocabList = new ArrayList<String>();
     private Random random = new Random();
   
-    public Mode(){}
-    public Mode(String m, ArrayList<String> li){
+    public Vocab(){}
+    public Vocab(String m, ArrayList<String> li){
       mode = m;
       vocabList = li;
       sizeList = vocabList.size();
@@ -332,23 +419,19 @@ class Mode {
   }
 
 class Player{
-    private int HP,Score;
+    private int HP, Score;
     private int playerwidth = 200, playerhight = 165,healthbarwidth = 180,healthbarhight = 30;
     private MyImageIcon player,healthbar_pic;
     private JLabel playerLabel,HP_Label;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
     String[] HP_bar = {"health bar/H0.png","health bar/1.png","health bar/H2.png","health bar/H3.png","health bar/H4.png","health bar/H5.png"};
-    public void player() {}
-    public void draw_player(JLabel x){
-
+    public Player(JLabel x) {
         player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
         playerLabel.setBounds(0,440,playerwidth,playerhight);
         x.add(playerLabel);
         x.validate();
-    }
 
-    public void draw_healthbar(JLabel x){
         for(int i=0;i<HP_bar.length;i++){
             healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth,healthbarhight);
             HP_Label = new JLabel(healthbar_pic);
@@ -360,6 +443,7 @@ class Player{
         HP = HP_AL.size()-1;
         x.add(HP_AL.get(5));
     }
+
 
     public void hitplayer(JLabel x){
         x.remove(HP_AL.get(HP));
@@ -373,8 +457,81 @@ class Player{
     public void setscore(int x){
         this.Score = x;
     }
+    public JLabel getLabel(){
+        return playerLabel;
+    }
 }//end Player
+
+class ZombieThread extends Thread{
+    JLabel zombLabel = new JLabel();
+    JLabel playerLabel = new JLabel(); //For Check Intersect
+    int zombCurX, zombCurY;
+    int zombSpeed;
+    MainApplication program;
+
+    public ZombieThread(String n, JLabel zl, int x, int y, JLabel pl, int zs,JLabel pane){
+        super(n);
+        zombLabel = zl;
+        zombCurX = x;
+        zombCurY = y;
+        playerLabel = pl;
+        zombSpeed = zs;
+
+        zombLabel.setBounds(-200,440,200,165);
+        pane.add(zombLabel);
+        pane.validate();
+        
+/*
+        //---------------- For randoming time Zombie Appear ----------
+        Random r = new Random();
+        int low = 1500;
+        int high = 4000;
+        int timeWait = r.nextInt(high-low) + low;
+	    try  { Thread.sleep(timeWait); }  catch (InterruptedException e)  { }*/
+        start();
+    }
     
+    public void run()
+        {
+            System.out.println("thread = " + this.getName());
+            //-------------------- If zombie not hit pikachu, it walks --------------------
+		   while (!(zombLabel.getBounds().intersects(playerLabel.getBounds())))
+		    {
+                    zombLabel.setLocation(zombCurX, zombCurY);
+                    if (true)
+                    {
+                        //Move Left
+			            zombCurX = zombCurX - 10;
+                    }
+                    else
+                    {
+                        System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
+                    }
+                    zombLabel.repaint(); 
+                    try { Thread.sleep(zombSpeed); } 
+                    catch (InterruptedException e) { e.printStackTrace(); }
+		    } // end while
+        } // end run
+}
+
+
+//----------------- Special Class Zone ----------------
+class MyImageIcon extends ImageIcon {
+    public MyImageIcon(String fname) {
+        super(fname);
+    }
+
+    public MyImageIcon(Image image) {
+        super(image);
+    }
+
+    public MyImageIcon resize(int width, int height) {
+        Image oldimg = this.getImage();
+        Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        return new MyImageIcon(newimg);
+    }
+};
+
 class MySoundEffect
 {
     private Clip clip;
@@ -394,6 +551,7 @@ class MySoundEffect
     public void playLoop()   { clip.loop(Clip.LOOP_CONTINUOUSLY); }
     public void stop()       { clip.stop(); }
 }
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 
@@ -439,3 +597,44 @@ class Keyboard_bar {
 
 }
 >>>>>>> Stashed changes
+=======
+
+class Zombie{
+    private String name;
+}
+
+
+class Keyboard_bar{
+    private JTextArea typearea;
+    private int width,height;
+    public Keyboard_bar(){
+        typearea = new JTextArea();
+        typearea.setBounds(50,100,500,30);
+        typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
+        //typearea.grabFocus();
+        typearea.addKeyListener(new KeyListener(){
+            public void keyPressed(KeyEvent e){
+                if(e.getKeyCode() == KeyEvent.VK_SPACE){
+                    System.out.println("Hello world");
+                }
+            }
+            public void keyTyped(KeyEvent e) {}
+            public void keyReleased(KeyEvent e ) {}
+        });
+    }
+
+    public JTextArea getTypearea(){
+        return typearea;
+    }
+
+    public void setPane(JLabel x){
+        x.add(typearea);
+    }
+
+    public void setposition(int x, int y){
+        typearea.setBounds(x,y,width,height);
+    }
+
+    
+}
+>>>>>>> main
