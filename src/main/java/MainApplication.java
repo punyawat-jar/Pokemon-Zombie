@@ -11,6 +11,7 @@ import java.util.stream.*;
 
 //Main Frame
 public class MainApplication extends JFrame {
+    /*For Pausing Game, use setPauseGame(true) zombieThread will pause.*/
     // ------------------------------- Component -------------------------------
     private JPanel contentpane;
     private JLabel drawpane;
@@ -38,7 +39,7 @@ public class MainApplication extends JFrame {
     private MyImageIcon readyGoImg;
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
-    private int zombSpeed = 300;
+    private int zombSpeed = 250;
     ArrayList<JLabel> mobLabel = new ArrayList<JLabel>();
     ArrayList<Integer> mobCurX = new ArrayList<Integer>();
     ArrayList<Integer> mobCurY = new ArrayList<Integer>();
@@ -111,14 +112,14 @@ public class MainApplication extends JFrame {
         
 
         // ------------------------------- Zombie -----------------------------------
-        readyGoImg = new MyImageIcon("sound_effect/321_Go.gif").resize(640, 360);
+        readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
         readyGoLabel = new JLabel(readyGoImg);
-        readyGoLabel.setBounds(583, 320, 640,360);
+
         
         for (int i = 0; i < 5; i++) {
             switch (i) {
                 case 0:
-                    mobWidth.add(87);
+                    mobWidth.add(98);
                     mobHeight.add(157);
                     mobCurY.add(frameHeight - 180 - mobHeight.get(0));
                     break;
@@ -399,10 +400,11 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < 10; i++) {
             mobThread.add(new ZombieThread("Zombie" + String.valueOf(i), mobLabel.get(i), player.getLabel(),
                     zombSpeed, drawpane, hurtSound));
+
             if(i==0){
                 readyGoSound.playOnce();
+                readyGoLabel.setBounds(525, 230, 380, 214);
                 drawpane.add(readyGoLabel);
-                drawpane.repaint();
                 drawpane.validate();
             }
             System.out.println("thread = " + this.getName() + " Get in");
@@ -664,10 +666,10 @@ class ZombieThread extends Thread {
     int zombWidth, zombHeight;
     int zombSpeed;
     JLabel tempPane;
-    MainApplication program;
+    boolean pauseGame = false;
     MySoundEffect hurtSound;
 
-    //-------------------------------- Thread Constructor ------------------------------
+    //-------------------------------- ZombieThread Constructor ------------------------------
     public ZombieThread(String n, JLabel zl, JLabel pl, int zs, JLabel pane, MySoundEffect hs){
         super(n);
         zombLabel = zl;
@@ -686,6 +688,10 @@ class ZombieThread extends Thread {
         tempPane.add(zombLabel);
         tempPane.validate();
         start();
+    }
+
+    public void setPauseGame(boolean b){
+        pauseGame = b;
     }
 
     // ------------------------- For randoming time Zombie Appear ----------------
@@ -708,14 +714,12 @@ class ZombieThread extends Thread {
         while (!(zombLabel.getBounds().intersects(playerLabel.getBounds()))) {
 
             zombLabel.setLocation(zombCurX, zombCurY);
-            if (true) {
-
-                zombCurX = zombCurX - 5;
-
+            if (!pauseGame) {
+                zombCurX = zombCurX - 5; 
+                zombLabel.repaint();
             } else {
                 System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
             }
-            zombLabel.repaint();
             try {
                 Thread.sleep(zombSpeed);
             } catch (InterruptedException e) {
