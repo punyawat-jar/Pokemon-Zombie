@@ -308,6 +308,9 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
+                drawpane.remove(custom_poke_AL.get(count));
+                rlabel.setVisible(false);
+                repaint();
                 mode_panel();
             }
         });
@@ -319,7 +322,7 @@ public class MainApplication extends JFrame {
         setUpButton(backbtn,backButton);
         setUpButton(nextbtn,nextButton);
         validate();
-        
+        repaint();
     }
 
     public void mode_panel() {
@@ -336,7 +339,7 @@ public class MainApplication extends JFrame {
         setUpButton(backbtn, backButton);
 
         play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
-        backbtn.setBounds(frameWidth / 4, frameHeight / 2, 500, 50);
+        backbtn.setBounds(frameWidth-1400 , frameHeight / 2, 500, 50);
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
