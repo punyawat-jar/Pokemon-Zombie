@@ -1,2 +1,1 @@
-
-    JLabel zombLabel = new JLabel();
+i
