@@ -111,7 +111,7 @@ public class MainApplication extends JFrame {
         contentpane.add(drawpane, BorderLayout.CENTER);
 
         // ------------------------------- Zombie -----------------------------------
-        readyGoImg = new MyImageIcon("sound_effect/321_Go.gif").resize(640, 360);
+        readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
         readyGoLabel = new JLabel(readyGoImg);
 
         for (int i = 0; i < 16; i++) {
