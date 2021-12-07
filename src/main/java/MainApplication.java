@@ -60,7 +60,7 @@ public class MainApplication extends JFrame {
     private Keyboard_bar keybar;
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
-    private int score = 0, count = 0;
+    private int score = 0, count = 0, count_pic =0;
 
     private Player player;
 
@@ -341,9 +341,9 @@ public class MainApplication extends JFrame {
 
                         for (int i = 0; i < poke_list.length; i++) {
                             if (poke_list[i].contains(x.getText())) {
-                                drawpane.remove(custom_poke_AL.get(count));
-                                count = i;
-                                drawpane.add(custom_poke_AL.get(count));
+                                drawpane.remove(custom_poke_AL.get(count_pic));
+                                count_pic = i;
+                                drawpane.add(custom_poke_AL.get(count_pic));
                                 repaint();
                             }
                         }
@@ -364,7 +364,7 @@ public class MainApplication extends JFrame {
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
 
-                drawpane.remove(custom_poke_AL.get(count));
+                drawpane.remove(custom_poke_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mainmanu();
@@ -376,7 +376,7 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
-                drawpane.remove(custom_poke_AL.get(count));
+                drawpane.remove(custom_poke_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mode_panel();
@@ -384,7 +384,7 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(nextbtn);
         drawpane.add(backbtn);
-        drawpane.add(custom_poke_AL.get(count));
+        drawpane.add(custom_poke_AL.get(count_pic));
         drawpane.add(rlabel);
         setUpButton(backbtn, backButton);
         setUpButton(nextbtn, nextButton);
@@ -447,8 +447,9 @@ public class MainApplication extends JFrame {
         zombSpeed = spd;
     }
 
-    public void addCount(int c) {
-        count += c;
+    public void setPbar(JProgressBar bar) {
+        count += 1;
+        bar.setValue(count*10);
         System.out.println("Add Count + = 1");
     }
 
@@ -701,7 +702,7 @@ public class MainApplication extends JFrame {
                     drawpane.remove(mobLabel.get(i));
                     drawpane.repaint();
                 }
-                addCount(1);
+                setPbar(PBar);
             } // end run
         };// end thread creation
 
