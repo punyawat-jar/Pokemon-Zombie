@@ -24,7 +24,10 @@ public class MainApplication extends JFrame {
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
 
-    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton,restartButton,menuButton;
+    private JRadioButton[] radio;
+    private String[] accessory = {"poke1","poke2","poke3","poke4","poke5"};
+
+    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton,restartButton,menuButton,nextButton,backButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound,
             usedItemSound;
 
@@ -47,19 +50,21 @@ public class MainApplication extends JFrame {
     ArrayList<Integer> mobWidth = new ArrayList<Integer>();
     ArrayList<Integer> mobHeight = new ArrayList<Integer>();
     ArrayList<ZombieThread> mobThread = new ArrayList<ZombieThread>();
+    ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
 
+    
     private MyImageIcon winGif,gameOverGif;
 
     private JProgressBar PBar = new JProgressBar();
     private Keyboard_bar keybar;
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
-    private int score = 0;
+    private int score = 0, count =0;
 
     private Player player;
 
     Tutorial Tframe;
-
+    private String[] poke_list = {"custom_poke/poke1.png","custom_poke/poke2.png","custom_poke/poke3.png","custom_poke/poke4.png","custom_poke/poke5.png"};
     private String []mode ={"Vocab/Beginner.txt","Vocab/Medium.txt","Vocab/Hard.txt","Vocab/Nightmare.txt","Vocab/Boss.txt"};
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
@@ -103,12 +108,10 @@ public class MainApplication extends JFrame {
         exitButton = new MyImageIcon("button_and_cursor/ExitButton.png").resize(138, 50);
         playButton = new MyImageIcon("button_and_cursor/PlayButton.png").resize(138, 50);
         restartButton = new MyImageIcon("button_and_cursor/RestartButton.png").resize(138, 50);
-        menuButton = new MyImageIcon("button_and_cursor/MenuButton.png").resize(138, 50);
-
+        menuButton = new MyImageIcon("button_and_cursor/NextButton.png").resize(138, 50);
+        nextButton = new MyImageIcon("button_and_cursor/nextButton.png").resize(138, 50);
+        backButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
         drawpane = new JLabel();
-        drawpane.setIcon(bgImg);
-        drawpane.setLayout(null);
-        contentpane.add(drawpane, BorderLayout.CENTER);
 
         // ------------------------------- Zombie -----------------------------------
         readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
@@ -234,7 +237,17 @@ public class MainApplication extends JFrame {
 
         menuSong.playLoop();
 
+        
+        mainmanu();
+        validate();
+    }// end AddComponent
+
+    public void mainmanu(){
         // main menu button
+        drawpane.setIcon(bgImg);
+        drawpane.setLayout(null);
+        contentpane.add(drawpane, BorderLayout.CENTER);
+
         JButton button1 = new JButton("Start");
         JButton button2 = new JButton("Credit");
         JButton button3 = new JButton("Tutorial");
@@ -260,7 +273,8 @@ public class MainApplication extends JFrame {
                 button3.setVisible(false);
                 button4.setVisible(false);
                 drawpane.setIcon(bgImg2);
-                mode_panel();
+                //mode_panel();
+                custom();
             }
         });
 
@@ -284,7 +298,94 @@ public class MainApplication extends JFrame {
         });
 
         validate();
-    }// end AddComponent
+    }
+
+    public void custom(){
+        JButton nextbtn = new JButton();
+        JButton backbtn = new JButton();
+        JLabel rlabel = new JLabel();
+        
+        rlabel.setLayout(new FlowLayout());
+        rlabel.setBounds(frameWidth-900, frameHeight/2, 400, 35);
+        rlabel.setOpaque(true);
+        rlabel.setBackground(Color.lightGray);
+        
+        radio = new JRadioButton[5];
+        ButtonGroup rgroup = new ButtonGroup();
+        for(int i=0;i<5;i++){
+            radio[i] = new JRadioButton(accessory[i]);
+            if(i == 0){
+                radio[i].setSelected(true);
+            }
+            rgroup.add(radio[i]);
+            rlabel.add(radio[i]);
+            
+            radio[i].addItemListener(new ItemListener(){
+                public void itemStateChanged(ItemEvent e ){
+                    JRadioButton x = (JRadioButton) e.getItem();
+                    if(x.isSelected()){
+                        // IntStream.range(0,poke_list_AL.size())
+                        //          .filter(arg->poke_list_AL.get(arg).contains(x.getText()))
+                        //          .forEach(arg->{
+                        //              drawpane.remove(custom_poke_AL.get(count));
+                        //              count = arg;
+                        //              drawpane.add(custom_poke_AL.get(arg));
+                                     
+                        //              repaint();
+                        //              });
+                        
+                        for(int i=0;i<poke_list.length;i++){
+                            if(poke_list[i].contains(x.getText())){
+                                drawpane.remove(custom_poke_AL.get(count));
+                                count = i;
+                                drawpane.add(custom_poke_AL.get(count));
+                                repaint();
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        read_poke_custom();
+        
+        //(custom_poke_AL)
+        nextbtn.setBounds(frameWidth / 2, frameHeight-300 / 1, 200, 50);
+        backbtn.setBounds(frameWidth / 4, frameHeight-300 / 1, 200, 50);
+        backbtn.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e){
+                buttonSound.playOnce();
+                nextbtn.setVisible(false);
+                backbtn.setVisible(false);
+                mainmanu();
+                
+            }
+        });
+        nextbtn.addActionListener(new ActionListener() { 
+            public void actionPerformed(ActionEvent e){
+                buttonSound.playOnce();
+                nextbtn.setVisible(false);
+                backbtn.setVisible(false);
+                drawpane.remove(custom_poke_AL.get(count));
+                rlabel.setVisible(false);
+                repaint();
+                mode_panel();
+            }
+        });
+        drawpane.add(nextbtn);
+        drawpane.add(backbtn);
+        drawpane.add(custom_poke_AL.get(count));
+        drawpane.add(rlabel);
+        setUpButton(backbtn,backButton);
+        setUpButton(nextbtn,nextButton);
+        validate();
+
+        repaint();
+    }
+
+    
+
+    
 
     public void mode_panel() {
         // mode button
@@ -656,6 +757,15 @@ public class MainApplication extends JFrame {
 
     // ----------------------------------- Read File
     // ----------------------------------
+
+    public void read_poke_custom(){
+        for(int i=0;i<poke_list.length;i++){
+            JLabel label = new JLabel(new ImageIcon(poke_list[i]));
+            label.setBounds(170,40,500,250);
+            custom_poke_AL.add(label);
+        }
+    }
+
     public void readFile(String[] mode) {
         for (int i = 0; i < mode.length; i++) {
             enforceFile(mode[i]);
@@ -949,46 +1059,31 @@ class MySoundEffect {
 
     class Keyboard_bar {
         private JTextArea typearea;
-        private int width, height;
-
-        public Keyboard_bar(){
+        private int width, height;  
+        public Keyboard_bar() {
             typearea = new JTextArea();
             typearea.setBounds(50, 100, 500, 30);
             typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
-
             // typearea.grabFocus();
             typearea.addKeyListener(new KeyListener() {
                 public void keyPressed(KeyEvent e) {
                     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                         System.out.println("Hello world");
                     }
-                }
-
+                }   
                 public void keyTyped(KeyEvent e) {
-                }
-
+                }   
                 public void keyReleased(KeyEvent e) {
                 }
             });
         }
-
-            public void keyTyped(KeyEvent e) {
-            }
-
-            public void keyReleased(KeyEvent e) {
-            }
-    
-
-        public JTextArea getTypearea() {
-            return typearea;
-        }
-
-        public void setPane(JLabel x) {
-            x.add(typearea);
-        }
-
-        public void setposition(int x, int y) {
-            typearea.setBounds(x, y, width, height);
-        }
-
+    public JTextArea getTypearea() {
+        return typearea;
     }
+    public void setPane(JLabel x) {
+        x.add(typearea);
+    }
+    public void setposition(int x, int y) {
+        typearea.setBounds(x, y, width, height);
+    }
+}
