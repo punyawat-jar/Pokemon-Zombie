@@ -411,6 +411,7 @@ public class MainApplication extends JFrame {
                 if ((String) combo.getSelectedItem() != "--- Please select difficulty ---") {
                     combo.setVisible(false);
                     play.setVisible(false);
+                    backbtn.setVisible(false);
                     main_game((String) combo.getSelectedItem());
                 }
             }
