@@ -1,1 +1,1 @@
-i
+ized(Thread.currentThread())

@@ -412,10 +412,10 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
-                        combo.setVisible(false);
-                        play.setVisible(false);
-                        backbtn.setVisible(false);
-                        main_game(modeSelected);
+                    combo.setVisible(false);
+                    play.setVisible(false);
+                    backbtn.setVisible(false);
+                    main_game(modeSelected);
                 }
             }
         });
@@ -454,7 +454,7 @@ public class MainApplication extends JFrame {
 
     public void createZombieThread(String mode) {
         for (int i = 0; i < 10; i++) {
-            
+
             mobCurX.set(i, mobLabel.get(i).getX());
             mobCurY.set(i, mobLabel.get(i).getY());
 
@@ -469,7 +469,7 @@ public class MainApplication extends JFrame {
             System.out.println("thread = " + this.getName() + " Get in");
 
         }
-    }//end CreateZombieThread
+    }// end CreateZombieThread
 
     // ----------------------------- Add 10 Zombies to screen--------------------
     public void addZombieBeginner(String mode) {
@@ -615,6 +615,7 @@ public class MainApplication extends JFrame {
                 player = new Player(drawpane);
                 addZombieBeginner(mode);
 
+                System.out.println("End Stage: " + mode);
                 break;
             case "Medium":
                 drawpane.setIcon(in_gamebg2Img);
@@ -665,7 +666,8 @@ public class MainApplication extends JFrame {
         // gameover(mode);
     }
 
-    //We Create Thread in setZombieThread in order to easily edit Variable from MainApplication
+    // We Create Thread in setZombieThread in order to easily edit Variable from
+    // MainApplication
     public void setZombieThread(int i) {
 
         System.out.println("mode = " + modeSelected);
@@ -679,6 +681,7 @@ public class MainApplication extends JFrame {
         drawpane.validate();
         Thread zombieThread = new Thread("Zombie" + i) {
             public void run() {
+
                 System.out.println("thread = " + this.getName());
                 if (modeSelected == "Nightmare") {
                     waitGetInNightmare(i);
@@ -689,21 +692,28 @@ public class MainApplication extends JFrame {
                 }
                 System.out.println("Thread: Zombie" + i + " -> move");
                 move(i);
+                if (player.getHP() == 0)
+                    return;
                 // --------- Remove Zombie when Hit Pikachu & decrease heart
                 if (mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) {
                     hurtSound.playOnce();
+                    player.hitplayer(drawpane);
                     drawpane.remove(mobLabel.get(i));
                     drawpane.repaint();
                 }
                 addCount(1);
             } // end run
         };// end thread creation
-        zombieThread.start();
-        /*try{
-        zombieThread.join();
-        }catch(InterruptedException e){}*/
-    }
 
+        zombieThread.start();
+        if (zombieThread.isAlive() == false) {
+            /*
+             * try{
+             * zombieThread.join();
+             * }catch(InterruptedException e){}
+             */
+        }
+    }
 
     public void setPauseGame(boolean b) {
         pauseGame = b;
@@ -713,8 +723,8 @@ public class MainApplication extends JFrame {
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
     synchronized public static void waitGetIn(int i) {
-        int timeWait = 0 ;
-        if (i!=0) {
+        int timeWait = 0;
+        if (i != 0) {
             Random r = new Random();
             int low = 5000;
             int high = 15000;
@@ -724,38 +734,43 @@ public class MainApplication extends JFrame {
             } catch (InterruptedException e) {
             }
         }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait/1000 + "sec");
+        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
     synchronized public static void waitGetInHard(int i) {
-        if (i!= 0) {
+        int timeWait = 0;
+        if (i != 0) {
             Random r = new Random();
             int low = 5000;
             int high = 10000;
-            int timeWait = r.nextInt(high - low) + low;
+            timeWait = r.nextInt(high - low) + low;
             try {
                 Thread.sleep(timeWait);
             } catch (InterruptedException e) {
             }
         }
+        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
     synchronized public static void waitGetInNightmare(int i) {
-        if (i!=0) {
+        int timeWait = 0;
+        if (i != 0) {
             Random r = new Random();
             int low = 4000;
             int high = 7500;
-            int timeWait = r.nextInt(high - low) + low;
+            timeWait = r.nextInt(high - low) + low;
             try {
                 Thread.sleep(timeWait);
             } catch (InterruptedException e) {
             }
         }
+        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
     // ----------------- If zombie not hit pikachu, it walks to left----------------
     public void move(int i) {
-        while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds()))) {
+        // While not Hit player & player not die.
+        while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) && player.getHP() != 0) {
             mobLabel.get(i).setLocation(mobCurX.get(i), mobCurY.get(i));
             if (!pauseGame) {
                 mobCurX.set(i, mobCurX.get(i) - 5);
@@ -910,7 +925,6 @@ public class MainApplication extends JFrame {
         System.out.println("");
     }
 }// end Class MainApplication
-
 
 // class Vocab {
 // private String mode;
