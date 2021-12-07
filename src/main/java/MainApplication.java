@@ -248,10 +248,10 @@ public class MainApplication extends JFrame {
         drawpane.setLayout(null);
         contentpane.add(drawpane, BorderLayout.CENTER);
 
-        JButton button1 = new JButton("Start");
-        JButton button2 = new JButton("Credit");
-        JButton button3 = new JButton("Tutorial");
-        JButton button4 = new JButton("Exit");
+        JButton button1 = new JButton();
+        JButton button2 = new JButton();
+        JButton button3 = new JButton();
+        JButton button4 = new JButton();
         setUpButton(button1, startButton);
         setUpButton(button2, creditButton);
         setUpButton(button3, tutorialButton);
@@ -357,11 +357,15 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
+
+                drawpane.remove(custom_poke_AL.get(count));
+                rlabel.setVisible(false);
+                repaint();
                 mainmanu();
                 
             }
         });
-        nextbtn.addActionListener(new ActionListener() { 
+        nextbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 buttonSound.playOnce();
                 nextbtn.setVisible(false);
@@ -394,9 +398,13 @@ public class MainApplication extends JFrame {
         combo.setBounds(frameWidth / 4, frameHeight / 4, 200, 50);
 
         // Play button
-        JButton play = new JButton("Play!!");
+        JButton play = new JButton();
+        JButton backbtn = new JButton();
         setUpButton(play, playButton);
+        setUpButton(backbtn, backButton);
         play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
+        backbtn.setBounds(frameWidth-1400 , frameHeight / 2, 500, 50);
+        
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
@@ -407,8 +415,20 @@ public class MainApplication extends JFrame {
                 }
             }
         });
+
+        backbtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
+                combo.setVisible(false);
+                play.setVisible(false);
+                backbtn.setVisible(false);
+                custom();
+            }
+        });
+
         drawpane.add(combo);
         drawpane.add(play);
+        drawpane.add(backbtn);
     }// end mode Panel
 
     public int randomNum(int amount) {
@@ -628,8 +648,8 @@ public class MainApplication extends JFrame {
         drawpane.add(PBar);
 
         keybar = new Keyboard_bar();
-        //keybar.setPane(drawpane);
-        // keybar.getTypearea().grabFocus();
+        keybar.setPane(drawpane);
+        keybar.getTypearea().grabFocus();
         
         //gameover(mode);
     }
@@ -761,8 +781,9 @@ public class MainApplication extends JFrame {
     public void read_poke_custom(){
         for(int i=0;i<poke_list.length;i++){
             JLabel label = new JLabel(new ImageIcon(poke_list[i]));
-            label.setBounds(170,40,500,250);
+            label.setBounds(450,40,500,250);
             custom_poke_AL.add(label);
+            //poke_list_AL.add(poke_list[i]);
         }
     }
 
