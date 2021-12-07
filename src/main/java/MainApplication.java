@@ -533,46 +533,6 @@ public class MainApplication extends JFrame {
         //gameover(mode);
     }
 
-    // ------------------------------- Set Up Zombie Thread(Must in main because
-    // have to use "Pause");
-    // public void setZombieThread(String n, JLabel zl, int x, int y){
-    /*
-     * JLabel zombLabel = zl;
-     * Thread zombThread = new Thread(n){
-     * public void run()
-     * {/*
-     * int zombCurX = x;
-     * int zombCurY = y;
-     * //---------------- For randoming time Zombie Appear ----------
-     * Random r = new Random();
-     * int low = 1500;
-     * int high = 4000;
-     * int timeWait = r.nextInt(high-low) + low;
-     * try { Thread.sleep(50); } catch (InterruptedException e) { }
-     * //-------------------- If zombie not hit pikachu, it walks
-     * --------------------
-     * while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())))
-     * {
-     * zombLabel.setLocation(zombCurX, zombCurY);
-     * if (!pauseGame)
-     * {
-     * //Move Left
-     * zombCurX = zombCurX - 10;
-     * }
-     * else
-     * {
-     * System.out.println("Pause ZombieThread: " +
-     * Thread.currentThread().getName());
-     * }
-     * repaint();
-     * try { Thread.sleep(zombSpeed); }
-     * catch (InterruptedException e) { e.printStackTrace(); }
-     * } // end while
-     * } // end run
-     * }; // end thread creation
-     * zombThread.start();}
-     */
-
     // ---------------------------- Game Over ------------------------
     public void gameover(String mode){
         winGif = new MyImageIcon("gameOver/win.gif");
@@ -654,8 +614,7 @@ public class MainApplication extends JFrame {
 
     // Add Vocab
 
-    // ----------------------------------- Read File
-    // ----------------------------------
+    // --------------------------------- Read File --------------------------------
     public void readFile(String[] mode) {
         for (int i = 0; i < mode.length; i++) {
             enforceFile(mode[i]);
@@ -863,8 +822,7 @@ class ZombieThread extends Thread {
         }
     }
 
-    // -------------------- If zombie not hit pikachu, it walks to left
-    // --------------------
+    // -------------------- If zombie not hit pikachu, it walks to left ------------------
     public void move() {
         while (!(zombLabel.getBounds().intersects(playerLabel.getBounds()))) {
 
