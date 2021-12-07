@@ -358,6 +358,7 @@ public class MainApplication extends JFrame {
         nextbtn.setBounds(frameWidth / 2, frameHeight - 300 / 1, 200, 50);
         backbtn.setBounds(frameWidth / 4, frameHeight - 300 / 1, 200, 50);
         backbtn.addActionListener(new ActionListener() {
+
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
                 nextbtn.setVisible(false);
@@ -411,9 +412,10 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
-                    combo.setVisible(false);
-                    play.setVisible(false);
-                    main_game(modeSelected);
+                        combo.setVisible(false);
+                        play.setVisible(false);
+                        backbtn.setVisible(false);
+                        main_game(modeSelected);
                 }
             }
         });
@@ -467,7 +469,7 @@ public class MainApplication extends JFrame {
             System.out.println("thread = " + this.getName() + " Get in");
 
         }
-    }
+    }//end CreateZombieThread
 
     // ----------------------------- Add 10 Zombies to screen--------------------
     public void addZombieBeginner(String mode) {
@@ -679,11 +681,11 @@ public class MainApplication extends JFrame {
             public void run() {
                 System.out.println("thread = " + this.getName());
                 if (modeSelected == "Nightmare") {
-                    waitGetInNightmare();
+                    waitGetInNightmare(i);
                 } else if (modeSelected == "Hard") {
-                    waitGetInHard();
+                    waitGetInHard(i);
                 } else {
-                    waitGetIn();
+                    waitGetIn(i);
                 }
                 System.out.println("Thread: Zombie" + i + " -> move");
                 move(i);
@@ -710,9 +712,9 @@ public class MainApplication extends JFrame {
     // ------------------------- For randoming time Zombie Appear ----------------
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
-    synchronized public static void waitGetIn() {
+    synchronized public static void waitGetIn(int i) {
         int timeWait = 0 ;
-        if (Thread.currentThread().getName() != "Zombie0") {
+        if (i!=0) {
             Random r = new Random();
             int low = 5000;
             int high = 15000;
@@ -725,8 +727,8 @@ public class MainApplication extends JFrame {
         System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait/1000 + "sec");
     }
 
-    synchronized public static void waitGetInHard() {
-        if (Thread.currentThread().getName() != "Zombie0") {
+    synchronized public static void waitGetInHard(int i) {
+        if (i!= 0) {
             Random r = new Random();
             int low = 5000;
             int high = 10000;
@@ -738,8 +740,8 @@ public class MainApplication extends JFrame {
         }
     }
 
-    synchronized public static void waitGetInNightmare() {
-        if (Thread.currentThread().getName() != "Zombie0") {
+    synchronized public static void waitGetInNightmare(int i) {
+        if (i!=0) {
             Random r = new Random();
             int low = 4000;
             int high = 7500;
@@ -751,8 +753,7 @@ public class MainApplication extends JFrame {
         }
     }
 
-    // -------------------- If zombie not hit pikachu, it walks to left
-    // ------------------
+    // ----------------- If zombie not hit pikachu, it walks to left----------------
     public void move(int i) {
         while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds()))) {
             mobLabel.get(i).setLocation(mobCurX.get(i), mobCurY.get(i));
@@ -910,293 +911,307 @@ public class MainApplication extends JFrame {
     }
 }// end Class MainApplication
 
-class Vocab {
-    private String mode;
-    private int sizeList;
-    private ArrayList<String> vocabList = new ArrayList<String>();
-    private Random random = new Random();
 
-    public Vocab() {
-    }
+// class Vocab {
+// private String mode;
+// private int sizeList;
+// private ArrayList<String> vocabList = new ArrayList<String>();
+// private Random random = new Random();
 
-    public Vocab(String m, ArrayList<String> li) {
-        mode = m;
-        vocabList = li;
-        sizeList = vocabList.size();
-    }
+// public Vocab() {
+// }
 
-    public String getMode() {
-        return mode;
-    }
+// public Vocab(String m, ArrayList<String> li) {
+// mode = m;
+// vocabList = li;
+// sizeList = vocabList.size();
+// }
 
-    public String randomWord() { // Random word
-        int ran = random.nextInt(sizeList);
-        return vocabList.get(ran);
-    }
+// public String getMode() {
+// return mode;
+// }
 
-    public void printFileWord() { // check Reading File
-        System.out.printf("====== Mode %-9s reading... =====\n", mode);
-        for (int i = 0; i < vocabList.size(); i++) {
-            System.out.printf("\t [%8s] %-15s \n", mode, vocabList.get(i));
-        }
-        System.out.println("");
-    }
-}
+// public String randomWord() { // Random word
+// int ran = random.nextInt(sizeList);
+// return vocabList.get(ran);
+// }
 
-class Player {
-    private int HP, Score;
-    private int playerwidth = 200, playerhight = 165, healthbarwidth = 180, healthbarhight = 30;
-    private MyImageIcon player, healthbar_pic;
-    private JLabel playerLabel, HP_Label;
-    private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
-    String[] HP_bar = { "health bar/H0.png", "health bar/1.png", "health bar/H2.png", "health bar/H3.png",
-            "health bar/H4.png", "health bar/H5.png" };
+// public void printFileWord() { // check Reading File
+// System.out.printf("====== Mode %-9s reading... =====\n", mode);
+// for (int i = 0; i < vocabList.size(); i++) {
+// System.out.printf("\t [%8s] %-15s \n", mode, vocabList.get(i));
+// }
+// System.out.println("");
+// }
+// }
 
-    public Player(JLabel x) {
-        player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth, playerhight);
-        playerLabel = new JLabel(player);
-        playerLabel.setBounds(0, 440, playerwidth, playerhight);
-        x.add(playerLabel);
-        x.validate();
+// class Player {
+// private int HP, Score;
+// private int playerwidth = 200, playerhight = 165, healthbarwidth = 180,
+// healthbarhight = 30;
+// private MyImageIcon player, healthbar_pic;
+// private JLabel playerLabel, HP_Label;
+// private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
+// String[] HP_bar = { "health bar/H0.png", "health bar/1.png", "health
+// bar/H2.png", "health bar/H3.png",
+// "health bar/H4.png", "health bar/H5.png" };
 
-        for (int i = 0; i < HP_bar.length; i++) {
-            healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth, healthbarhight);
-            HP_Label = new JLabel(healthbar_pic);
+// public Player(JLabel x) {
+// player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth,
+// playerhight);
+// playerLabel = new JLabel(player);
+// playerLabel.setBounds(0, 440, playerwidth, playerhight);
+// x.add(playerLabel);
+// x.validate();
 
-            HP_Label.setBounds(45, 50, healthbarwidth, healthbarhight);
-            // HP_Label.setBounds(45,420,healthbarwidth,healthbarhight);
-            HP_AL.add(HP_Label);
-        }
-        HP = HP_AL.size() - 1;
-        x.add(HP_AL.get(5));
-    }
+// for (int i = 0; i < HP_bar.length; i++) {
+// healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth,
+// healthbarhight);
+// HP_Label = new JLabel(healthbar_pic);
 
-    public void hitplayer(JLabel x) {
-        x.remove(HP_AL.get(HP));
-        HP -= 1;
-        x.add(HP_AL.get(HP));
-    }
+// HP_Label.setBounds(45, 50, healthbarwidth, healthbarhight);
+// // HP_Label.setBounds(45,420,healthbarwidth,healthbarhight);
+// HP_AL.add(HP_Label);
+// }
+// HP = HP_AL.size() - 1;
+// x.add(HP_AL.get(5));
+// }
 
-    public int getHP() {
-        return HP;
-    }
+// public void hitplayer(JLabel x) {
+// x.remove(HP_AL.get(HP));
+// HP -= 1;
+// x.add(HP_AL.get(HP));
+// }
 
-    public void setscore(int x) {
-        this.Score = x;
-    }
+// public int getHP() {
+// return HP;
+// }
 
-    public JLabel getLabel() {
-        return playerLabel;
-    }
-}// end Player
-/*
- * class ZombieThread extends Thread {
- * JLabel zombLabel = new JLabel();
- * JLabel playerLabel = new JLabel(); // For Check Intersect
- * int zombCurX, zombCurY;
- * int zombWidth, zombHeight;
- * int zombSpeed;
- * int low,high;
- * JLabel tempPane;
- * boolean pauseGame=false;
- * MainApplication program;
- * MySoundEffect hurtSound;
- * static String mode;
- * 
- * 
- * // -------------------------------- ZombieThread Constructor
- * --------------------------
- * public ZombieThread(String n, JLabel zl, JLabel pl, int zs, JLabel pane,
- * MySoundEffect hs, String m, MainApplication p) {
- * super(n);
- * zombLabel = zl;
- * zombCurX = zl.getX();
- * zombCurY = zl.getY();
- * zombWidth = zl.getWidth();
- * zombHeight = zl.getHeight();
- * playerLabel = pl;
- * zombSpeed = zs;
- * tempPane = pane;
- * hurtSound = hs;
- * mode = m;
- * program = p;
- * System.out.println("mode = " + mode);
- * System.out.println("zombCur X = " + zombCurX + ", zombCurY = " + zombCurY +
- * " zombWidth = " + zombWidth
- * + " , zombHeight" + zombHeight);
- * 
- * zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
- * tempPane.add(zombLabel);
- * tempPane.validate();
- * start();
- * }
- * 
- * public void setPauseGame(boolean b) {
- * pauseGame = b;
- * }
- * 
- * // ------------------------- For randoming time Zombie Appear
- * ----------------
- * // Use static method to lock class * If lock only Obj. all other thread will
- * // work and wait together.
- * synchronized public static void waitGetIn() {
- * System.out.println("Thread: "+ Thread.currentThread().getName()+" Waiting");
- * if (Thread.currentThread().getName() != "Zombie0") {
- * Random r = new Random();
- * int low = 5000;
- * int high = 15000;
- * int timeWait = r.nextInt(high - low) + low;
- * try {
- * Thread.sleep(timeWait);
- * } catch (InterruptedException e) {
- * }
- * }
- * }
- * synchronized public static void waitGetInHard() {
- * if (Thread.currentThread().getName() != "Zombie0") {
- * Random r = new Random();
- * int low = 5000;
- * int high = 10000;
- * int timeWait = r.nextInt(high - low) + low;
- * try {
- * Thread.sleep(timeWait);
- * } catch (InterruptedException e) {
- * }
- * }
- * }
- * synchronized public static void waitGetInNightmare() {
- * if (Thread.currentThread().getName() != "Zombie0") {
- * Random r = new Random();
- * int low = 4000;
- * int high = 7500;
- * int timeWait = r.nextInt(high - low) + low;
- * try {
- * Thread.sleep(timeWait);
- * } catch (InterruptedException e) {
- * }
- * }
- * }
- * 
- * // -------------------- If zombie not hit pikachu, it walks to left
- * ------------------
- * public void move() {
- * while (!(zombLabel.getBounds().intersects(playerLabel.getBounds()))) {
- * 
- * zombLabel.setLocation(zombCurX, zombCurY);
- * if (!pauseGame) {
- * zombCurX = zombCurX - 5;
- * zombLabel.repaint();
- * } else {
- * System.out.println("Pause ZombieThread: " +
- * Thread.currentThread().getName());
- * }
- * zombLabel.repaint();
- * try {
- * Thread.sleep(zombSpeed);
- * } catch (InterruptedException e) {
- * e.printStackTrace();
- * }
- * System.out.println("thread = " + this.getName() + " move");
- * } // end while
- * 
- * }
- * 
- * public void run() {
- * System.out.println("thread = " + this.getName());
- * if(mode=="Nightmare"){waitGetInNightmare();}
- * else if(mode =="Hard"){waitGetInHard();}
- * else{ waitGetIn(); }
- * move();
- * // --------- Remove Zombie when Hit Pikachu & decrease heart
- * if (zombLabel.getBounds().intersects(playerLabel.getBounds())) {
- * hurtSound.playOnce();
- * tempPane.remove(zombLabel);
- * tempPane.repaint();
- * }
- * program.addCount(1);
- * 
- * } // end run
- * }
- */
-// ----------------- Special Class Zone ----------------
+// public void setscore(int x) {
+// this.Score = x;
+// }
 
-class MyImageIcon extends ImageIcon {
-    public MyImageIcon(String fname) {
-        super(fname);
-    }
+// public JLabel getLabel() {
+// return playerLabel;
+// }
+// }// end Player
 
-    public MyImageIcon(Image image) {
-        super(image);
-    }
+// class ZombieThread extends Thread {
+// JLabel zombLabel = new JLabel();
+// JLabel playerLabel = new JLabel(); // For Check Intersect
+// int zombCurX, zombCurY;
+// int zombWidth, zombHeight;
+// int zombSpeed;
+// int low, high;
+// JLabel tempPane;
+// boolean pauseGame = false;
+// MainApplication program;
+// MySoundEffect hurtSound;
+// static String mode;
 
-    public MyImageIcon resize(int width, int height) {
-        Image oldimg = this.getImage();
-        Image newimg = oldimg.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-        return new MyImageIcon(newimg);
-    }
-};
+// // -------------------------------- ZombieThread Constructor
+// // --------------------------
+// public ZombieThread(String n, JLabel zl, JLabel pl, int zs, JLabel pane,
+// MySoundEffect hs, String m) {
+// super(n);
+// zombLabel = zl;
+// zombCurX = zl.getX();
+// zombCurY = zl.getY();
+// zombWidth = zl.getWidth();
+// zombHeight = zl.getHeight();
+// playerLabel = pl;
+// zombSpeed = zs;
+// tempPane = pane;
+// hurtSound = hs;
+// mode = m;
+// System.out.println("mode = " + mode);
+// System.out.println("zombCur X = " + zombCurX + ", zombCurY = " + zombCurY + "
+// zombWidth = " + zombWidth
+// + " , zombHeight" + zombHeight);
 
-class MySoundEffect {
-    private Clip clip;
+// zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
+// tempPane.add(zombLabel);
+// tempPane.validate();
+// start();
+// }
 
-    public MySoundEffect(String filename) {
-        try {
-            java.io.File file = new java.io.File(filename);
-            AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-            clip = AudioSystem.getClip();
-            clip.open(audioStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+// public void setPauseGame(boolean b) {
+// pauseGame = b;
+// }
 
-    public void playOnce() {
-        clip.setMicrosecondPosition(0);
-        clip.start();
-    }
+// // ------------------------- For randoming time Zombie Appear
+// ----------------
+// // Use static method to lock class * If lock only Obj. all other thread will
+// // work and wait together.
+// synchronized public static void waitGetIn() {
+// if (Thread.currentThread().getName() != "Zombie0") {
+// Random r = new Random();
+// int low = 5000;
+// int high = 15000;
+// int timeWait = r.nextInt(high - low) + low;
+// try {
+// Thread.sleep(timeWait);
+// } catch (InterruptedException e) {
+// }
+// }
+// }
 
-    public void playLoop() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
+// synchronized public static void waitGetInHard() {
+// if (Thread.currentThread().getName() != "Zombie0") {
+// Random r = new Random();
+// int low = 5000;
+// int high = 10000;
+// int timeWait = r.nextInt(high - low) + low;
+// try {
+// Thread.sleep(timeWait);
+// } catch (InterruptedException e) {
+// }
+// }
+// }
 
-    public void stop() {
-        clip.stop();
-    }
-}
+// synchronized public static void waitGetInNightmare() {
+// if (Thread.currentThread().getName() != "Zombie0") {
+// Random r = new Random();
+// int low = 4000;
+// int high = 7500;
+// int timeWait = r.nextInt(high - low) + low;
+// try {
+// Thread.sleep(timeWait);
+// } catch (InterruptedException e) {
+// }
+// }
+// }
 
-class Keyboard_bar {
-    private JTextArea typearea;
-    private int width, height;
+// // -------------------- If zombie not hit pikachu, it walks to left
+// // --------------------
+// public void move() {
+// while (!(zombLabel.getBounds().intersects(playerLabel.getBounds()))) {
 
-    public Keyboard_bar() {
-        typearea = new JTextArea();
-        typearea.setBounds(50, 100, 500, 30);
-        typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
-        // typearea.grabFocus();
-        typearea.addKeyListener(new KeyListener() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    System.out.println("Hello world");
-                }
-            }
+// zombLabel.setLocation(zombCurX, zombCurY);
+// if (!pauseGame) {
+// zombCurX = zombCurX - 5;
+// zombLabel.repaint();
+// } else {
+// System.out.println("Pause ZombieThread: " +
+// Thread.currentThread().getName());
+// }
+// zombLabel.repaint();
+// try {
+// Thread.sleep(zombSpeed);
+// } catch (InterruptedException e) {
+// e.printStackTrace();
+// }
+// System.out.println("thread = " + this.getName() + " move");
+// } // end while
 
-            public void keyTyped(KeyEvent e) {
-            }
+// }
 
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-    }
+// public void run() {
+// System.out.println("thread = " + this.getName());
+// if (mode == "Nightmare") {
+// waitGetInNightmare();
+// } else if (mode == "Hard") {
+// waitGetInHard();
+// } else {
+// waitGetIn();
+// }
+// move();
+// // --------- Remove Zombie when Hit Pikachu & decrease heart
+// if (zombLabel.getBounds().intersects(playerLabel.getBounds())) {
+// hurtSound.playOnce();
+// tempPane.remove(zombLabel);
+// tempPane.repaint();
+// }
 
-    public JTextArea getTypearea() {
-        return typearea;
-    }
+// } // end run
+// }
 
-    public void setPane(JLabel x) {
-        x.add(typearea);
-    }
+// // ----------------- Special Class Zone ----------------
+// class MyImageIcon extends ImageIcon {
+// public MyImageIcon(String fname) {
+// super(fname);
+// }
 
-    public void setposition(int x, int y) {
-        typearea.setBounds(x, y, width, height);
-    }
-}
+// public MyImageIcon(Image image) {
+// super(image);
+// }
+
+// public MyImageIcon resize(int width, int height) {
+// Image oldimg = this.getImage();
+// Image newimg = oldimg.getScaledInstance(width, height,
+// java.awt.Image.SCALE_SMOOTH);
+// return new MyImageIcon(newimg);
+// }
+// };
+
+// class MySoundEffect {
+// private Clip clip;
+
+// public MySoundEffect(String filename) {
+// try {
+// java.io.File file = new java.io.File(filename);
+// AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+// clip = AudioSystem.getClip();
+// clip.open(audioStream);
+// } catch (Exception e) {
+// e.printStackTrace();
+// }
+// }
+
+// public void playOnce() {
+// clip.setMicrosecondPosition(0);
+// clip.start();
+// }
+
+// public void playLoop() {
+// clip.loop(Clip.LOOP_CONTINUOUSLY);
+// }
+
+// public void stop() {
+// clip.stop();
+// }
+// }
+
+// class Keyboard_bar {
+// private JTextArea typearea;
+// private int width, height;
+
+// public Keyboard_bar() {
+// typearea = new JTextArea();
+// typearea.setBounds(50, 100, 500, 30);
+// typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
+// // typearea.grabFocus();
+// typearea.addKeyListener(new KeyListener() {
+// public void keyPressed(KeyEvent e) {
+// if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+// System.out.println("Hello world");
+// }
+// }
+
+// public void keyTyped(KeyEvent e) {
+// }
+
+// public void keyReleased(KeyEvent e) {
+// }
+// });
+// }
+
+// public JTextArea getTypearea() {
+// return typearea;
+// }
+
+// public void setPane(JLabel x) {
+// x.add(typearea);
+// }
+
+// public void setposition(int x, int y) {
+// typearea.setBounds(x, y, width, height);
+// }
+// }
+
+// class Item {
+// private int amount = 0;
+// private int width = 100, length = 100;
+// private ImageIcon img;
+
+// }
