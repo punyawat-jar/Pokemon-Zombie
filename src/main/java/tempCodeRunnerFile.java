@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
     // ---------------------------- Game Over ------------------------
     public void gameover(String mode) {
         winGif = new MyImageIcon("gameOver/win.gif");
@@ -83,3 +84,6 @@
         drawpane.add(button1);
         drawpane.add(button2);
     }
+=======
+        typearea.addKeyListener(new KeyList
+>>>>>>> 3a5546f1e245963e64167c2f07801903b4e6ade7
