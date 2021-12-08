@@ -35,7 +35,7 @@ class Vocab {
     public void printFileWord() { // check Reading File
         System.out.printf("====== Mode %-9s reading... =====\n", mode);
         for (int i = 0; i < vocabList.size(); i++) {
-            System.out.printf("\t [%8s] %-15s \n", mode, vocabList.get(i));
+            System.out.printf("\t [%8s %4d] %-15s \n", mode,i, vocabList.get(i));
         }
         System.out.println("");
     }

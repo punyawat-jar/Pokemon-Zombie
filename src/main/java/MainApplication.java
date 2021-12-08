@@ -64,19 +64,14 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0, count_pic = 0;
 
     private Player player;
-<<<<<<< HEAD
     //private Bomb bomb;
-=======
-    private Wordbox wbox;
-    private Bomb bomb;
->>>>>>> c30e9c50993afd7cf7df22d3371a9b5d6a32f20e
     // private Potion potion;
 
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
             "custom_poke/poke4.png", "custom_poke/poke5.png" };
-    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
-            "Vocab/Boss.txt" };
+
+    private String[]mode = {"Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt","Vocab/Nightmare.txt","Vocab/Boss.txt"};
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
@@ -108,10 +103,11 @@ public class MainApplication extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         contentpane = (JPanel) getContentPane();
         contentpane.setLayout(new BorderLayout());
-         // add Vocab
-        readFile(mode);
         
         AddComponents();
+
+        // add Vocab
+        readFile(mode);
     }// end MainApplication Constructor;
 
     public void AddComponents() {
@@ -463,7 +459,6 @@ public class MainApplication extends JFrame {
         wbox_AL.clear();
         switch (mode) {
             case "Beginner":
-                //showText(mode);
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
@@ -981,10 +976,10 @@ public class MainApplication extends JFrame {
 
     public void readFile(String[] mode) {
         for (int i = 0; i < mode.length; i++) {
-            enforceFile(mode[i]);
+             enforceFile(mode[i]);
         }
-        System.out.printf("----------------------------------------------\n");
-        printReadFile();
+        //System.out.printf("----------------------------------------------\n");
+        //printReadFile();
     }
 
     public void enforceFile(String fname) {
@@ -1018,42 +1013,12 @@ public class MainApplication extends JFrame {
     }
 
     public void printReadFile() { // print read file
-        // for (int i = 0; i < modeList.size(); i++) {
-        modeList.get(2).printFileWord();
-        // }
+        for (int i = 0; i < modeList.size(); i++) {
+            modeList.get(i).printFileWord();
+         }
         System.out.println("");
     }
 
-<<<<<<< HEAD
-    public void showText(String mode){
-        int numMode = 0;
-        String text;
-        switch(mode){
-            case "Beginner" : numMode = 0; break;
-            case "Medium"   : numMode = 1; break;
-            case "Hard"     : numMode = 2; break;
-            case "Nightmare": numMode = 3; break;
-            case "Boss"     : numMode = 4; break;
-        }
-        text  = modeList.get(numMode).randomWord();
-
-        JPanel textpane = new JPanel();
-        textpane.setLayout(new BorderLayout());
-        textpane.setSize(200, 50);
-        
-        JLabel bgText = new JLabel();
-        bgText.setIcon(emptyButton);
-        
-        validate();
-        //return text;
-=======
-    public void input_word(int n){
-        for(int i=0;i<10;i++){
-            wbox = new Wordbox(drawpane,modeList.get(n).randomWord());
-            wbox_AL.add(wbox);
-        }
->>>>>>> c30e9c50993afd7cf7df22d3371a9b5d6a32f20e
-    }
 }// end Class MainApplication
 
 // class Vocab {
