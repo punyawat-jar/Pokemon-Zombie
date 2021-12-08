@@ -11,6 +11,8 @@ import javax.swing.border.*;
 class Keyboard_bar {
     private JTextArea typearea;
     private int width, height;
+    private JLabel pane;
+    private MainApplication main;
 
     public Keyboard_bar() {
         typearea = new JTextArea();
@@ -21,6 +23,12 @@ class Keyboard_bar {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     System.out.println("Hello world");
+                }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == false){
+                    main.setPauseGame(true);
+                }
+                else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == true){
+                    main.setPauseGame(false);
                 }
             }
 
@@ -36,7 +44,8 @@ class Keyboard_bar {
         return typearea;
     }
 
-    public void setPane(JLabel x) {
+    public void setPane(JLabel x,MainApplication m) {
+        main = m;
         x.add(typearea);
     }
 

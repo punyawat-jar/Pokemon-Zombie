@@ -30,7 +30,7 @@ public class MainApplication extends JFrame {
     private JRadioButton[] radio;
     private String[] accessory = { "poke1", "poke2", "poke3", "poke4", "poke5" };
 
-    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton, restartButton, menuButton,
+    private MyImageIcon emptyButton,startButton, creditButton, tutorialButton, exitButton, playButton, restartButton, menuButton,
             nextButton, backButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound,
             usedItemSound;
@@ -64,6 +64,8 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0, count_pic = 0;
 
     private Player player;
+    private Bomb bomb;
+    // private Potion potion;
 
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
@@ -77,8 +79,20 @@ public class MainApplication extends JFrame {
         new MainApplication();
     }
 
+    public int get_framewidth() {
+        return frameWidth;
+    }
+
+    public int get_frameheight() {
+        return frameHeight;
+    }
+
     public boolean getPauseGame() {
         return pauseGame;
+    }
+
+    public void setPauseGame(boolean x) {
+        pauseGame = x;
     }
 
     public MainApplication() {
@@ -106,6 +120,7 @@ public class MainApplication extends JFrame {
         in_gamebg4Img = new MyImageIcon("bg/nightmare_bg.png").resize(frameWidth, frameHeight);
         in_gamebg5Img = new MyImageIcon("bg/boss_bg.png").resize(frameWidth, frameHeight);
 
+        emptyButton = new MyImageIcon("button_and_cursor/button.png").resize(138, 50);
         startButton = new MyImageIcon("button_and_cursor/StartButton.png").resize(138, 50);
         creditButton = new MyImageIcon("button_and_cursor/CreditButton.png").resize(138, 50);
         tutorialButton = new MyImageIcon("button_and_cursor/TutorialButton.png").resize(138, 50);
@@ -442,6 +457,7 @@ public class MainApplication extends JFrame {
         menuSong.stop();
         switch (mode) {
             case "Beginner":
+                showText(mode);
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
@@ -494,8 +510,9 @@ public class MainApplication extends JFrame {
         drawpane.add(PBar);
 
         keybar = new Keyboard_bar();
-        keybar.setPane(drawpane);
+        keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
+
         // gameover(mode);
         // // validate();
         // joinThread(10);
@@ -903,13 +920,13 @@ public class MainApplication extends JFrame {
         if (player.getHP() == 0) { // Game Over
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
-        } 
-        /*
-        if(score==10) { // win
-            drawpane.add(winLabel);
-            winSound.playOnce();
         }
-        */
+        /*
+         * if(score==10) { // win
+         * drawpane.add(winLabel);
+         * winSound.playOnce();
+         * }
+         */
 
         drawpane.add(button1);
         drawpane.add(button2);
@@ -989,6 +1006,29 @@ public class MainApplication extends JFrame {
         modeList.get(2).printFileWord();
         // }
         System.out.println("");
+    }
+
+    public void showText(String mode){
+        int numMode = 0;
+        String text;
+        switch(mode){
+            case "Beginner" : numMode = 0; break;
+            case "Medium"   : numMode = 1; break;
+            case "Hard"     : numMode = 2; break;
+            case "Nightmare": numMode = 3; break;
+            case "Boss"     : numMode = 4; break;
+        }
+        text  = modeList.get(numMode).randomWord();
+
+        JPanel textpane = new JPanel();
+        textpane.setLayout(new BorderLayout());
+        textpane.setSize(200, 50);
+        
+        JLabel bgText = new JLabel();
+        bgText.setIcon(emptyButton);
+        
+        validate();
+        //return text;
     }
 }// end Class MainApplication
 
