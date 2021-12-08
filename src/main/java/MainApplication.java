@@ -44,6 +44,7 @@ public class MainApplication extends JFrame {
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
+    ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
     private MyImageIcon winGif, gameOverGif;
 
     private JProgressBar PBar = new JProgressBar();
@@ -344,6 +345,7 @@ public class MainApplication extends JFrame {
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
+
         if (comeIn == false) {
             comeIn = true;
             readyGoLabel.setBounds(525, 230, 380, 214);
@@ -352,6 +354,17 @@ public class MainApplication extends JFrame {
             readyGoSound.playOnce();
         }
         wbox_AL.clear();
+
+        PBar.setValue(0);
+        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
+        PBar.setForeground(new Color(255, 199, 56));
+        PBar.setStringPainted(false);
+        drawpane.add(PBar);
+
+        keybar = new Keyboard_bar(wbox_AL);
+        keybar.setPane(drawpane, this);
+        keybar.getTypearea().grabFocus();
+
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
@@ -405,15 +418,7 @@ public class MainApplication extends JFrame {
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
 
-        PBar.setValue(0);
-        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
-        PBar.setForeground(new Color(255, 199, 56));
-        PBar.setStringPainted(false);
-        drawpane.add(PBar);
-
-        keybar = new Keyboard_bar(wbox_AL);
-        keybar.setPane(drawpane, this);
-        keybar.getTypearea().grabFocus();
+        
         
         setup_thread_list();
 
@@ -425,10 +430,36 @@ public class MainApplication extends JFrame {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
                     program,wbox_AL);
-            System.out.println("i main = " + i);
+            zombielist.add(zombThread);
 
+            System.out.println("i main = " + i);
+            
         }
     }
+
+    public void pause(){
+        for(int i =0;i<zombielist.size();i++){
+            if(zombielist.get(i).getPauseGame() == false){
+                zombielist.get(i).setPauseGame(true);
+            }
+            else if(zombielist.get(i).getPauseGame() == true){
+                zombielist.get(i).setPauseGame(false);
+            }
+        }
+    }
+
+    public void kill_zombie(int i){
+        // drawpane.remove(mobLabel.get(i));
+        for(int j =0;j<zombielist.size();j++){
+            zombielist.get(i).kill_monster(i);
+        }
+        // wbox_AL.get(i).setvisible(false);
+        //drawpane.remove(wbox_AL.get(i));
+        // drawpane.repaint();
+        setCount_death();
+
+    }
+    
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
     // try {
@@ -476,15 +507,7 @@ public class MainApplication extends JFrame {
         gameResult = result;
     }
 
-    // public void kill_monster(int i){
-    //     drawpane.remove(mobLabel.get(i));
-    //     wbox_AL.get(i).setvisible(false);
-    //     //drawpane.remove(wbox_AL.get(i));
-    //     drawpane.repaint();
-        
-    //     setCount_death();
-
-    // }
+  
 
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
@@ -649,9 +672,7 @@ public class MainApplication extends JFrame {
         } // end while
     }
 
-    public void IsPauseGame(boolean b) {
-        //pause = b;
-    }
+
     public void printReadFile() { // print read file
         for (int i = 0; i < modeList.size(); i++) {
             modeList.get(i).printFileWord();

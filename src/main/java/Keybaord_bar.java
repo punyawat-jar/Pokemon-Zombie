@@ -31,25 +31,23 @@ class Keyboard_bar {
                         //main.kill_monster(main.threadlist.get(main.getCount_death()));
 
                     //}
-                    
                     a = typearea.getText().trim();
                     b = word_AL.get(main.getCount_death()).getWord().trim();
                     
-                //     if(a.equals(b)){
-                //         ///score++
-                //         main.kill_monster(main.threadlist.get(main.getCount_death()));
-                        
-                //         System.out.println("mY name is your");
-                //     }
-                //     typearea.setText(null);
+                    if(a.equals(b)){
+                        ///score++
+                        main.kill_zombie(main.threadlist.get(main.getCount_death()));
+                        System.out.println("count is = " + main.getCount_death());
+                        System.out.println("thread is = " + main.threadlist);
+                        System.out.println("mY name is your");
+                    }
+                    typearea.setText(null);
                     
-                // }
-                // if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == false){
-                //     main.setPauseGame(true);
-                // }
-                // else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == true){
-                //     main.setPauseGame(false);
                 }
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                    main.pause();
+                }
+
             }
 
             public void keyTyped(KeyEvent e) {

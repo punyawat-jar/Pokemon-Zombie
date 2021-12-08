@@ -24,6 +24,7 @@ class ZombieThread extends Thread {
     private MySoundEffect hurtSound;
     private JProgressBar tempProgressBar;
     private ArrayList<Wordbox> wbox = new ArrayList<Wordbox>();
+    
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
@@ -244,6 +245,7 @@ class ZombieThread extends Thread {
             hurtSound.playOnce();
             tempPlayer.hitplayer(tempPane);
             kill_monster(i);
+            program.setCount_death();
         }
     }// end run
     
@@ -252,6 +254,7 @@ class ZombieThread extends Thread {
         tempPane.repaint();
         wbox.get(i).setvisible(false);
         killed = true;
+        
     }
 
     // -------------------- For randoming time Zombie Appear--------------
@@ -333,7 +336,7 @@ class ZombieThread extends Thread {
             if (!pauseGame) {
                 zombCurX = zombCurX - 5;
                 zombLabel.repaint();
-                wbox.get(i).wbox_move(zombCurX,zombCurY);
+                wbox.get(i).wbox_move(zombCurX-30,zombCurY);
             } else {
                 System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
             }
