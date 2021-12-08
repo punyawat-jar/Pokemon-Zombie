@@ -14,12 +14,12 @@ class Keyboard_bar {
     private JTextArea typearea;
     private int width, height;
     private MainApplication main;
+    private ZombieThread zt;
     private ArrayList<Wordbox> word_AL;
     private String a,b;
     public Keyboard_bar(ArrayList<Wordbox> wAL) {
         word_AL = wAL;
         typearea = new JTextArea();
-        
         typearea.setBounds(50, 100, 500, 30);
         typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
         // typearea.grabFocus();
@@ -35,20 +35,20 @@ class Keyboard_bar {
                     a = typearea.getText().trim();
                     b = word_AL.get(main.getCount_death()).getWord().trim();
                     
-                    if(a.equals(b)){
-                        ///score++
-                        main.kill_monster(main.threadlist.get(main.getCount_death()));
+                //     if(a.equals(b)){
+                //         ///score++
+                //         main.kill_monster(main.threadlist.get(main.getCount_death()));
                         
-                        System.out.println("mY name is your");
-                    }
-                    typearea.setText(null);
+                //         System.out.println("mY name is your");
+                //     }
+                //     typearea.setText(null);
                     
-                }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == false){
-                    main.setPauseGame(true);
-                }
-                else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == true){
-                    main.setPauseGame(false);
+                // }
+                // if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == false){
+                //     main.setPauseGame(true);
+                // }
+                // else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == true){
+                //     main.setPauseGame(false);
                 }
             }
 
@@ -59,7 +59,7 @@ class Keyboard_bar {
             }
         });
     }
-
+    
     public JTextArea getTypearea() {
         return typearea;
     }
@@ -67,6 +67,9 @@ class Keyboard_bar {
     public void setPane(JLabel x,MainApplication m) {
         main = m;
         x.add(typearea);
+    }
+    public void setZombieThread(ZombieThread z){
+        zt = z;
     }
 
     public void setposition(int x, int y) {

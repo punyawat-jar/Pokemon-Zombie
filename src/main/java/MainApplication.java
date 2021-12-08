@@ -359,6 +359,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
                 player = new Player(drawpane);
+                // input_word(0);
                 createZombieThread(mode);
 
                 break;
@@ -368,6 +369,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
                 player = new Player(drawpane);
+                // input_word(1);
                 createZombieThread(mode);
                 break;
             case "Hard":
@@ -376,6 +378,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
                 player = new Player(drawpane);
+                // input_word(2);
                 createZombieThread(mode);
                 break;
             case "Nightmare":
@@ -384,6 +387,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 nightmareSong.playLoop();
                 player = new Player(drawpane);
+                input_word(3);
                 createZombieThread(mode);
                 break;
             case "Boss":
@@ -645,6 +649,9 @@ public class MainApplication extends JFrame {
         } // end while
     }
 
+    public void IsPauseGame(boolean b) {
+        //pause = b;
+    }
     public void printReadFile() { // print read file
         for (int i = 0; i < modeList.size(); i++) {
             modeList.get(i).printFileWord();
@@ -666,6 +673,10 @@ public class MainApplication extends JFrame {
 
     }
 }// end Class MainApplication
+
+
+
+
 
 // class Vocab {
 // private String mode;
