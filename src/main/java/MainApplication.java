@@ -66,6 +66,7 @@ public class MainApplication extends JFrame {
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0,count_death=0;
 
+    private boolean ismove = true;
     private Player player;
     private Wordbox wbox;
     // private Bomb bomb;
@@ -524,7 +525,7 @@ public class MainApplication extends JFrame {
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
         
-
+        setup_thread_list();
 
         // gameover(mode);
         // // validate();
@@ -747,6 +748,7 @@ public class MainApplication extends JFrame {
                     hurtSound.playOnce();
                     player.hitplayer(drawpane);
                     kill_monster(i);
+                    //this.stop();
                 }
             } // end run
         };// end thread creation
@@ -823,6 +825,12 @@ public class MainApplication extends JFrame {
         System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
+    public void setup_thread_list(){
+        threadlist.add(0);
+        for(int i=9;i>0;i--){
+            threadlist.add(i);
+        }
+    }
 
     public void print_list_thread(){
         for(int i =0;i<threadlist.size();i++){
@@ -833,10 +841,9 @@ public class MainApplication extends JFrame {
     // ----------------- If zombie not hit pikachu, it walks to left----------------
     public void move(int i) {
         System.out.println("Thread: Zombie" + i + " -> move");
-        threadlist.add(i);
         print_list_thread();
         // While not Hit player & player not die. walk left
-        while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) && player.getHP() != 0) {
+        while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) && player.getHP() != 0 && ismove == true) {
             mobLabel.get(i).setLocation(mobCurX.get(i), mobCurY.get(i));
             if (!pauseGame) {
                 mobCurX.set(i, mobCurX.get(i) - 5);
@@ -880,8 +887,8 @@ public class MainApplication extends JFrame {
         wbox_AL.get(i).setvisible(false);
         //drawpane.remove(wbox_AL.get(i));
         drawpane.repaint();
-        setCount_death();
         
+        setCount_death();
 
     }
 

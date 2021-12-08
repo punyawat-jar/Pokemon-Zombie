@@ -34,13 +34,12 @@ class Keyboard_bar {
                     
                     a = typearea.getText().trim();
                     b = word_AL.get(main.getCount_death()).getWord().trim();
-
+                    
                     if(a.equals(b)){
                         ///score++
                         main.kill_monster(main.threadlist.get(main.getCount_death()));
-                        System.out.println("*" + a + "*");
-                        System.out.println("+" + b + "+");
-                       
+                        
+                        System.out.println("mY name is your");
                     }
                     typearea.setText(null);
                     
