@@ -836,7 +836,7 @@ public class MainApplication extends JFrame {
                         bossSong.stop();
                         break;
                 }
-                // drawpane.removeAll();AddComponents();
+                //drawpane.removeAll();AddComponents();
             }
         });
 
