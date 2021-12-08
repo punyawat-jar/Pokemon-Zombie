@@ -840,7 +840,7 @@ public class MainApplication extends JFrame {
             }
         });
 
-        if (score >= 0)
+        if (score >=0)
             drawpane.add(winLabel);
         else
             drawpane.add(gameOverLabel);
