@@ -130,6 +130,5 @@ class ZombieThread extends Thread {
             tempPane.remove(zombLabel);
             tempPane.repaint();
         }
-
     } // end run
 }

@@ -64,7 +64,7 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0, count_pic = 0;
 
     private Player player;
-    private Bomb bomb;
+    //private Bomb bomb;
     // private Potion potion;
 
     Tutorial Tframe;
@@ -103,10 +103,10 @@ public class MainApplication extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         contentpane = (JPanel) getContentPane();
         contentpane.setLayout(new BorderLayout());
-
+         // add Vocab
+        readFile(mode);
+        
         AddComponents();
-        // add Vocab
-        // readFile(mode);
     }// end MainApplication Constructor;
 
     public void AddComponents() {
@@ -457,7 +457,7 @@ public class MainApplication extends JFrame {
         menuSong.stop();
         switch (mode) {
             case "Beginner":
-                showText(mode);
+                //showText(mode);
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
@@ -967,8 +967,8 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < mode.length; i++) {
             enforceFile(mode[i]);
         }
-        // System.out.printf("---------------\n");
-        // printReadFile();
+        System.out.printf("----------------------------------------------\n");
+        printReadFile();
     }
 
     public void enforceFile(String fname) {
