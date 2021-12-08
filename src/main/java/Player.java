@@ -43,11 +43,15 @@ class Player {
         x.add(HP_AL.get(HP));
     }
 
-    public int getHP() {
+    public void resetHP() {
+        HP = 4;
+    }
+
+    synchronized public int getHP() {
         return HP;
     }
 
-    public void setscore(int x) {
+    synchronized public void setscore(int x) {
         this.Score = x;
     }
 
