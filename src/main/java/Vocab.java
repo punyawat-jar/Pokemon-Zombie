@@ -14,8 +14,7 @@ class Vocab {
     private ArrayList<String> vocabList = new ArrayList<String>();
     private Random random = new Random();
 
-    public Vocab() {
-    }
+    public Vocab() {}
 
     public Vocab(String m, ArrayList<String> li) {
         mode = m;

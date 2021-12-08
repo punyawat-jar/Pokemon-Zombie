@@ -80,6 +80,9 @@ public class MainApplication extends JFrame {
     public boolean getPauseGame() {
         return pauseGame;
     }
+    public void setPauseGame(boolean x){
+        pauseGame = x;
+    }
 
     public MainApplication() {
         setTitle("PokemonGame!");
@@ -494,8 +497,9 @@ public class MainApplication extends JFrame {
         drawpane.add(PBar);
 
         keybar = new Keyboard_bar();
-        keybar.setPane(drawpane);
+        keybar.setPane(drawpane,this);
         keybar.getTypearea().grabFocus();
+
         // gameover(mode);
         // // validate();
         // joinThread(10);
