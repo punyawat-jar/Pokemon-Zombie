@@ -47,6 +47,8 @@ public class MainApplication extends JFrame {
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
     private int zombSpeed = 300;
+    private Compare_text compare;
+
     ArrayList<JLabel> mobLabel = new ArrayList<JLabel>();
     ArrayList<Integer> mobCurX = new ArrayList<Integer>();
     ArrayList<Integer> mobCurY = new ArrayList<Integer>();
@@ -55,24 +57,26 @@ public class MainApplication extends JFrame {
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
+    ArrayList<Integer> threadlist = new ArrayList<Integer>();
     private MyImageIcon winGif, gameOverGif;
 
     private JProgressBar PBar = new JProgressBar();
     private Keyboard_bar keybar;
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
-    private int score = 0, count = 0, count_pic = 0;
+    private int score = 0, count = 0, count_pic = 0,count_death=0;
 
     private Player player;
     private Wordbox wbox;
-    private Bomb bomb;
+    // private Bomb bomb;
     // private Potion potion;
 
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
             "custom_poke/poke4.png", "custom_poke/poke5.png" };
-    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
-            "Vocab/Boss.txt" };
+    // private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
+    //         "Vocab/Boss.txt" };
+    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt"};
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
@@ -107,7 +111,7 @@ public class MainApplication extends JFrame {
 
         AddComponents();
         // add Vocab
-        // readFile(mode);
+        readFile(mode);
     }// end MainApplication Constructor;
 
     public void AddComponents() {
@@ -491,7 +495,7 @@ public class MainApplication extends JFrame {
                 nightmareSong.playLoop();
                 player = new Player(drawpane);
                 addZombieNightmare(mode);
-                //input_word(3);
+                input_word(3);
                 break;
             case "Boss":
                 drawpane.setIcon(in_gamebg5Img);
@@ -514,9 +518,10 @@ public class MainApplication extends JFrame {
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
-        keybar = new Keyboard_bar();
+        keybar = new Keyboard_bar(wbox_AL);
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
+        
 
 
         // gameover(mode);
@@ -739,8 +744,7 @@ public class MainApplication extends JFrame {
                 if (mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) {
                     hurtSound.playOnce();
                     player.hitplayer(drawpane);
-                    drawpane.remove(mobLabel.get(i));
-                    drawpane.repaint();
+                    kill_monster(i);
                 }
             } // end run
         };// end thread creation
@@ -748,6 +752,12 @@ public class MainApplication extends JFrame {
         zombieThread.start();
     }
 
+    public void setCount_death(){
+        count_death+=1;
+    }
+    public int getCount_death(){
+        return count_death;
+    }
     // ------------------------- For randoming time Zombie Appear ----------------
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
@@ -811,9 +821,18 @@ public class MainApplication extends JFrame {
         System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
+
+    public void print_list_thread(){
+        for(int i =0;i<threadlist.size();i++){
+            System.out.println("->>>>>>>>"+threadlist.get(i));
+        }
+    }
+
     // ----------------- If zombie not hit pikachu, it walks to left----------------
     public void move(int i) {
         System.out.println("Thread: Zombie" + i + " -> move");
+        threadlist.add(i);
+        print_list_thread();
         // While not Hit player & player not die. walk left
         while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) && player.getHP() != 0) {
             mobLabel.get(i).setLocation(mobCurX.get(i), mobCurY.get(i));
@@ -822,6 +841,8 @@ public class MainApplication extends JFrame {
                 mobLabel.get(i).repaint();
                 //wbox_AL.get(i).wbox_move(mobCurX.get(i) - 5, mobCurY.get(i)-20);
                 //wbox.wbox_move(mobCurX.get(i) - 5,mobCurY.get(i)-20);
+                wbox_AL.get(i).wbox_move(mobCurX.get(i),mobCurY.get(i)-50);
+                
             } 
             else{
                 System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
@@ -850,6 +871,16 @@ public class MainApplication extends JFrame {
     public void addCount(int c) {
         count += c;
         System.out.println("Add Count + = 1");
+    }
+
+    public void kill_monster(int i){
+        drawpane.remove(mobLabel.get(i));
+        wbox_AL.get(i).setvisible(false);
+        //drawpane.remove(wbox_AL.get(i));
+        drawpane.repaint();
+        setCount_death();
+        
+
     }
 
     // ---------------------------- Game Over ------------------------
@@ -995,8 +1026,11 @@ public class MainApplication extends JFrame {
                     if (countLine == 0) {
                         name = buf[0].trim();
                         countLine++;
-                    } else {
+                    } 
+                    else {
+                        
                         vList.add(buf[0].trim());
+                        
                     }
                 }
                 Vocab m = new Vocab(name, vList);
@@ -1018,9 +1052,16 @@ public class MainApplication extends JFrame {
 
     public void input_word(int n){
         for(int i=0;i<10;i++){
-            wbox = new Wordbox(drawpane,modeList.get(n).randomWord());
+            wbox = new Wordbox(drawpane,"Helloworld");
+            
+            //modeList.get(n).randomWord()
             wbox_AL.add(wbox);
         }
+
+        for(int i=0;i<wbox_AL.size();i++){
+            System.out.println(i + " = " + wbox_AL.get(i).getWord());
+        }
+        
     }
 }// end Class MainApplication
 

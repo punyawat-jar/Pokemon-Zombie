@@ -1,1 +1,2 @@
- 
+
+        typearea.addKeyListener(new KeyList
