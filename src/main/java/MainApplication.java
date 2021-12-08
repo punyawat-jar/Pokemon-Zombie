@@ -891,20 +891,23 @@ public class MainApplication extends JFrame {
                 // button2.setVisible(false);
                 // PBar.setVisible(false);
 
-                // drawpane.removeAll();
+                drawpane.removeAll();
                 repaint();
                 validate();
                 mainmanu();
             }
         });
 
-        if (player.getHP() > 0) { // Win
-            drawpane.add(winLabel);
-            winSound.playOnce();
-        } else { // gameOver
+        if (player.getHP() > 0) { // Game Over
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
+        } 
+        /*
+        if(score==10) { // win
+            drawpane.add(winLabel);
+            winSound.playOnce();
         }
+        */
 
         drawpane.add(button1);
         drawpane.add(button2);
