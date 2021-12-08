@@ -241,13 +241,15 @@ public class MainApplication extends JFrame {
         nightmareSong = new MySoundEffect("song/nightmare_song.wav");
         bossSong = new MySoundEffect("song/boss_song.wav");
 
-        menuSong.playLoop();
+        //menuSong.playLoop();
 
         mainmanu();
         validate();
     }// end AddComponent
 
     public void mainmanu() {
+        menuSong.playLoop();
+        
         // main menu button
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
