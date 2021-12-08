@@ -20,6 +20,7 @@ class Vocab {
         mode = m;
         vocabList = li;
         sizeList = vocabList.size();
+        System.out.println("VOcab complete");
     }
 
     public String getMode() {
