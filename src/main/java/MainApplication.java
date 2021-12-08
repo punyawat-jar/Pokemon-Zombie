@@ -21,6 +21,7 @@ public class MainApplication extends JFrame {
     private JLabel Label;
     private ButtonGroup bgroup;
     private boolean pauseGame = false;
+    private boolean joinComplete = false;
     private String modeSelected;
 
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
@@ -51,7 +52,7 @@ public class MainApplication extends JFrame {
     ArrayList<Integer> mobCurY = new ArrayList<Integer>();
     ArrayList<Integer> mobWidth = new ArrayList<Integer>();
     ArrayList<Integer> mobHeight = new ArrayList<Integer>();
-    // ArrayList<ZombieThread> mobThread = new ArrayList<ZombieThread>();
+    // ArrayList<Thread> mobThread = new ArrayList<Thread>();
 
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     private MyImageIcon winGif, gameOverGif;
@@ -60,7 +61,7 @@ public class MainApplication extends JFrame {
     private Keyboard_bar keybar;
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
-    private int score = 0, count = 0;
+    private int score = 0, count = 0, count_pic = 0;
 
     private Player player;
     private Bomb bomb;
@@ -88,6 +89,10 @@ public class MainApplication extends JFrame {
 
     public boolean getPauseGame() {
         return pauseGame;
+    }
+
+    public void setPauseGame(boolean x) {
+        pauseGame = x;
     }
 
     public MainApplication() {
@@ -251,13 +256,16 @@ public class MainApplication extends JFrame {
         nightmareSong = new MySoundEffect("song/nightmare_song.wav");
         bossSong = new MySoundEffect("song/boss_song.wav");
 
-        menuSong.playLoop();
+        // menuSong.playLoop();
 
         mainmanu();
         validate();
+
     }// end AddComponent
 
     public void mainmanu() {
+        menuSong.playLoop();
+
         // main menu button
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
@@ -351,9 +359,9 @@ public class MainApplication extends JFrame {
 
                         for (int i = 0; i < poke_list.length; i++) {
                             if (poke_list[i].contains(x.getText())) {
-                                drawpane.remove(custom_poke_AL.get(count));
-                                count = i;
-                                drawpane.add(custom_poke_AL.get(count));
+                                drawpane.remove(custom_poke_AL.get(count_pic));
+                                count_pic = i;
+                                drawpane.add(custom_poke_AL.get(count_pic));
                                 repaint();
                             }
                         }
@@ -374,7 +382,7 @@ public class MainApplication extends JFrame {
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
 
-                drawpane.remove(custom_poke_AL.get(count));
+                drawpane.remove(custom_poke_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mainmanu();
@@ -386,7 +394,7 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
-                drawpane.remove(custom_poke_AL.get(count));
+                drawpane.remove(custom_poke_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mode_panel();
@@ -394,12 +402,11 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(nextbtn);
         drawpane.add(backbtn);
-        drawpane.add(custom_poke_AL.get(count));
+        drawpane.add(custom_poke_AL.get(count_pic));
         drawpane.add(rlabel);
         setUpButton(backbtn, backButton);
         setUpButton(nextbtn, nextButton);
         validate();
-
         repaint();
     }
 
@@ -445,41 +452,96 @@ public class MainApplication extends JFrame {
         drawpane.add(backbtn);
     }// end mode Panel
 
-    public int randomNum(int amount) {
-        Random random = new Random();
-        int randomNum = random.nextInt(amount);
-        mobCurX.add(frameWidth);
-        System.out.println(randomNum);
-        return randomNum;
+    public void main_game(String mode) {
+        menuSong.stop();
+        switch (mode) {
+            case "Beginner":
+                drawpane.setIcon(in_gamebg1Img);
+                drawpane.setLayout(null);
+                contentpane.add(drawpane, BorderLayout.CENTER);
+                beginnerSong.playLoop();
+                player = new Player(drawpane);
+                addZombieBeginner(mode);
+                break;
+            case "Medium":
+                drawpane.setIcon(in_gamebg2Img);
+                drawpane.setLayout(null);
+                contentpane.add(drawpane, BorderLayout.CENTER);
+                mediumSong.playLoop();
+                player = new Player(drawpane);
+                addZombieMedium(mode);
+                break;
+            case "Hard":
+                drawpane.setIcon(in_gamebg3Img);
+                drawpane.setLayout(null);
+                contentpane.add(drawpane, BorderLayout.CENTER);
+                hardSong.playLoop();
+                player = new Player(drawpane);
+                addZombieHard(mode);
+                break;
+            case "Nightmare":
+                drawpane.setIcon(in_gamebg4Img);
+                drawpane.setLayout(null);
+                contentpane.add(drawpane, BorderLayout.CENTER);
+                nightmareSong.playLoop();
+                player = new Player(drawpane);
+                addZombieNightmare(mode);
+                break;
+            case "Boss":
+                drawpane.setIcon(in_gamebg5Img);
+                drawpane.setLayout(null);
+                contentpane.add(drawpane, BorderLayout.CENTER);
+                bossSong.playLoop();
+                player = new Player(drawpane);
+                // addZombieHard();
+
+                break;
+        }
+        // player = new Player();
+        // player.draw_player(drawpane);
+        // player.draw_healthbar(drawpane);
+
+        PBar.setValue(0);
+        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
+        PBar.setForeground(new Color(255, 199, 56));
+        PBar.setStringPainted(false);
+        drawpane.add(PBar);
+
+        keybar = new Keyboard_bar();
+        keybar.setPane(drawpane, this);
+        keybar.getTypearea().grabFocus();
+
+        // gameover(mode);
+        // // validate();
+        // joinThread(10);
+        // while (!joinComplete) {
+        // System.out.println("Before if, mobThread size = " + mobThread.size());
+        // if (mobThread.size() == 10) {
+        // System.out.println("Join all Threads");
+        // // validate();
+        // joinThread(10);
+        // System.out.println("End game, Stage: " + mode);
+        // System.out.println("mobThread size = " + mobThread.size());
+        // // }
+        // joinComplete = true;
+        // }
+        // }
     }
 
-    public void setZombSpeed(int spd) {
-        zombSpeed = spd;
-    }
-
-    public void addCount(int c) {
-        count += c;
+    public void setPbar(JProgressBar bar) {
+        count += 1;
+        bar.setValue(count * 10);
         System.out.println("Add Count + = 1");
     }
 
-    public void createZombieThread(String mode) {
-        for (int i = 0; i < 10; i++) {
-
-            mobCurX.set(i, mobLabel.get(i).getX());
-            mobCurY.set(i, mobLabel.get(i).getY());
-
-            setZombieThread(i);
-
-            if (i == 0) {
-                readyGoSound.playOnce();
-                readyGoLabel.setBounds(525, 230, 380, 214);
-                drawpane.add(readyGoLabel);
-                drawpane.validate();
-            }
-            System.out.println("thread = " + this.getName() + " Get in");
-
-        }
-    }// end CreateZombieThread
+    // public void joinThread(int n) {
+    // for (int i = 0; i < n; i++) {
+    // try {
+    // mobThread.get(i).join();
+    // } catch (InterruptedException e) {
+    // }
+    // }
+    // }
 
     // ----------------------------- Add 10 Zombies to screen--------------------
     public void addZombieBeginner(String mode) {
@@ -614,72 +676,27 @@ public class MainApplication extends JFrame {
         createZombieThread(mode);
     }// end addZombieNightmare
 
-    public void main_game(String mode) {
-        menuSong.stop();
-        switch (mode) {
-            case "Beginner":
-                drawpane.setIcon(in_gamebg1Img);
-                drawpane.setLayout(null);
-                contentpane.add(drawpane, BorderLayout.CENTER);
-                beginnerSong.playLoop();
-                // bomb = new Bomb(drawpane);
-                player = new Player(drawpane);
-                addZombieBeginner(mode);
+    public void createZombieThread(String mode) {
+        for (int i = 0; i < 10; i++) {
 
-                break;
-            case "Medium":
-                drawpane.setIcon(in_gamebg2Img);
-                drawpane.setLayout(null);
-                contentpane.add(drawpane, BorderLayout.CENTER);
-                mediumSong.playLoop();
-                player = new Player(drawpane);
-                addZombieMedium(mode);
-                break;
-            case "Hard":
-                drawpane.setIcon(in_gamebg3Img);
-                drawpane.setLayout(null);
-                contentpane.add(drawpane, BorderLayout.CENTER);
-                hardSong.playLoop();
-                player = new Player(drawpane);
-                addZombieHard(mode);
-                break;
-            case "Nightmare":
-                drawpane.setIcon(in_gamebg4Img);
-                drawpane.setLayout(null);
-                contentpane.add(drawpane, BorderLayout.CENTER);
-                nightmareSong.playLoop();
-                player = new Player(drawpane);
-                addZombieNightmare(mode);
-                break;
-            case "Boss":
-                drawpane.setIcon(in_gamebg5Img);
-                drawpane.setLayout(null);
-                contentpane.add(drawpane, BorderLayout.CENTER);
-                bossSong.playLoop();
-                player = new Player(drawpane);
-                // addZombieHard();
-                break;
+            mobCurX.set(i, mobLabel.get(i).getX());
+            mobCurY.set(i, mobLabel.get(i).getY());
+
+            setZombieThread(i);
+
+            if (i == 0) {
+                readyGoSound.playOnce();
+                readyGoLabel.setBounds(525, 230, 380, 214);
+                drawpane.add(readyGoLabel);
+                drawpane.validate();
+            }
+            System.out.println("thread = " + Thread.currentThread().getName() + " Get in");
         }
-
-        // player = new Player();
-        // player.draw_player(drawpane);
-        // player.draw_healthbar(drawpane);
-
-        PBar.setValue(0);
-        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
-        PBar.setStringPainted(false);
-        drawpane.add(PBar);
-
-        keybar = new Keyboard_bar();
-        keybar.setPane(drawpane);
-        keybar.getTypearea().grabFocus();
-        // gameover(mode);
-    }
+    }// end CreateZombieThread
 
     // We Create Thread in setZombieThread in order to easily edit Variable from
     // MainApplication
     public void setZombieThread(int i) {
-
         System.out.println("mode = " + modeSelected);
         System.out.println("zombCurX = " + mobCurX.get(i) + ", zombCurY = " + mobCurY.get(i) + " zombWidth = "
                 + mobLabel.get(i).getWidth()
@@ -689,8 +706,11 @@ public class MainApplication extends JFrame {
                 mobLabel.get(i).getHeight());
         drawpane.add(mobLabel.get(i));
         drawpane.validate();
+        // mobThread.add(new Thread("Zombie" + i) {
+
         Thread zombieThread = new Thread("Zombie" + i) {
             public void run() {
+
                 System.out.println("thread = " + this.getName());
                 if (modeSelected == "Nightmare") {
                     waitGetInNightmare(i);
@@ -699,34 +719,31 @@ public class MainApplication extends JFrame {
                 } else {
                     waitGetIn(i);
                 }
-                System.out.println("Thread: Zombie" + i + " -> move");
+                setPbar(PBar);
                 move(i);
+
+                if (player.getHP() == 0) {
+                    gameover(modeSelected);
+                    return;
+                }
                 // --------- Remove Zombie when Hit Pikachu & decrease heart
                 if (mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) {
                     hurtSound.playOnce();
+                    player.hitplayer(drawpane);
                     drawpane.remove(mobLabel.get(i));
                     drawpane.repaint();
                 }
-                addCount(1);
             } // end run
         };// end thread creation
-        zombieThread.start();
-        /*
-         * try{
-         * zombieThread.join();
-         * }catch(InterruptedException e){}
-         */
-    }
 
-    public void setPauseGame(boolean b) {
-        pauseGame = b;
+        zombieThread.start();
     }
 
     // ------------------------- For randoming time Zombie Appear ----------------
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
     synchronized public static void waitGetIn(int i) {
-        int timeWait = 0;
+        int timeWait = 3000;
         if (i != 0) {
             Random r = new Random();
             int low = 5000;
@@ -736,39 +753,60 @@ public class MainApplication extends JFrame {
                 Thread.sleep(timeWait);
             } catch (InterruptedException e) {
             }
+        } else {
+            try {
+                Thread.sleep(timeWait);
+            } catch (InterruptedException e) {
+            }
         }
         System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
     synchronized public static void waitGetInHard(int i) {
+        int timeWait = 3000;
         if (i != 0) {
             Random r = new Random();
             int low = 5000;
             int high = 10000;
-            int timeWait = r.nextInt(high - low) + low;
+            timeWait = r.nextInt(high - low) + low;
+            try {
+                Thread.sleep(timeWait);
+            } catch (InterruptedException e) {
+            }
+        } else {
             try {
                 Thread.sleep(timeWait);
             } catch (InterruptedException e) {
             }
         }
+        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
     synchronized public static void waitGetInNightmare(int i) {
+        int timeWait = 3000;
         if (i != 0) {
             Random r = new Random();
             int low = 4000;
             int high = 7500;
-            int timeWait = r.nextInt(high - low) + low;
+            timeWait = r.nextInt(high - low) + low;
+            try {
+                Thread.sleep(timeWait);
+            } catch (InterruptedException e) {
+            }
+        } else {
             try {
                 Thread.sleep(timeWait);
             } catch (InterruptedException e) {
             }
         }
+        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
     // ----------------- If zombie not hit pikachu, it walks to left----------------
     public void move(int i) {
-        while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds()))) {
+        System.out.println("Thread: Zombie" + i + " -> move");
+        // While not Hit player & player not die. walk left
+        while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) && player.getHP() != 0) {
             mobLabel.get(i).setLocation(mobCurX.get(i), mobCurY.get(i));
             if (!pauseGame) {
                 mobCurX.set(i, mobCurX.get(i) - 5);
@@ -785,14 +823,31 @@ public class MainApplication extends JFrame {
         } // end while
     }
 
+    public int randomNum(int amount) {
+        Random random = new Random();
+        int randomNum = random.nextInt(amount);
+        mobCurX.add(frameWidth);
+        System.out.println(randomNum);
+        return randomNum;
+    }
+
+    public void setZombSpeed(int spd) {
+        zombSpeed = spd;
+    }
+
+    public void addCount(int c) {
+        count += c;
+        System.out.println("Add Count + = 1");
+    }
+
     // ---------------------------- Game Over ------------------------
     public void gameover(String mode) {
         winGif = new MyImageIcon("gameOver/win.gif");
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         JLabel winLabel = new JLabel(winGif);
         JLabel gameOverLabel = new JLabel(gameOverGif);
-        winLabel.setBounds(frameWidth / 2, (frameHeight / 2) - 75, frameWidth, frameHeight);
-        gameOverLabel.setBounds(frameWidth / 2, (frameHeight / 2) - 75, frameWidth, frameHeight);
+        winLabel.setBounds((frameWidth / 2) - 280, 120, 620, 200);
+        gameOverLabel.setBounds((frameWidth / 2) - 400, 120, 800, 200);
 
         JButton button1 = new JButton();
         JButton button2 = new JButton();
@@ -800,52 +855,79 @@ public class MainApplication extends JFrame {
         setUpButton(button2, menuButton);
         button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 50, 200, 50);
         button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
+
+        /*
+         * Waiting For my Brain --Show Score
+         * JTextField showScore = new JTextField("SCORE : 34",10);
+         * showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
+         * //drawpane.add(showScore,frameWidth/2,200);
+         */
+
+        // ----------------Stop All sound and delete All component in main
+        // game-----------------------
+        normalHitSound.stop();
+        softHitSound.stop();
+        criHitSound.stop();
+        hurtSound.stop();
+        usedItemSound.stop();
+        readyGoSound.stop();
+        beginnerSong.stop();
+        mediumSong.stop();
+        hardSong.stop();
+        nightmareSong.stop();
+        bossSong.stop();
+        // drawpane.removeAll();
+
         button1.addActionListener(new ActionListener() { // Restart Game
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                button1.setVisible(false);
-                button2.setVisible(false);
-                // drawpane.removeAll(); main_game(mode);
+                winSound.stop();
+                gameOverSound.stop();
+                // winLabel.setVisible(false);
+                // gameOverLabel.setVisible(false);
+                // button1.setVisible(false);
+                // button2.setVisible(false);
+
+                drawpane.removeAll();
+                repaint();
+                validate();
+                main_game(mode);
             }
         });
 
         button2.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                button1.setVisible(false);
-                button2.setVisible(false);
-                PBar.setVisible(false);
+                winSound.stop();
+                gameOverSound.stop();
+                // winLabel.setVisible(false);
+                // gameOverLabel.setVisible(false);
+                // button1.setVisible(false);
+                // button2.setVisible(false);
+                // PBar.setVisible(false);
 
-                switch (mode) {
-                    case "Beginner":
-                        beginnerSong.stop();
-                        break;
-                    case "Easy":
-                        mediumSong.stop();
-                        break;
-                    case "Normal":
-                        hardSong.stop();
-                        break;
-                    case "Hard":
-                        nightmareSong.stop();
-                        break;
-                    case "Nightmare":
-                        bossSong.stop();
-                        break;
-                }
-                // drawpane.removeAll();AddComponents();
+                drawpane.removeAll();
+                repaint();
+                validate();
+                mainmanu();
             }
         });
 
-        if (score >= 0)
-            drawpane.add(winLabel);
-        else
+        if (player.getHP() == 0) { // Game Over
             drawpane.add(gameOverLabel);
+            gameOverSound.playOnce();
+        }
+        /*
+         * if(score==10) { // win
+         * drawpane.add(winLabel);
+         * winSound.playOnce();
+         * }
+         */
 
         drawpane.add(button1);
         drawpane.add(button2);
-        validate();
     }
+    // ---------------------------- Set up Cursor & Button ------------------------
 
     // ---------------------------- Set up Cursor & Button ------------------------
 
@@ -866,8 +948,7 @@ public class MainApplication extends JFrame {
 
     // Add Vocab
 
-    // ----------------------------------- Read File
-    // ---------------------------------
+    // ---------------------------- Read File -----------------------
 
     public void read_poke_custom() {
         for (int i = 0; i < poke_list.length; i++) {
