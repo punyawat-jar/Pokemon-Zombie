@@ -52,7 +52,7 @@ public class MainApplication extends JFrame {
     ArrayList<Integer> mobCurY = new ArrayList<Integer>();
     ArrayList<Integer> mobWidth = new ArrayList<Integer>();
     ArrayList<Integer> mobHeight = new ArrayList<Integer>();
-    ArrayList<Thread> mobThread = new ArrayList<Thread>();
+    // ArrayList<Thread> mobThread = new ArrayList<Thread>();
 
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     private MyImageIcon winGif, gameOverGif;
@@ -691,7 +691,9 @@ public class MainApplication extends JFrame {
                 mobLabel.get(i).getHeight());
         drawpane.add(mobLabel.get(i));
         drawpane.validate();
-        mobThread.add(new Thread("Zombie" + i) {
+        // mobThread.add(new Thread("Zombie" + i) {
+
+        Thread zombieThread = new Thread("Zombie" + i) {
             public void run() {
 
                 System.out.println("thread = " + this.getName());
@@ -717,9 +719,9 @@ public class MainApplication extends JFrame {
                     drawpane.repaint();
                 }
             } // end run
-        });// end thread creation
+        };// end thread creation
 
-        mobThread.get(i).start();
+        zombieThread.start();
     }
 
     // ------------------------- For randoming time Zombie Appear ----------------
@@ -889,7 +891,7 @@ public class MainApplication extends JFrame {
                 // button2.setVisible(false);
                 // PBar.setVisible(false);
 
-                drawpane.removeAll();
+                // drawpane.removeAll();
                 repaint();
                 validate();
                 mainmanu();
