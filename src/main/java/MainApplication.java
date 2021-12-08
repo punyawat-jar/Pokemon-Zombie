@@ -10,7 +10,7 @@ import javax.swing.border.*;
 
 //Main Frame
 public class MainApplication extends JFrame {
-    private MainApplication program; // Use to call this class' function in other class
+    private static MainApplication program;// Use to call this class' function in other class
     /* For Pausing Game, use setPauseGame(true) zombieThread will pause. */
     // ------------------------------- Component -------------------------------
     private JPanel contentpane;
@@ -20,9 +20,13 @@ public class MainApplication extends JFrame {
     private JTextField scoreText;
     private JLabel Label;
     private ButtonGroup bgroup;
-    private boolean pauseGame = false;
-    private boolean joinComplete = false;
     private String modeSelected;
+    private MyImageIcon readyGoImg;
+    private JLabel readyGoLabel;
+    private MySoundEffect readyGoSound;
+    private boolean comeIn;
+    private boolean gameEnd = false;
+    private String gameResult;
 
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
@@ -32,26 +36,14 @@ public class MainApplication extends JFrame {
 
     private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton, restartButton, menuButton,
             nextButton, backButton;
-    private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound,
+    private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, gameOverSound, winSound,
             usedItemSound;
 
-    private MyImageIcon zomb1Img, zomb2Img, zomb3Img, zomb4Img, zombBossImg; // Beginner & Boss
-    private MyImageIcon nzomb1Img, nzomb2Img, nzomb3Img, nzomb4Img; // Medium (Night)
-    private MyImageIcon ezomb1Img, ezomb2Img, ezomb3Img, ezomb4Img; // Hard (Earth)
-    private MyImageIcon szomb1Img, szomb2Img, szomb3Img; // Nightmare (Stone)
-    private JLabel zomb1Label, zomb2Label, zomb3Label, zomb4Label, zombBossLabel;
-    private JLabel nzomb1Label, nzomb2Label, nzomb3Label, nzomb4Label;
-    private JLabel ezomb1Label, ezomb2Label, ezomb3Label, ezomb4Label;
-    private JLabel szomb1Label, szomb2Label, szomb3Label, szomb4Label;
-    private MyImageIcon readyGoImg;
-    private JLabel readyGoLabel;
-    private MySoundEffect readyGoSound;
-    private int zombSpeed = 300;
     ArrayList<JLabel> mobLabel = new ArrayList<JLabel>();
-    ArrayList<Integer> mobCurX = new ArrayList<Integer>();
-    ArrayList<Integer> mobCurY = new ArrayList<Integer>();
-    ArrayList<Integer> mobWidth = new ArrayList<Integer>();
-    ArrayList<Integer> mobHeight = new ArrayList<Integer>();
+    ArrayList<Integer> zombCurX = new ArrayList<Integer>();
+    ArrayList<Integer> zombCurY = new ArrayList<Integer>();
+    ArrayList<Integer> zombWidth = new ArrayList<Integer>();
+    ArrayList<Integer> zombHeight = new ArrayList<Integer>();
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
 
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
@@ -74,12 +66,13 @@ public class MainApplication extends JFrame {
 
     // ------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
-        new MainApplication();
+        program = new MainApplication();
+
     }
 
-    public boolean getPauseGame() {
-        return pauseGame;
-    }
+    // public boolean getPauseGame() {
+    // return pauseGame;
+    // }
 
     public MainApplication() {
         setTitle("PokemonGame!");
@@ -117,122 +110,19 @@ public class MainApplication extends JFrame {
         backButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
         drawpane = new JLabel();
 
-        // ------------------------------- Zombie -----------------------------------
+        readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
         readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
         readyGoLabel = new JLabel(readyGoImg);
-
-        for (int i = 0; i < 16; i++) {
-            switch (i) {
-                case 0: // z1
-                    mobWidth.add(98);
-                    mobHeight.add(157);
-                    break;
-                case 1:// z2
-                    mobWidth.add(140);
-                    mobHeight.add(139);
-                    break;
-                case 2:// z3
-                    mobWidth.add(138);
-                    mobHeight.add(153);
-                    break;
-                case 3:// z4
-                    mobWidth.add(140);
-                    mobHeight.add(140);
-                    break;
-                case 4:// nz1
-                    mobWidth.add(98);
-                    mobHeight.add(157);
-                    break;
-                case 5:// nz2
-                    mobWidth.add(140);
-                    mobHeight.add(139);
-                    break;
-                case 6:// nz3
-                    mobWidth.add(138);
-                    mobHeight.add(153);
-                    break;
-                case 7:// nz4
-                    mobWidth.add(140);
-                    mobHeight.add(140);
-                    break;
-                case 8:// ez1
-                    mobWidth.add(143);
-                    mobHeight.add(140);
-                    break;
-                case 9:// ez2
-                    mobWidth.add(140);
-                    mobHeight.add(117);
-                    break;
-                case 10:// ez3
-                    mobWidth.add(140);
-                    mobHeight.add(153);
-                    break;
-                case 11:// ez4
-                    mobWidth.add(170);
-                    mobHeight.add(170);
-                    break;
-                case 12:// sz1
-                    mobWidth.add(140);
-                    mobHeight.add(140);
-                    break;
-                case 13:// sz2
-                    mobWidth.add(187);
-                    mobHeight.add(140);
-                    break;
-                case 14:// sz3
-                    mobWidth.add(140);
-                    mobHeight.add(140);
-
-                case 15:// boss
-                    mobWidth.add(182);
-                    mobHeight.add(223);
-                    break;
-            }
-            mobCurX.add(i, frameWidth);
-            if (0 <= i && i <= 7) {
-                mobCurY.add(frameHeight - 185 - mobHeight.get(i));
-            } else if (8 <= i && i <= 11) {
-                if (i == 9)
-                    mobCurY.add(frameHeight - 160 - mobHeight.get(i));
-                else
-                    mobCurY.add(frameHeight - 180 - mobHeight.get(i));
-            } else if (i == 13 || i == 14)
-                mobCurY.add(frameHeight - 200 - mobHeight.get(i));
-            else
-                mobCurY.add(frameHeight - 170 - mobHeight.get(i));
-        }
-        // 0-3 Beginner
-        zomb1Img = new MyImageIcon("zombie/z01.png").resize(mobWidth.get(0), mobHeight.get(0));
-        zomb2Img = new MyImageIcon("zombie/z02.png").resize(mobWidth.get(1), mobHeight.get(1));
-        zomb3Img = new MyImageIcon("zombie/z03.png").resize(mobWidth.get(2), mobHeight.get(2));
-        zomb4Img = new MyImageIcon("zombie/z04.png").resize(mobWidth.get(3), mobHeight.get(3));
-        // 4-7 Medium
-        nzomb1Img = new MyImageIcon("zombie/nz01.png").resize(mobWidth.get(4), mobHeight.get(4));
-        nzomb2Img = new MyImageIcon("zombie/nz02.png").resize(mobWidth.get(5), mobHeight.get(5));
-        nzomb3Img = new MyImageIcon("zombie/nz03.png").resize(mobWidth.get(6), mobHeight.get(6));
-        nzomb4Img = new MyImageIcon("zombie/nz04.png").resize(mobWidth.get(7), mobHeight.get(7));
-        // 8-11 Hard
-        ezomb1Img = new MyImageIcon("zombie/ez01.png").resize(mobWidth.get(8), mobHeight.get(8));
-        ezomb2Img = new MyImageIcon("zombie/ez02.png").resize(mobWidth.get(9), mobHeight.get(9));
-        ezomb3Img = new MyImageIcon("zombie/ez03.png").resize(mobWidth.get(10), mobHeight.get(10));
-        ezomb4Img = new MyImageIcon("zombie/ez04.png").resize(mobWidth.get(11), mobHeight.get(11));
-        // 12-14 Nightmare (also Use zombie from other mode)
-        szomb1Img = new MyImageIcon("zombie/sz01.png").resize(mobWidth.get(12), mobHeight.get(12));
-        szomb2Img = new MyImageIcon("zombie/sz02.png").resize(mobWidth.get(13), mobHeight.get(13));
-        szomb3Img = new MyImageIcon("zombie/sz03.png").resize(mobWidth.get(14), mobHeight.get(14));
-        // 15 Boss
-        zombBossImg = new MyImageIcon("zombie/zboss.png").resize(mobWidth.get(15), mobHeight.get(15));
+        // ------------------------------- Zombie -----------------------------------
 
         // ---------------------------- Sound --------------------------------------
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
         normalHitSound = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
         softHitSound = new MySoundEffect("sound_effect/SoftHit_soundeffect.wav");
         criHitSound = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
-        hurtSound = new MySoundEffect("sound_effect/Hurt_soundeffect.wav");
         gameOverSound = new MySoundEffect("sound_effect/GameOver_soundeffect.wav");
         winSound = new MySoundEffect("sound_effect/Win_soundeffect.wav");
         usedItemSound = new MySoundEffect("sound_effect/UsedItem_soundeffect.wav");
-        readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
 
         menuSong = new MySoundEffect("song/menu_song.wav");
         creditSong = new MySoundEffect("song/credit_song.wav");
@@ -440,6 +330,19 @@ public class MainApplication extends JFrame {
 
     public void main_game(String mode) {
         menuSong.stop();
+        PBar.setValue(0);
+        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
+        PBar.setForeground(new Color(255, 199, 56));
+        PBar.setStringPainted(false);
+        drawpane.add(PBar);
+
+        if (comeIn == false) {
+            comeIn = true;
+            readyGoLabel.setBounds(525, 230, 380, 214);
+            drawpane.add(readyGoLabel);
+            drawpane.validate();
+            readyGoSound.playOnce();
+        }
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
@@ -447,7 +350,8 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
                 player = new Player(drawpane);
-                addZombieBeginner(mode);
+                createZombieThread(mode);
+
                 break;
             case "Medium":
                 drawpane.setIcon(in_gamebg2Img);
@@ -455,7 +359,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
                 player = new Player(drawpane);
-                addZombieMedium(mode);
+                createZombieThread(mode);
                 break;
             case "Hard":
                 drawpane.setIcon(in_gamebg3Img);
@@ -463,7 +367,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
                 player = new Player(drawpane);
-                addZombieHard(mode);
+                createZombieThread(mode);
                 break;
             case "Nightmare":
                 drawpane.setIcon(in_gamebg4Img);
@@ -471,7 +375,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 nightmareSong.playLoop();
                 player = new Player(drawpane);
-                addZombieNightmare(mode);
+                createZombieThread(mode);
                 break;
             case "Boss":
                 drawpane.setIcon(in_gamebg5Img);
@@ -487,38 +391,21 @@ public class MainApplication extends JFrame {
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
 
-        PBar.setValue(0);
-        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
-        PBar.setForeground(new Color(255, 199, 56));
-        PBar.setStringPainted(false);
-        drawpane.add(PBar);
-
         keybar = new Keyboard_bar();
         keybar.setPane(drawpane);
         keybar.getTypearea().grabFocus();
         // gameover(mode);
-        // // validate();
-        // joinThread(10);
-        // while (!joinComplete) {
-        // System.out.println("Before if, mobThread size = " + mobThread.size());
-        // if (mobThread.size() == 10) {
-        // System.out.println("Join all Threads");
-        // // validate();
-        // joinThread(10);
-        // System.out.println("End game, Stage: " + mode);
-        // System.out.println("mobThread size = " + mobThread.size());
-        // // }
-        // joinComplete = true;
-        // }
-        // }
     }
 
-    public void setPbar(JProgressBar bar) {
-        count += 1;
-        bar.setValue(count * 10);
-        System.out.println("Add Count + = 1");
-    }
+    public void createZombieThread(String mode) {
+        for (int i = 0; i < 10; i++) {
 
+            ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
+                    program);
+            System.out.println("i main = " + i);
+
+        }
+    }
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
     // try {
@@ -528,305 +415,23 @@ public class MainApplication extends JFrame {
     // }
     // }
 
-    // ----------------------------- Add 10 Zombies to screen--------------------
-    public void addZombieBeginner(String mode) {
-        for (int i = 0; i < 10; i++) {
-            int zombie = randomNum(4);
-            switch (zombie) {
-                case 0:
-                    mobLabel.add(new JLabel(zomb1Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(0), mobCurY.get(0), mobWidth.get(0),
-                            mobHeight.get(0));
-                    break;
-                case 1:
-                    mobLabel.add(new JLabel(zomb2Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(1), mobCurY.get(1), mobWidth.get(1),
-                            mobHeight.get(1));
-                    break;
-                case 2:
-                    mobLabel.add(new JLabel(zomb3Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(2), mobCurY.get(2), mobWidth.get(2),
-                            mobHeight.get(2));
-                    break;
-                case 3:
-                    mobLabel.add(new JLabel(zomb4Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(3), mobCurY.get(3), mobWidth.get(3),
-                            mobHeight.get(3));
-                    break;
-            }
-            System.out.println("Size Of zombLabel = " + mobLabel.size());
-        } // end for getZombie
-        setZombSpeed(250);
-        createZombieThread(mode);
-    }// end addZombieBeginner
-
-    public void addZombieMedium(String mode) {
-        for (int i = 0; i < 10; i++) {
-            int zombie = randomNum(4);
-            switch (zombie) {
-                case 0:
-                    mobLabel.add(new JLabel(nzomb1Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(4), mobCurY.get(4), mobWidth.get(4),
-                            mobHeight.get(4));
-                    break;
-                case 1:
-                    mobLabel.add(new JLabel(nzomb2Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(5), mobCurY.get(5), mobWidth.get(5),
-                            mobHeight.get(5));
-                    break;
-                case 2:
-                    mobLabel.add(new JLabel(nzomb3Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(6), mobCurY.get(6), mobWidth.get(6),
-                            mobHeight.get(6));
-                    break;
-                case 3:
-                    mobLabel.add(new JLabel(nzomb4Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(7), mobCurY.get(7), mobWidth.get(7),
-                            mobHeight.get(7));
-                    break;
-            }
-            System.out.println("Size Of zombLabel = " + mobLabel.size());
-        } // end for
-        setZombSpeed(200);
-        createZombieThread(mode);
-    } // end addZombieMedium
-
-    // ----------------------------- Add 10 Zombies to screen--------------------
-    public void addZombieHard(String mode) {
-        for (int i = 0; i < 10; i++) {
-
-            int zombie = randomNum(4);
-            switch (zombie) {
-                case 0:
-                    mobLabel.add(new JLabel(ezomb1Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(8), mobCurY.get(8), mobWidth.get(8),
-                            mobHeight.get(8));
-                    break;
-                case 1:
-                    mobLabel.add(new JLabel(ezomb2Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(9), mobCurY.get(9), mobWidth.get(9),
-                            mobHeight.get(9));
-                    break;
-                case 2:
-                    mobLabel.add(new JLabel(ezomb3Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(10), mobCurY.get(10), mobWidth.get(10),
-                            mobHeight.get(10));
-                    break;
-                case 3:
-                    mobLabel.add(new JLabel(ezomb4Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(11), mobCurY.get(11), mobWidth.get(11),
-                            mobHeight.get(11));
-                    break;
-            }
-            System.out.println("Size Of zombLabel = " + mobLabel.size());
-        } // end for getZombie
-        setZombSpeed(150);
-        createZombieThread(mode);
-    }// end addZombieHard
-
-    // ----------------------------- Add 10 Zombies to screen--------------------
-    public void addZombieNightmare(String mode) {
-        for (int i = 0; i < 10; i++) {
-            int zombie = randomNum(5);
-            switch (zombie) {
-                case 0:
-                    mobLabel.add(new JLabel(szomb1Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(12), mobCurY.get(12), mobWidth.get(12),
-                            mobHeight.get(12));
-                    break;
-                case 1:
-                    mobLabel.add(new JLabel(szomb2Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(13), mobCurY.get(13), mobWidth.get(13),
-                            mobHeight.get(13));
-                    break;
-                case 2:
-                    mobLabel.add(new JLabel(szomb3Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(14), mobCurY.get(14), mobWidth.get(14),
-                            mobHeight.get(14));
-                    break;
-                case 3: // Use Senigame Zombie from Beginner mode
-                    mobLabel.add(new JLabel(zomb4Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(3), mobCurY.get(3) + 15, mobWidth.get(3),
-                            mobHeight.get(3));
-                    break;
-                case 4: // Use Sunflower Zombie from hard mode
-                    mobLabel.add(new JLabel(ezomb4Img));
-                    mobLabel.get(i).setBounds(mobCurX.get(11), mobCurY.get(11), mobWidth.get(11),
-                            mobHeight.get(11));
-                    break;
-            }
-            System.out.println("Size Of zombLabel = " + mobLabel.size());
-        } // end for getZombie
-        setZombSpeed(100);
-        createZombieThread(mode);
-    }// end addZombieNightmare
-
-    public void createZombieThread(String mode) {
-        for (int i = 0; i < 10; i++) {
-
-            mobCurX.set(i, mobLabel.get(i).getX());
-            mobCurY.set(i, mobLabel.get(i).getY());
-
-            setZombieThread(i);
-
-            if (i == 0) {
-                readyGoSound.playOnce();
-                readyGoLabel.setBounds(525, 230, 380, 214);
-                drawpane.add(readyGoLabel);
-                drawpane.validate();
-            }
-            System.out.println("thread = " + Thread.currentThread().getName() + " Get in");
-        }
-    }// end CreateZombieThread
-
-    // We Create Thread in setZombieThread in order to easily edit Variable from
-    // MainApplication
-    public void setZombieThread(int i) {
-        System.out.println("mode = " + modeSelected);
-        System.out.println("zombCurX = " + mobCurX.get(i) + ", zombCurY = " + mobCurY.get(i) + " zombWidth = "
-                + mobLabel.get(i).getWidth()
-                + " , zombHeight" + mobLabel.get(i).getHeight());
-
-        mobLabel.get(i).setBounds(mobCurX.get(i), mobCurY.get(i), mobLabel.get(i).getWidth(),
-                mobLabel.get(i).getHeight());
-        drawpane.add(mobLabel.get(i));
-        drawpane.validate();
-        // mobThread.add(new Thread("Zombie" + i) {
-
-        Thread zombieThread = new Thread("Zombie" + i) {
-            public void run() {
-
-                System.out.println("thread = " + this.getName());
-                if (modeSelected == "Nightmare") {
-                    waitGetInNightmare(i);
-                } else if (modeSelected == "Hard") {
-                    waitGetInHard(i);
-                } else {
-                    waitGetIn(i);
-                }
-                setPbar(PBar);
-                move(i);
-
-                if (player.getHP() == 0) {
-                    gameover(modeSelected);
-                    return;
-                }
-                // --------- Remove Zombie when Hit Pikachu & decrease heart
-                if (mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) {
-                    hurtSound.playOnce();
-                    player.hitplayer(drawpane);
-                    drawpane.remove(mobLabel.get(i));
-                    drawpane.repaint();
-                }
-            } // end run
-        };// end thread creation
-
-        zombieThread.start();
-    }
-
-    // ------------------------- For randoming time Zombie Appear ----------------
-    // Use static method to lock class * If lock only Obj. all other thread will
-    // work and wait together.
-    synchronized public static void waitGetIn(int i) {
-        int timeWait = 3000;
-        if (i != 0) {
-            Random r = new Random();
-            int low = 5000;
-            int high = 15000;
-            timeWait = r.nextInt(high - low) + low;
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        } else {
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
-    }
-
-    synchronized public static void waitGetInHard(int i) {
-        int timeWait = 3000;
-        if (i != 0) {
-            Random r = new Random();
-            int low = 5000;
-            int high = 10000;
-            timeWait = r.nextInt(high - low) + low;
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        } else {
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
-    }
-
-    synchronized public static void waitGetInNightmare(int i) {
-        int timeWait = 3000;
-        if (i != 0) {
-            Random r = new Random();
-            int low = 4000;
-            int high = 7500;
-            timeWait = r.nextInt(high - low) + low;
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        } else {
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
-    }
-
-    // ----------------- If zombie not hit pikachu, it walks to left----------------
-    public void move(int i) {
-        System.out.println("Thread: Zombie" + i + " -> move");
-        // While not Hit player & player not die. walk left
-        while (!(mobLabel.get(i).getBounds().intersects(player.getLabel().getBounds())) && player.getHP() != 0) {
-            mobLabel.get(i).setLocation(mobCurX.get(i), mobCurY.get(i));
-            if (!pauseGame) {
-                mobCurX.set(i, mobCurX.get(i) - 5);
-                mobLabel.get(i).repaint();
-            } else {
-                System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
-            }
-            mobLabel.get(i).repaint();
-            try {
-                Thread.sleep(zombSpeed);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } // end while
-    }
-
-    public int randomNum(int amount) {
-        Random random = new Random();
-        int randomNum = random.nextInt(amount);
-        mobCurX.add(frameWidth);
-        System.out.println(randomNum);
-        return randomNum;
-    }
-
-    public void setZombSpeed(int spd) {
-        zombSpeed = spd;
-    }
-
-    public void addCount(int c) {
-        count += c;
+    public void setPBar() {
+        count += 1;
+        PBar.setValue(count * 10);
         System.out.println("Add Count + = 1");
     }
 
-    // ---------------------------- Game Over ------------------------
-    public void gameover(String mode) {
+    public void resetPBar() {
+        PBar.setValue(0);
+        System.out.println("-- Reset Progress Bar --");
+    }
+
+    public void setGameResult(String result) {
+        gameResult = result;
+    }
+
+    // ---------------------------- Stage End ------------------------
+    public void stageEnd(String mode) {
         winGif = new MyImageIcon("gameOver/win.gif");
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         JLabel winLabel = new JLabel(winGif);
@@ -850,19 +455,30 @@ public class MainApplication extends JFrame {
 
         // ----------------Stop All sound and delete All component in main
         // game-----------------------
-        normalHitSound.stop();
-        softHitSound.stop();
-        criHitSound.stop();
-        hurtSound.stop();
-        usedItemSound.stop();
-        readyGoSound.stop();
+        // normalHitSound.stop();
+        // softHitSound.stop();
+        // criHitSound.stop();
+        // usedItemSound.stop();
+        // readyGoSound.stop();
         beginnerSong.stop();
         mediumSong.stop();
         hardSong.stop();
         nightmareSong.stop();
         bossSong.stop();
+        comeIn = false;
+        gameEnd = true;
+        resetPBar();
         // drawpane.removeAll();
 
+        if (player.getHP() > 0 && gameEnd == true) { // Win
+            drawpane.add(winLabel);
+            winSound.playOnce();
+            gameEnd = false;
+        } else if (player.getHP() == 0 && gameEnd == true) { // gameOver
+            drawpane.add(gameOverLabel);
+            gameOverSound.playOnce();
+            gameEnd = false;
+        }
         button1.addActionListener(new ActionListener() { // Restart Game
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
@@ -872,7 +488,9 @@ public class MainApplication extends JFrame {
                 // gameOverLabel.setVisible(false);
                 // button1.setVisible(false);
                 // button2.setVisible(false);
-
+                gameEnd = false;
+                // drawpane.remove(PBar);
+                // drawpane.remove(player);
                 drawpane.removeAll();
                 repaint();
                 validate();
@@ -882,6 +500,7 @@ public class MainApplication extends JFrame {
 
         button2.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
+                gameEnd = false;
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
@@ -890,21 +509,12 @@ public class MainApplication extends JFrame {
                 // button1.setVisible(false);
                 // button2.setVisible(false);
                 // PBar.setVisible(false);
-
-                // drawpane.removeAll();
+                drawpane.removeAll();
                 repaint();
                 validate();
                 mainmanu();
             }
         });
-
-        if (player.getHP() > 0) { // Win
-            drawpane.add(winLabel);
-            winSound.playOnce();
-        } else { // gameOver
-            drawpane.add(gameOverLabel);
-            gameOverSound.playOnce();
-        }
 
         drawpane.add(button1);
         drawpane.add(button2);
