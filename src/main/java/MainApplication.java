@@ -63,6 +63,8 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0;
 
     private Player player;
+    private Bomb bomb;
+    // private Potion potion;
 
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
@@ -74,6 +76,14 @@ public class MainApplication extends JFrame {
     // ------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
         new MainApplication();
+    }
+
+    public int get_framewidth() {
+        return frameWidth;
+    }
+
+    public int get_frameheight() {
+        return frameHeight;
     }
 
     public boolean getPauseGame() {
@@ -412,10 +422,10 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
-                        combo.setVisible(false);
-                        play.setVisible(false);
-                        backbtn.setVisible(false);
-                        main_game(modeSelected);
+                    combo.setVisible(false);
+                    play.setVisible(false);
+                    backbtn.setVisible(false);
+                    main_game(modeSelected);
                 }
             }
         });
@@ -454,7 +464,7 @@ public class MainApplication extends JFrame {
 
     public void createZombieThread(String mode) {
         for (int i = 0; i < 10; i++) {
-            
+
             mobCurX.set(i, mobLabel.get(i).getX());
             mobCurY.set(i, mobLabel.get(i).getY());
 
@@ -469,7 +479,7 @@ public class MainApplication extends JFrame {
             System.out.println("thread = " + this.getName() + " Get in");
 
         }
-    }//end CreateZombieThread
+    }// end CreateZombieThread
 
     // ----------------------------- Add 10 Zombies to screen--------------------
     public void addZombieBeginner(String mode) {
@@ -612,6 +622,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
+                // bomb = new Bomb(drawpane);
                 player = new Player(drawpane);
                 addZombieBeginner(mode);
 
@@ -665,7 +676,8 @@ public class MainApplication extends JFrame {
         // gameover(mode);
     }
 
-    //We Create Thread in setZombieThread in order to easily edit Variable from MainApplication
+    // We Create Thread in setZombieThread in order to easily edit Variable from
+    // MainApplication
     public void setZombieThread(int i) {
 
         System.out.println("mode = " + modeSelected);
@@ -699,11 +711,12 @@ public class MainApplication extends JFrame {
             } // end run
         };// end thread creation
         zombieThread.start();
-        /*try{
-        zombieThread.join();
-        }catch(InterruptedException e){}*/
+        /*
+         * try{
+         * zombieThread.join();
+         * }catch(InterruptedException e){}
+         */
     }
-
 
     public void setPauseGame(boolean b) {
         pauseGame = b;
@@ -713,8 +726,8 @@ public class MainApplication extends JFrame {
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
     synchronized public static void waitGetIn(int i) {
-        int timeWait = 0 ;
-        if (i!=0) {
+        int timeWait = 0;
+        if (i != 0) {
             Random r = new Random();
             int low = 5000;
             int high = 15000;
@@ -724,11 +737,11 @@ public class MainApplication extends JFrame {
             } catch (InterruptedException e) {
             }
         }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait/1000 + "sec");
+        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting" + timeWait / 1000 + "sec");
     }
 
     synchronized public static void waitGetInHard(int i) {
-        if (i!= 0) {
+        if (i != 0) {
             Random r = new Random();
             int low = 5000;
             int high = 10000;
@@ -741,7 +754,7 @@ public class MainApplication extends JFrame {
     }
 
     synchronized public static void waitGetInNightmare(int i) {
-        if (i!=0) {
+        if (i != 0) {
             Random r = new Random();
             int low = 4000;
             int high = 7500;
@@ -910,7 +923,6 @@ public class MainApplication extends JFrame {
         System.out.println("");
     }
 }// end Class MainApplication
-
 
 // class Vocab {
 // private String mode;
