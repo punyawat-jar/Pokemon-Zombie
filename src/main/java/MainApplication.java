@@ -61,7 +61,7 @@ public class MainApplication extends JFrame {
     private Keyboard_bar keybar;
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
-    private int score = 0, count = 0;
+    private int score = 0, count = 0, count_pic = 0;
 
     private Player player;
 
@@ -242,7 +242,7 @@ public class MainApplication extends JFrame {
         nightmareSong = new MySoundEffect("song/nightmare_song.wav");
         bossSong = new MySoundEffect("song/boss_song.wav");
 
-        menuSong.playLoop();
+        // menuSong.playLoop();
 
         mainmanu();
         validate();
@@ -250,6 +250,8 @@ public class MainApplication extends JFrame {
     }// end AddComponent
 
     public void mainmanu() {
+        menuSong.playLoop();
+
         // main menu button
         drawpane.setIcon(bgImg);
         drawpane.setLayout(null);
@@ -343,9 +345,9 @@ public class MainApplication extends JFrame {
 
                         for (int i = 0; i < poke_list.length; i++) {
                             if (poke_list[i].contains(x.getText())) {
-                                drawpane.remove(custom_poke_AL.get(count));
-                                count = i;
-                                drawpane.add(custom_poke_AL.get(count));
+                                drawpane.remove(custom_poke_AL.get(count_pic));
+                                count_pic = i;
+                                drawpane.add(custom_poke_AL.get(count_pic));
                                 repaint();
                             }
                         }
@@ -366,7 +368,7 @@ public class MainApplication extends JFrame {
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
 
-                drawpane.remove(custom_poke_AL.get(count));
+                drawpane.remove(custom_poke_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mainmanu();
@@ -378,7 +380,7 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
-                drawpane.remove(custom_poke_AL.get(count));
+                drawpane.remove(custom_poke_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mode_panel();
@@ -386,7 +388,7 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(nextbtn);
         drawpane.add(backbtn);
-        drawpane.add(custom_poke_AL.get(count));
+        drawpane.add(custom_poke_AL.get(count_pic));
         drawpane.add(rlabel);
         setUpButton(backbtn, backButton);
         setUpButton(nextbtn, nextButton);
@@ -481,7 +483,6 @@ public class MainApplication extends JFrame {
 
                 break;
         }
-
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
@@ -509,6 +510,12 @@ public class MainApplication extends JFrame {
         // joinComplete = true;
         // }
         // }
+    }
+
+    public void setPbar(JProgressBar bar) {
+        count += 1;
+        bar.setValue(count * 10);
+        System.out.println("Add Count + = 1");
     }
 
     public void joinThread(int n) {
@@ -707,7 +714,7 @@ public class MainApplication extends JFrame {
                     drawpane.remove(mobLabel.get(i));
                     drawpane.repaint();
                 }
-                addCount(1);
+                setPbar(PBar);
             } // end run
         });// end thread creation
 
@@ -821,8 +828,8 @@ public class MainApplication extends JFrame {
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         JLabel winLabel = new JLabel(winGif);
         JLabel gameOverLabel = new JLabel(gameOverGif);
-        winLabel.setBounds(frameWidth / 2, (frameHeight / 2) - 75, frameWidth, frameHeight);
-        gameOverLabel.setBounds(frameWidth / 2, (frameHeight / 2) - 75, frameWidth, frameHeight);
+        winLabel.setBounds((frameWidth / 2) - 280, 120, 620, 200);
+        gameOverLabel.setBounds((frameWidth / 2) - 400, 120, 800, 200);
 
         JButton button1 = new JButton();
         JButton button2 = new JButton();
@@ -830,52 +837,76 @@ public class MainApplication extends JFrame {
         setUpButton(button2, menuButton);
         button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 50, 200, 50);
         button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
+
+        /*
+         * Waiting For my Brain --Show Score
+         * JTextField showScore = new JTextField("SCORE : 34",10);
+         * showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
+         * //drawpane.add(showScore,frameWidth/2,200);
+         */
+
+        // ----------------Stop All sound and delete All component in main
+        // game-----------------------
+        normalHitSound.stop();
+        softHitSound.stop();
+        criHitSound.stop();
+        hurtSound.stop();
+        usedItemSound.stop();
+        readyGoSound.stop();
+        beginnerSong.stop();
+        mediumSong.stop();
+        hardSong.stop();
+        nightmareSong.stop();
+        bossSong.stop();
+        // drawpane.removeAll();
+
         button1.addActionListener(new ActionListener() { // Restart Game
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                button1.setVisible(false);
-                button2.setVisible(false);
-                // drawpane.removeAll(); main_game(mode);
+                winSound.stop();
+                gameOverSound.stop();
+                // winLabel.setVisible(false);
+                // gameOverLabel.setVisible(false);
+                // button1.setVisible(false);
+                // button2.setVisible(false);
+
+                drawpane.removeAll();
+                repaint();
+                validate();
+                main_game(mode);
             }
         });
 
         button2.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                button1.setVisible(false);
-                button2.setVisible(false);
-                PBar.setVisible(false);
+                winSound.stop();
+                gameOverSound.stop();
+                // winLabel.setVisible(false);
+                // gameOverLabel.setVisible(false);
+                // button1.setVisible(false);
+                // button2.setVisible(false);
+                // PBar.setVisible(false);
 
-                switch (mode) {
-                    case "Beginner":
-                        beginnerSong.stop();
-                        break;
-                    case "Easy":
-                        mediumSong.stop();
-                        break;
-                    case "Normal":
-                        hardSong.stop();
-                        break;
-                    case "Hard":
-                        nightmareSong.stop();
-                        break;
-                    case "Nightmare":
-                        bossSong.stop();
-                        break;
-                }
-                // drawpane.removeAll();AddComponents();
+                drawpane.removeAll();
+                repaint();
+                validate();
+                mainmanu();
             }
         });
 
-        if (score >= 0)
+        if (score >= 0) { // Win
             drawpane.add(winLabel);
-        else
+            winSound.playLoop();
+        } else { // gameOver
             drawpane.add(gameOverLabel);
+            gameOverSound.playLoop();
+        }
 
         drawpane.add(button1);
         drawpane.add(button2);
-        validate();
     }
+    // ---------------------------- Set up Cursor & Button ------------------------
 
     // ---------------------------- Set up Cursor & Button ------------------------
 

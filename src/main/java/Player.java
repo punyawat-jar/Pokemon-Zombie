@@ -39,6 +39,7 @@ class Player {
     public void hitplayer(JLabel x) {
         x.remove(HP_AL.get(HP));
         HP -= 1;
+        System.out.println("HP is " + HP);
         x.add(HP_AL.get(HP));
     }
 
