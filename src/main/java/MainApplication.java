@@ -898,7 +898,7 @@ public class MainApplication extends JFrame {
             }
         });
 
-        if (player.getHP() > 0) { // Game Over
+        if (player.getHP() == 0) { // Game Over
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
         } 
