@@ -898,10 +898,10 @@ public class MainApplication extends JFrame {
 
         if (score >= 0) { // Win
             drawpane.add(winLabel);
-            winSound.playLoop();
+            winSound.playOnce();
         } else { // gameOver
             drawpane.add(gameOverLabel);
-            gameOverSound.playLoop();
+            gameOverSound.playOnce();
         }
 
         drawpane.add(button1);
