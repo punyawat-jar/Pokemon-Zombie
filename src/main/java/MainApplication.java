@@ -53,7 +53,7 @@ public class MainApplication extends JFrame {
     ArrayList<Integer> mobWidth = new ArrayList<Integer>();
     ArrayList<Integer> mobHeight = new ArrayList<Integer>();
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
-
+    ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     private MyImageIcon winGif, gameOverGif;
 
@@ -64,7 +64,12 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0, count_pic = 0;
 
     private Player player;
+<<<<<<< HEAD
     //private Bomb bomb;
+=======
+    private Wordbox wbox;
+    private Bomb bomb;
+>>>>>>> c30e9c50993afd7cf7df22d3371a9b5d6a32f20e
     // private Potion potion;
 
     Tutorial Tframe;
@@ -455,6 +460,7 @@ public class MainApplication extends JFrame {
 
     public void main_game(String mode) {
         menuSong.stop();
+        wbox_AL.clear();
         switch (mode) {
             case "Beginner":
                 //showText(mode);
@@ -464,6 +470,7 @@ public class MainApplication extends JFrame {
                 beginnerSong.playLoop();
                 player = new Player(drawpane);
                 addZombieBeginner(mode);
+                //input_word(0);
                 break;
             case "Medium":
                 drawpane.setIcon(in_gamebg2Img);
@@ -472,6 +479,7 @@ public class MainApplication extends JFrame {
                 mediumSong.playLoop();
                 player = new Player(drawpane);
                 addZombieMedium(mode);
+                //input_word(1);
                 break;
             case "Hard":
                 drawpane.setIcon(in_gamebg3Img);
@@ -480,6 +488,7 @@ public class MainApplication extends JFrame {
                 hardSong.playLoop();
                 player = new Player(drawpane);
                 addZombieHard(mode);
+                //input_word(2);
                 break;
             case "Nightmare":
                 drawpane.setIcon(in_gamebg4Img);
@@ -488,6 +497,7 @@ public class MainApplication extends JFrame {
                 nightmareSong.playLoop();
                 player = new Player(drawpane);
                 addZombieNightmare(mode);
+                //input_word(3);
                 break;
             case "Boss":
                 drawpane.setIcon(in_gamebg5Img);
@@ -495,6 +505,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 bossSong.playLoop();
                 player = new Player(drawpane);
+                //input_word(4);
                 // addZombieHard();
 
                 break;
@@ -512,6 +523,7 @@ public class MainApplication extends JFrame {
         keybar = new Keyboard_bar();
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
+
 
         // gameover(mode);
         // // validate();
@@ -712,7 +724,7 @@ public class MainApplication extends JFrame {
 
         Thread zombieThread = new Thread("Zombie" + i) {
             public void run() {
-
+                //wbox = new Wordbox(drawpane);
                 System.out.println("thread = " + this.getName());
                 if (modeSelected == "Nightmare") {
                     waitGetInNightmare(i);
@@ -723,6 +735,7 @@ public class MainApplication extends JFrame {
                 }
                 setPbar(PBar);
                 move(i);
+                
 
                 if (player.getHP() == 0) {
                     gameover(modeSelected);
@@ -813,7 +826,10 @@ public class MainApplication extends JFrame {
             if (!pauseGame) {
                 mobCurX.set(i, mobCurX.get(i) - 5);
                 mobLabel.get(i).repaint();
-            } else {
+                //wbox_AL.get(i).wbox_move(mobCurX.get(i) - 5, mobCurY.get(i)-20);
+                //wbox.wbox_move(mobCurX.get(i) - 5,mobCurY.get(i)-20);
+            } 
+            else{
                 System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
             }
             mobLabel.get(i).repaint();
@@ -1008,6 +1024,7 @@ public class MainApplication extends JFrame {
         System.out.println("");
     }
 
+<<<<<<< HEAD
     public void showText(String mode){
         int numMode = 0;
         String text;
@@ -1029,6 +1046,13 @@ public class MainApplication extends JFrame {
         
         validate();
         //return text;
+=======
+    public void input_word(int n){
+        for(int i=0;i<10;i++){
+            wbox = new Wordbox(drawpane,modeList.get(n).randomWord());
+            wbox_AL.add(wbox);
+        }
+>>>>>>> c30e9c50993afd7cf7df22d3371a9b5d6a32f20e
     }
 }// end Class MainApplication
 

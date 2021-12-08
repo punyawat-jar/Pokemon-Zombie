@@ -11,7 +11,6 @@ import javax.swing.border.*;
 class Keyboard_bar {
     private JTextArea typearea;
     private int width, height;
-    private JLabel pane;
     private MainApplication main;
 
     public Keyboard_bar() {
