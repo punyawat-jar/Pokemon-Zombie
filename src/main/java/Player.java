@@ -14,7 +14,7 @@ class Player {
     private MyImageIcon player, healthbar_pic;
     private JLabel playerLabel, HP_Label;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
-    String[] HP_bar = { "health bar/H0.png", "health bar/1.png", "health bar/H2.png", "health bar/H3.png",
+    String[] HP_bar = { "health bar/H0.png", "health bar/H1.png", "health bar/H2.png", "health bar/H3.png",
             "health bar/H4.png", "health bar/H5.png" };
 
     public Player(JLabel x) {
