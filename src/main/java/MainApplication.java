@@ -52,7 +52,7 @@ public class MainApplication extends JFrame {
     ArrayList<Integer> mobCurY = new ArrayList<Integer>();
     ArrayList<Integer> mobWidth = new ArrayList<Integer>();
     ArrayList<Integer> mobHeight = new ArrayList<Integer>();
-    ArrayList<Thread> mobThread = new ArrayList<Thread>();
+    // ArrayList<Thread> mobThread = new ArrayList<Thread>();
 
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     private MyImageIcon winGif, gameOverGif;
@@ -523,14 +523,14 @@ public class MainApplication extends JFrame {
         System.out.println("Add Count + = 1");
     }
 
-    public void joinThread(int n) {
-        for (int i = 0; i < n; i++) {
-            try {
-                mobThread.get(i).join();
-            } catch (InterruptedException e) {
-            }
-        }
-    }
+    // public void joinThread(int n) {
+    // for (int i = 0; i < n; i++) {
+    // try {
+    // mobThread.get(i).join();
+    // } catch (InterruptedException e) {
+    // }
+    // }
+    // }
 
     // ----------------------------- Add 10 Zombies to screen--------------------
     public void addZombieBeginner(String mode) {
@@ -695,7 +695,9 @@ public class MainApplication extends JFrame {
                 mobLabel.get(i).getHeight());
         drawpane.add(mobLabel.get(i));
         drawpane.validate();
-        mobThread.add(new Thread("Zombie" + i) {
+        // mobThread.add(new Thread("Zombie" + i) {
+
+        Thread zombieThread = new Thread("Zombie" + i) {
             public void run() {
 
                 System.out.println("thread = " + this.getName());
@@ -721,9 +723,9 @@ public class MainApplication extends JFrame {
                     drawpane.repaint();
                 }
             } // end run
-        });// end thread creation
+        };// end thread creation
 
-        mobThread.get(i).start();
+        zombieThread.start();
     }
 
     // ------------------------- For randoming time Zombie Appear ----------------
@@ -900,13 +902,16 @@ public class MainApplication extends JFrame {
             }
         });
 
-        if (score >= 0) { // Win
-            drawpane.add(winLabel);
-            winSound.playOnce();
-        } else { // gameOver
+        if (player.getHP() == 0) { // Game Over
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
+        } 
+        /*
+        if(score==10) { // win
+            drawpane.add(winLabel);
+            winSound.playOnce();
         }
+        */
 
         drawpane.add(button1);
         drawpane.add(button2);
