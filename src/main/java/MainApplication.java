@@ -794,8 +794,8 @@ public class MainApplication extends JFrame {
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         JLabel winLabel = new JLabel(winGif);
         JLabel gameOverLabel = new JLabel(gameOverGif);
-        winLabel.setBounds(frameWidth / 2, (frameHeight / 2) - 75, frameWidth, frameHeight);
-        gameOverLabel.setBounds(frameWidth / 2, (frameHeight / 2) - 75, frameWidth, frameHeight);
+        winLabel.setBounds((frameWidth / 2)-280, 120, 620, 200);
+        gameOverLabel.setBounds((frameWidth / 2)-400, 120, 800, 200);
 
         JButton button1 = new JButton();
         JButton button2 = new JButton();
@@ -803,52 +803,64 @@ public class MainApplication extends JFrame {
         setUpButton(button2, menuButton);
         button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 50, 200, 50);
         button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
+
+        /*Waiting For my Brain --Show Score 
+        JTextField showScore = new JTextField("SCORE : 34",10);
+        showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
+        //drawpane.add(showScore,frameWidth/2,200);
+        */
+
+        //----------------Stop All sound and delete All component in main game-----------------------
+        normalHitSound.stop(); softHitSound.stop(); criHitSound.stop(); hurtSound.stop();  usedItemSound.stop();  readyGoSound.stop();
+        beginnerSong.stop(); mediumSong.stop(); hardSong.stop(); nightmareSong.stop(); bossSong.stop();
+        //drawpane.removeAll(); 
+
         button1.addActionListener(new ActionListener() { // Restart Game
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                button1.setVisible(false);
-                button2.setVisible(false);
-                // drawpane.removeAll(); main_game(mode);
+                winSound.stop();
+                gameOverSound.stop();
+                // winLabel.setVisible(false);
+                // gameOverLabel.setVisible(false);
+                // button1.setVisible(false);
+                // button2.setVisible(false);
+
+                drawpane.removeAll(); 
+                repaint(); validate();
+                main_game(mode);   
             }
         });
 
         button2.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                button1.setVisible(false);
-                button2.setVisible(false);
-                PBar.setVisible(false);
+                winSound.stop();
+                gameOverSound.stop();
+                // winLabel.setVisible(false);
+                // gameOverLabel.setVisible(false);
+                // button1.setVisible(false);
+                // button2.setVisible(false);
+                // PBar.setVisible(false);
 
-                switch (mode) {
-                    case "Beginner":
-                        beginnerSong.stop();
-                        break;
-                    case "Easy":
-                        mediumSong.stop();
-                        break;
-                    case "Normal":
-                        hardSong.stop();
-                        break;
-                    case "Hard":
-                        nightmareSong.stop();
-                        break;
-                    case "Nightmare":
-                        bossSong.stop();
-                        break;
-                }
-                //drawpane.removeAll();AddComponents();
+                drawpane.removeAll();
+                repaint(); validate(); 
+                mainmanu();       
             }
         });
 
-        if (score >=0)
+        if(score>=0){  //Win
             drawpane.add(winLabel);
-        else
+            winSound.playLoop();
+        }
+        else{ //gameOver
             drawpane.add(gameOverLabel);
-
-        drawpane.add(button1);
+            gameOverSound.playLoop();
+        }
+        
+        drawpane.add(button1); 
         drawpane.add(button2);
-        validate();
     }
+    // ---------------------------- Set up Cursor & Button ------------------------
 
     // ---------------------------- Set up Cursor & Button ------------------------
 
