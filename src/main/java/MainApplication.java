@@ -417,12 +417,9 @@ public class MainApplication extends JFrame {
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
-
-        
         
         setup_thread_list();
 
-        // gameover(mode);
     }
 
     public void createZombieThread(String mode) {
@@ -525,17 +522,15 @@ public class MainApplication extends JFrame {
         button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 50, 200, 50);
         button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
 
-        /*
-         * // * Waiting For my Brain --Show Score
-         * JPanel scorepane = new JPanel();
-         * JTextField showScore = new JTextField("SCORE : 34",10);
-         * showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
-         * scorepane.add(showScore);
-         * //contentpane.add(scorepane,BorderLayout.CENTER);
-         */
+        JTextField scoreText = new JTextField("  SCORE : "+score,10);
+        scoreText.setEditable(false);
+        scoreText.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,25));
+        JPanel scorepane = new JPanel();
+        scorepane.setLayout(new BorderLayout());
+        scorepane.setBounds((frameWidth/2)-100,340, 200, 40);
+        scorepane.add(scoreText,BorderLayout.CENTER);
 
-        // ----------------Stop All sound and delete All component in main
-        // game-----------------------
+        // ----------------Stop All sound and delete All component in main game-----------------------
         // normalHitSound.stop();
         // softHitSound.stop();
         // criHitSound.stop();
@@ -549,7 +544,7 @@ public class MainApplication extends JFrame {
         comeIn = false;
         gameEnd = true;
         resetPBar();
-        // drawpane.removeAll();
+        //drawpane.removeAll();
 
         if (player.getHP() > 0 && gameEnd == true) { // Win
             drawpane.add(winLabel);
@@ -565,10 +560,6 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
-                // winLabel.setVisible(false);
-                // gameOverLabel.setVisible(false);
-                // button1.setVisible(false);
-                // button2.setVisible(false);
                 gameEnd = false;
                 // drawpane.remove(PBar);
                 // drawpane.remove(player);
@@ -585,18 +576,13 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
-                // winLabel.setVisible(false);
-                // gameOverLabel.setVisible(false);
-                // button1.setVisible(false);
-                // button2.setVisible(false);
-                // PBar.setVisible(false);
                 drawpane.removeAll();
                 repaint();
                 validate();
                 mainmanu();
             }
         });
-
+        drawpane.add(scorepane);
         drawpane.add(button1);
         drawpane.add(button2);
     }
