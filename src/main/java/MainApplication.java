@@ -489,6 +489,7 @@ public class MainApplication extends JFrame {
 
         PBar.setValue(0);
         PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
+        PBar.setForeground(new Color(255, 199, 56));
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
@@ -701,6 +702,7 @@ public class MainApplication extends JFrame {
                 } else {
                     waitGetIn(i);
                 }
+                setPbar(PBar);
                 move(i);
 
                 if (player.getHP() == 0) {
@@ -714,7 +716,6 @@ public class MainApplication extends JFrame {
                     drawpane.remove(mobLabel.get(i));
                     drawpane.repaint();
                 }
-                setPbar(PBar);
             } // end run
         });// end thread creation
 
