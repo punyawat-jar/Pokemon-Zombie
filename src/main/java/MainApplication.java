@@ -842,11 +842,13 @@ public class MainApplication extends JFrame {
         button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
 
         /*
-         * Waiting For my Brain --Show Score
-         * JTextField showScore = new JTextField("SCORE : 34",10);
-         * showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
-         * //drawpane.add(showScore,frameWidth/2,200);
-         */
+         // * Waiting For my Brain --Show Score
+           JPanel scorepane = new JPanel();
+           JTextField showScore = new JTextField("SCORE : 34",10);
+           showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
+           scorepane.add(showScore);
+           //contentpane.add(scorepane,BorderLayout.CENTER);
+        */
 
         // ----------------Stop All sound and delete All component in main
         // game-----------------------
