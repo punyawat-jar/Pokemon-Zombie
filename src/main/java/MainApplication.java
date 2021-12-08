@@ -65,6 +65,8 @@ public class MainApplication extends JFrame {
 
     private Player player;
     private Wordbox wbox;
+    private Bomb bomb;
+    // private Potion potion;
 
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
@@ -78,10 +80,19 @@ public class MainApplication extends JFrame {
         new MainApplication();
     }
 
+    public int get_framewidth() {
+        return frameWidth;
+    }
+
+    public int get_frameheight() {
+        return frameHeight;
+    }
+
     public boolean getPauseGame() {
         return pauseGame;
     }
-    public void setPauseGame(boolean x){
+
+    public void setPauseGame(boolean x) {
         pauseGame = x;
     }
 
@@ -504,7 +515,7 @@ public class MainApplication extends JFrame {
         drawpane.add(PBar);
 
         keybar = new Keyboard_bar();
-        keybar.setPane(drawpane,this);
+        keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
 
 
@@ -917,13 +928,13 @@ public class MainApplication extends JFrame {
         if (player.getHP() == 0) { // Game Over
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
-        } 
-        /*
-        if(score==10) { // win
-            drawpane.add(winLabel);
-            winSound.playOnce();
         }
-        */
+        /*
+         * if(score==10) { // win
+         * drawpane.add(winLabel);
+         * winSound.playOnce();
+         * }
+         */
 
         drawpane.add(button1);
         drawpane.add(button2);
