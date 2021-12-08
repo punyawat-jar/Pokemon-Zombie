@@ -30,7 +30,7 @@ public class MainApplication extends JFrame {
     private JRadioButton[] radio;
     private String[] accessory = { "poke1", "poke2", "poke3", "poke4", "poke5" };
 
-    private MyImageIcon startButton, creditButton, tutorialButton, exitButton, playButton, restartButton, menuButton,
+    private MyImageIcon emptyButton,startButton, creditButton, tutorialButton, exitButton, playButton, restartButton, menuButton,
             nextButton, backButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, hurtSound, gameOverSound, winSound,
             usedItemSound;
@@ -108,8 +108,9 @@ public class MainApplication extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         contentpane = (JPanel) getContentPane();
         contentpane.setLayout(new BorderLayout());
-
+        
         AddComponents();
+
         // add Vocab
         readFile(mode);
     }// end MainApplication Constructor;
@@ -125,6 +126,7 @@ public class MainApplication extends JFrame {
         in_gamebg4Img = new MyImageIcon("bg/nightmare_bg.png").resize(frameWidth, frameHeight);
         in_gamebg5Img = new MyImageIcon("bg/boss_bg.png").resize(frameWidth, frameHeight);
 
+        emptyButton = new MyImageIcon("button_and_cursor/button.png").resize(138, 50);
         startButton = new MyImageIcon("button_and_cursor/StartButton.png").resize(138, 50);
         creditButton = new MyImageIcon("button_and_cursor/CreditButton.png").resize(138, 50);
         tutorialButton = new MyImageIcon("button_and_cursor/TutorialButton.png").resize(138, 50);
@@ -900,11 +902,13 @@ public class MainApplication extends JFrame {
         button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
 
         /*
-         * Waiting For my Brain --Show Score
-         * JTextField showScore = new JTextField("SCORE : 34",10);
-         * showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
-         * //drawpane.add(showScore,frameWidth/2,200);
-         */
+         // * Waiting For my Brain --Show Score
+           JPanel scorepane = new JPanel();
+           JTextField showScore = new JTextField("SCORE : 34",10);
+           showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
+           scorepane.add(showScore);
+           //contentpane.add(scorepane,BorderLayout.CENTER);
+        */
 
         // ----------------Stop All sound and delete All component in main
         // game-----------------------
@@ -1004,10 +1008,10 @@ public class MainApplication extends JFrame {
 
     public void readFile(String[] mode) {
         for (int i = 0; i < mode.length; i++) {
-            enforceFile(mode[i]);
+             enforceFile(mode[i]);
         }
-        // System.out.printf("---------------\n");
-        // printReadFile();
+        //System.out.printf("----------------------------------------------\n");
+        //printReadFile();
     }
 
     public void enforceFile(String fname) {
@@ -1044,9 +1048,9 @@ public class MainApplication extends JFrame {
     }
 
     public void printReadFile() { // print read file
-        // for (int i = 0; i < modeList.size(); i++) {
-        modeList.get(2).printFileWord();
-        // }
+        for (int i = 0; i < modeList.size(); i++) {
+            modeList.get(i).printFileWord();
+         }
         System.out.println("");
     }
 
