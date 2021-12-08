@@ -519,14 +519,14 @@ public class MainApplication extends JFrame {
         System.out.println("Add Count + = 1");
     }
 
-    public void joinThread(int n) {
-        for (int i = 0; i < n; i++) {
-            try {
-                mobThread.get(i).join();
-            } catch (InterruptedException e) {
-            }
-        }
-    }
+    // public void joinThread(int n) {
+    // for (int i = 0; i < n; i++) {
+    // try {
+    // mobThread.get(i).join();
+    // } catch (InterruptedException e) {
+    // }
+    // }
+    // }
 
     // ----------------------------- Add 10 Zombies to screen--------------------
     public void addZombieBeginner(String mode) {
