@@ -56,7 +56,7 @@ class Keyboard_bar {
                         System.out.println("count is = " + main.getCount_death());
                         System.out.println("thread is = " + main.threadlist);
                         System.out.println("mY name is your");
-                        m.callSetScore();
+                        //main.callSetScore();
                     } else {
                         wrong.playOnce();
                     }

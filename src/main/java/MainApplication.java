@@ -549,9 +549,11 @@ public class MainApplication extends JFrame {
         return gameResult;
     }
 
+    /*
     public void callSetScore(){
         player.setscore();
     }
+    */
 
     // public void kill_monster(int i) {
     // drawpane.remove(mobLabel.get(i));
@@ -578,7 +580,8 @@ public class MainApplication extends JFrame {
         //System.out.printf("Score : %d \n",player.getScore());
 
         //Show Score
-        JTextField scoreText = new JTextField("  SCORE : " + player.getScore() , 10);
+        //JTextField scoreText = new JTextField("  SCORE : " + player.getScore() , 10);
+        JTextField scoreText = new JTextField("  SCORE : " + score , 10);
         scoreText.setEditable(false);
         scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
         scoreText.setBackground(new Color(255, 255, 255, 100));
