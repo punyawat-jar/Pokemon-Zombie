@@ -510,23 +510,25 @@ public class MainApplication extends JFrame {
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         JLabel winLabel = new JLabel(winGif);
         JLabel gameOverLabel = new JLabel(gameOverGif);
-        winLabel.setBounds((frameWidth / 2) - 280, 120, 620, 200);
-        gameOverLabel.setBounds((frameWidth / 2) - 400, 120, 800, 200);
+        winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
+        gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
 
         JButton button1 = new JButton();
         JButton button2 = new JButton();
         setUpButton(button1, restartButton);
         setUpButton(button2, menuButton);
-        button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 50, 200, 50);
-        button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
-
+        button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 40, 200, 50);
+        button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 40, 200, 50);
+        
         JTextField scoreText = new JTextField("  SCORE : "+score,10);
         scoreText.setEditable(false);
         scoreText.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,25));
-        JPanel scorepane = new JPanel();
-        scorepane.setLayout(new BorderLayout());
-        scorepane.setBounds((frameWidth/2)-100,340, 200, 40);
-        scorepane.add(scoreText,BorderLayout.CENTER);
+        scoreText.setBackground(new Color(255,255,255,100));
+    
+        JPanel scorePanel = new JPanel();
+        scorePanel.setLayout(new BorderLayout());
+        scorePanel.setBounds((frameWidth/2)-100,350, 200, 30);
+        scorePanel.add(scoreText,BorderLayout.CENTER);
 
         // ----------------Stop All sound and delete All component in main game-----------------------
         // normalHitSound.stop();
@@ -559,8 +561,6 @@ public class MainApplication extends JFrame {
                 winSound.stop();
                 gameOverSound.stop();
                 gameEnd = false;
-                // drawpane.remove(PBar);
-                // drawpane.remove(player);
                 drawpane.removeAll();
                 repaint();
                 validate();
@@ -580,7 +580,7 @@ public class MainApplication extends JFrame {
                 mainmanu();
             }
         });
-        drawpane.add(scorepane);
+        drawpane.add(scorePanel);
         drawpane.add(button1);
         drawpane.add(button2);
     }
