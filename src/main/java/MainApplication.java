@@ -27,7 +27,7 @@ public class MainApplication extends JFrame {
     private boolean comeIn;
     private boolean gameEnd = false;
     private String gameResult;
-
+    private int countStageEnd = 0;
     private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
 
@@ -77,6 +77,14 @@ public class MainApplication extends JFrame {
 
     public int get_frameheight() {
         return frameHeight;
+    }
+
+    public int getCountStageEnd() {
+        return countStageEnd;
+    }
+
+    public void addCountStageEnd() {
+        countStageEnd++;
     }
 
     public MainApplication() {
@@ -342,7 +350,9 @@ public class MainApplication extends JFrame {
         PBar.setForeground(new Color(255, 199, 56));
         PBar.setStringPainted(false);
         drawpane.add(PBar);
-
+        gameResult = "";
+        countStageEnd = 0;
+        comeIn = false;
         if (comeIn == false) {
             comeIn = true;
             readyGoLabel.setBounds(525, 230, 380, 214);
@@ -396,31 +406,31 @@ public class MainApplication extends JFrame {
 
                 break;
         }
-        // player = new Player();
-        // player.draw_player(drawpane);
-        // player.draw_healthbar(drawpane);
-
-        PBar.setValue(0);
-        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
-        PBar.setForeground(new Color(255, 199, 56));
-        PBar.setStringPainted(false);
-        drawpane.add(PBar);
 
         keybar = new Keyboard_bar(wbox_AL);
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
 
-        // gameover(mode);
     }
 
     public void createZombieThread(String mode) {
+        // ArrayList<ZombieThread> allZombThread = new ArrayList<ZombieThread>();
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
                     program);
             System.out.println("i main = " + i);
-
         }
+        // allZombThread.add(zombThread);
+        // }
+        // for (int i = 0; i < 10; i++) {
+        // try {
+        // allZombThread.get(i).join();
+        // } catch (InterruptedException e) {
+        // System.out.println("Join " + i + " Interrupted: " + e);
+        // }
+        // }
+        // System.out.println("Join Complete");
     }
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
@@ -437,6 +447,10 @@ public class MainApplication extends JFrame {
         System.out.println("Add Count + = 1");
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public void setCount_death() {
         count_death += 1;
     }
@@ -446,12 +460,17 @@ public class MainApplication extends JFrame {
     }
 
     public void resetPBar() {
+        count = 0;
         PBar.setValue(0);
         System.out.println("-- Reset Progress Bar --");
     }
 
     public void setGameResult(String result) {
         gameResult = result;
+    }
+
+    public String getGameResult() {
+        return gameResult;
     }
 
     // public void kill_monster(int i) {
@@ -490,11 +509,6 @@ public class MainApplication extends JFrame {
 
         // ----------------Stop All sound and delete All component in main
         // game-----------------------
-        // normalHitSound.stop();
-        // softHitSound.stop();
-        // criHitSound.stop();
-        // usedItemSound.stop();
-        // readyGoSound.stop();
         beginnerSong.stop();
         mediumSong.stop();
         hardSong.stop();
@@ -502,17 +516,21 @@ public class MainApplication extends JFrame {
         bossSong.stop();
         comeIn = false;
         gameEnd = true;
+        count_death = 0;
         resetPBar();
         // drawpane.removeAll();
 
-        if (player.getHP() > 0 && gameEnd == true) { // Win
+        if (player.getHP() > 0 && gameEnd == true && gameResult != "GameOver") { // Win
             drawpane.add(winLabel);
             winSound.playOnce();
             gameEnd = false;
-        } else if (player.getHP() == 0 && gameEnd == true) { // gameOver
+            gameResult = "";
+        } else if (player.getHP() == 0 && gameEnd == true &&
+                gameResult == "GameOver") { // gameOver
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
             gameEnd = false;
+            gameResult = "";
         }
         button1.addActionListener(new ActionListener() { // Restart Game
             public void actionPerformed(ActionEvent e) {
@@ -553,11 +571,9 @@ public class MainApplication extends JFrame {
 
         drawpane.add(button1);
         drawpane.add(button2);
-    }
-    // ---------------------------- Set up Cursor & Button ------------------------
+    }// end stageEnd
 
     // ---------------------------- Set up Cursor & Button ------------------------
-
     public void setUpButton(JButton button, MyImageIcon img) {
         button.setIcon(img);
         button.setOpaque(false);

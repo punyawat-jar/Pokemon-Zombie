@@ -39,7 +39,7 @@ class ZombieThread extends Thread {
         mode = m;
         importZombie(pane);
         pane.add(zombLabel);
-        pane.validate();
+        // pane.validate();
         hurtSound = new MySoundEffect("sound_effect/Hurt_soundeffect.wav");
         start();
     }// end Constructor
@@ -230,7 +230,19 @@ class ZombieThread extends Thread {
             tempPane.repaint();
             // removeZombie(10);
             program.setGameResult("GameOver");
-            return;
+            program.addCountStageEnd();
+            // return;
+        }
+
+        else if (program.getCount_death() == 10) { // Win
+            program.setGameResult("Win");
+            program.addCountStageEnd();
+        }
+
+        if ((program.getGameResult() == "GameOver" || program.getGameResult() == "Win")
+                && program.getCountStageEnd() == 1) {
+            // program.setCountStageEnd(0);
+            program.stageEnd(mode);
         }
         // --------- Remove Zombie when Hit Pikachu & decrease heart
         if (zombLabel.getBounds().intersects(tempPlayer.getLabel().getBounds())) {
@@ -239,6 +251,7 @@ class ZombieThread extends Thread {
             tempPane.remove(zombLabel);
             tempPane.repaint();
         }
+        program.setCount_death(); // death++
     }// end run
 
     // -------------------- For randoming time Zombie Appear--------------
