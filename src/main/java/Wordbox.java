@@ -47,6 +47,10 @@ public class Wordbox {
     }
     public void setvisible(boolean x){
         wlabel.setVisible(x);
+        
+    }
+    public void setfontcolor(Color x){
+        wlabel.setForeground(x);
     }
 
 }

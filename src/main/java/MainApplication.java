@@ -70,6 +70,8 @@ public class MainApplication extends JFrame {
     // "Vocab/Hard.txt" };
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
+
+
     // ------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
         program = new MainApplication();
@@ -101,6 +103,19 @@ public class MainApplication extends JFrame {
         contentpane.setLayout(new BorderLayout());
 
         AddComponents();
+
+        addWindowListener( new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                int exit = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to quit the game?","PokemonGame! - Message", JOptionPane.YES_NO_OPTION);
+                if(exit == JOptionPane.YES_OPTION){
+                    System.exit(0);
+                }
+                else{
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+            
+        });
 
         // add Vocab
         readFile(mode);
@@ -373,7 +388,7 @@ public class MainApplication extends JFrame {
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
-        keybar = new Keyboard_bar(wbox_AL);
+        keybar = new Keyboard_bar(wbox_AL,this);
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
 
