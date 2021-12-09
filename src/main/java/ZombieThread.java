@@ -329,6 +329,14 @@ class ZombieThread extends Thread {
             }
         } // end while
     }// end move
+
+    public int getCurX() {
+        return zombCurX;
+    }
+
+    public int getTimeWait() {
+        return zombTimeWait;
+    }
 }
 
 // end Class ZombieThread

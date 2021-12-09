@@ -11,8 +11,6 @@ import javax.swing.border.*;
 public class Wordbox {
     private JLabel wlabel,pane;
     private String word;
-    //Font f = la
-    private MyImageIcon wbox_bg =  new MyImageIcon("Wbox/wbox.png").resize(120, 40);
     public Wordbox(JLabel p,String s) {
         wlabel = new JLabel(s);
         //dtext = new DoubleText(wlabel,word);
@@ -50,7 +48,5 @@ public class Wordbox {
     public void setvisible(boolean x){
         wlabel.setVisible(x);
     }
-    public void compareword(String s){
 
-    }
 }
