@@ -30,21 +30,22 @@ class Keyboard_bar {
         typearea.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    //if(typearea.getText().trim().contains(word_AL.get(main.getCount_death()).getWord().trim())){
-                        
-                        //main.kill_monster(main.threadlist.get(main.getCount_death()));
+                    // if(typearea.getText().trim().contains(word_AL.get(main.getCount_death()).getWord().trim())){
 
-                    //}
+                    // main.kill_monster(main.threadlist.get(main.getCount_death()));
+
+                    // }
                     // a = typearea.getText().trim();
                     // b = word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim();
                     // System.out.println("-" + a + "-");
                     // System.out.println("*" + b + "*");
                     // System.out.println("death count = " + main.getCount_death() );
                     // for(int i =0;i<10;i++){
-                    //     System.out.println("WordAL = " + word_AL.get(i).getWord());
+                    // System.out.println("WordAL = " + word_AL.get(i).getWord());
                     // }
-                    if(typearea.getText().trim().equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())){
-                        ///score++
+                    if (typearea.getText().trim()
+                            .equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
+                        /// score++
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
                         correct.playOnce();
                         System.out.println("count is = " + main.getCount_death());
@@ -55,13 +56,12 @@ class Keyboard_bar {
                         wrong.playOnce();
                     }
                     typearea.setText(null);
-                    
+
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                     main.pause();
                     
                 }
-
             }
             public void keyTyped(KeyEvent e) {
                 // compare = new Compare_text( typearea, word_AL,main,2);
@@ -69,16 +69,15 @@ class Keyboard_bar {
             public void keyReleased(KeyEvent e) {}
         });
     }
-    
+
     public JTextArea getTypearea() {
         return typearea;
     }
 
-    public void setPane(JLabel x,MainApplication m) {
+    public void setPane(JLabel x, MainApplication m) {
         main = m;
         x.add(typearea);
     }
-
 
     public void setposition(int x, int y) {
         typearea.setBounds(x, y, width, height);
@@ -101,12 +100,11 @@ class Compare_text implements CaretListener{
         position = count;
     }
 
-    
     public void caretUpdate(CaretEvent e) {
         if(text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim()) ){
             System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
         }
 
-        //out.setText( in.getText() );
+        // out.setText( in.getText() );
     }
 };
