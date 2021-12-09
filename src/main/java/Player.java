@@ -34,6 +34,8 @@ class Player {
         }
         HP = HP_AL.size() - 1;
         x.add(HP_AL.get(5));
+
+        Score = 0;
     }
 
     public void hitplayer(JLabel x) {
@@ -51,11 +53,16 @@ class Player {
         return HP;
     }
 
-    synchronized public void setscore(int x) {
-        this.Score = x;
+    synchronized public void setscore(/*int x*/) {
+        //this.Score = x;
+        Score++;
     }
 
     public JLabel getLabel() {
         return playerLabel;
+    }
+    
+    public int getScore(){
+        return Score;
     }
 }// end Player

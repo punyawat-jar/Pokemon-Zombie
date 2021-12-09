@@ -550,6 +550,10 @@ public class MainApplication extends JFrame {
         return gameResult;
     }
 
+    public void callSetScore(){
+        player.setscore();
+    }
+
     // public void kill_monster(int i) {
     // drawpane.remove(mobLabel.get(i));
     // wbox_AL.get(i).setvisible(false);
@@ -568,10 +572,13 @@ public class MainApplication extends JFrame {
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
 
-        JButton button1 = new JButton();  //Back To Menu
+        //Back To Menu
+        JButton button1 = new JButton(); 
         setUpButton(button1, menuButton);
         button1.setBounds((frameWidth / 2) -100, (frameHeight / 2) + 30, 200, 50);
+        //System.out.printf("Score : %d \n",player.getScore());
 
+        //Show Score
         JTextField scoreText = new JTextField("  SCORE : " + player.getScore() , 10);
         scoreText.setEditable(false);
         scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
@@ -617,8 +624,7 @@ public class MainApplication extends JFrame {
                 validate();
                 program.dispose(); 
                 program = new MainApplication();
-                
-                //mainmanu();
+
             }
         });
 
