@@ -222,12 +222,14 @@ class ZombieThread extends Thread {
                 + " , zombHeight" + zombHeight);
 
         System.out.println("Thread : " + Thread.currentThread().getName());
-        if (mode == "Nightmare") {
-            waitGetInNightmare(i);
-        } else if (mode == "Hard") {
-            waitGetInHard(i);
-        } else {
-            waitGetIn(i);
+        if (!pauseGame) {
+            if (mode == "Nightmare") {
+                waitGetInNightmare(i);
+            } else if (mode == "Hard") {
+                waitGetInHard(i);
+            } else {
+                waitGetIn(i);
+            }
         }
         program.setPBar();
         move(tempPlayer, i);
