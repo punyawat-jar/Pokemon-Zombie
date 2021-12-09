@@ -62,10 +62,8 @@ public class MainApplication extends JFrame {
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
             "custom_poke/poke4.png", "custom_poke/poke5.png" };
-    // private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt",
-    // "Vocab/Hard.txt", "Vocab/Nightmare.txt",
-    // "Vocab/Boss.txt" };
-    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt" };
+    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt","Vocab/Hard.txt", "Vocab/Nightmare.txt","Vocab/Boss.txt" };
+    //private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt" };
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
@@ -642,8 +640,8 @@ public class MainApplication extends JFrame {
                     if (countLine == 0) {
                         name = buf[0].trim();
                         countLine++;
-                    } else {
-
+                    }
+                    else {
                         vList.add(buf[0].trim());
 
                     }
@@ -668,9 +666,7 @@ public class MainApplication extends JFrame {
 
     public void input_word(int n) {
         for (int i = 0; i < 10; i++) {
-            wbox = new Wordbox(drawpane, "Helloworld");
-
-            // modeList.get(n).randomWord()
+            wbox = new Wordbox(drawpane, modeList.get(n).randomWord());
             wbox_AL.add(wbox);
         }
 

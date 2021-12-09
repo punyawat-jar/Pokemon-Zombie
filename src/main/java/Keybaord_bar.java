@@ -32,8 +32,13 @@ class Keyboard_bar {
 
                     //}
                     a = typearea.getText().trim();
-                    b = word_AL.get(main.getCount_death()).getWord().trim();
-                    
+                    b = word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim();
+                    System.out.println("-" + a + "-");
+                    System.out.println("*" + b + "*");
+                    System.out.println("death count = " + main.getCount_death() );
+                    // for(int i =0;i<10;i++){
+                    //     System.out.println("WordAL = " + word_AL.get(i).getWord());
+                    // }
                     if(a.equals(b)){
                         ///score++
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
