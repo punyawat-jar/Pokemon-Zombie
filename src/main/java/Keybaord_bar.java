@@ -15,8 +15,9 @@ class Keyboard_bar {
     private int width, height;
     private MainApplication main;
     private ArrayList<Wordbox> word_AL;
-    private MySoundEffect correct,wrong;
+    private MySoundEffect correct, wrong;
     Compare_text compare;
+
     // private String a,b;
     public Keyboard_bar(ArrayList<Wordbox> wAL) {
         word_AL = wAL;
@@ -26,7 +27,7 @@ class Keyboard_bar {
         correct = new MySoundEffect("sound_effect/correct_sound.wav");
         wrong = new MySoundEffect("sound_effect/wrong_sound.wav");
         // typearea.grabFocus();
-        
+
         typearea.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -51,22 +52,24 @@ class Keyboard_bar {
                         System.out.println("count is = " + main.getCount_death());
                         System.out.println("thread is = " + main.threadlist);
                         System.out.println("mY name is your");
-                    }
-                    else{
+                    } else {
                         wrong.playOnce();
                     }
                     typearea.setText(null);
 
                 }
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    main.pause();
-                    
+                    // main.pause();
+
                 }
             }
+
             public void keyTyped(KeyEvent e) {
                 // compare = new Compare_text( typearea, word_AL,main,2);
             }
-            public void keyReleased(KeyEvent e) {}
+
+            public void keyReleased(KeyEvent e) {
+            }
         });
     }
 
@@ -84,24 +87,22 @@ class Keyboard_bar {
     }
 }
 
-
-
-class Compare_text implements CaretListener{
+class Compare_text implements CaretListener {
     private JTextArea text_type;
     private ArrayList<Wordbox> wbox;
     private MainApplication main;
     int position;
 
-    public Compare_text(JTextArea T, ArrayList<Wordbox> W,MainApplication m,int count){ 
-	    text_type = T;
+    public Compare_text(JTextArea T, ArrayList<Wordbox> W, MainApplication m, int count) {
+        text_type = T;
         wbox = W;
         main = m;
-	    text_type.addCaretListener(this);
+        text_type.addCaretListener(this);
         position = count;
     }
 
     public void caretUpdate(CaretEvent e) {
-        if(text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim()) ){
+        if (text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
             System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
         }
 
