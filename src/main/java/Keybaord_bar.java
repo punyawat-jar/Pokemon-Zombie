@@ -15,8 +15,9 @@ class Keyboard_bar {
     private int width, height;
     private MainApplication main;
     private ArrayList<Wordbox> word_AL;
-    private MySoundEffect correct,wrong;
+    private MySoundEffect correct, wrong;
     Compare_text compare;
+
     // private String a,b;
     public Keyboard_bar(ArrayList<Wordbox> wAL,MainApplication m) {
         word_AL = wAL;
@@ -55,22 +56,24 @@ class Keyboard_bar {
                         System.out.println("count is = " + main.getCount_death());
                         System.out.println("thread is = " + main.threadlist);
                         System.out.println("mY name is your");
-                    }
-                    else{
+                    } else {
                         wrong.playOnce();
                     }
                     typearea.setText(null);
 
                 }
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                    main.pause();
-                    
+                    // main.pause();
+
                 }
             }
+
             public void keyTyped(KeyEvent e) {
                 
             }
-            public void keyReleased(KeyEvent e) {}
+
+            public void keyReleased(KeyEvent e) {
+            }
         });
     }
 
@@ -88,9 +91,7 @@ class Keyboard_bar {
     }
 }
 
-
-
-class Compare_text implements CaretListener{
+class Compare_text implements CaretListener {
     private JTextArea text_type;
     private ArrayList<Wordbox> wbox;
     private MainApplication main;

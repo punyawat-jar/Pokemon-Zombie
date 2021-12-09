@@ -220,14 +220,6 @@ class ZombieThread extends Thread {
         } // end NightMare
     }
 
-    public void setPauseGame(boolean b) {
-        pauseGame = b;
-    }
-
-    public boolean getPauseGame() {
-        return pauseGame;
-    }
-
     public int randomNum(int amount) {
         Random random = new Random();
         int randomNum = random.nextInt(amount);
@@ -247,28 +239,9 @@ class ZombieThread extends Thread {
 
         System.out.println("Thread : " + Thread.currentThread().getName());
 
-        if (pauseGame == false) { // First Come'n is not pause
-            waitGetIn(i, pauseGame, zombTimeWait); // loop if PauseGame == true;
-            // }
-        }
-        // while (pauseGame) {
-        // System.out.println("pauseGame = " + pauseGame);
-        // System.out.println("Thread " + i + " Sleep " + zombTimeWait / 1000 + "sec");
-        // try {
-        // Thread.sleep(zombTimeWait);
-        // if (pauseGame == false)
-        // throw new InterruptedException("Earlier");
-        // } catch (InterruptedException e) {
-        // System.out.println("Thread " + i + " wake up." + e);
-        // }
-        // }
-        System.out.println("pauseGame = " + pauseGame);
+        waitGetIn(i, zombTimeWait); // loop if PauseGame == true;
 
-        // else if (pauseGame == true) {// First Come'n is pausing
-        // if (pauseGame == true) {
-        // waitGetInPauseLoop(i, pauseGame, zombTimeWait); // loop if PauseGame == true;
-        // }
-        // }
+        System.out.println("pauseGame = " + pauseGame);
 
         program.setPBar();
 
@@ -316,15 +289,11 @@ class ZombieThread extends Thread {
     // -------------------- For randoming time Zombie Appear--------------
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
-
-    synchronized public static void waitGetIn(int i, Boolean pauseGame, int timeWait) {
-        // We can't use while(pauseGame) in synch, because can't changed pause;
+    synchronized public static void waitGetIn(int i, int timeWait) {
         if (i == 0) {
             try {
                 timeWait = 3000;
                 Thread.sleep(timeWait);
-                if (pauseGame == false)
-                    throw new InterruptedException();
             } catch (InterruptedException e) {
 
                 System.out.println("Thread " + i + " wake up.");
@@ -332,8 +301,6 @@ class ZombieThread extends Thread {
         } else {
             try {
                 Thread.sleep(timeWait);
-                if (pauseGame == false)
-                    throw new InterruptedException();
             } catch (InterruptedException e) {
 
                 System.out.println("Thread " + i + " wake up.");
@@ -350,15 +317,10 @@ class ZombieThread extends Thread {
         while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())) &&
                 player.getHP() != 0 && killed == false) {
             zombLabel.setLocation(zombCurX, zombCurY);
-            if (!pauseGame) {
-                zombCurX = zombCurX - 5;
-                zombLabel.repaint();
-                wbox.get(i).wbox_move(zombCurX - 30, zombCurY);
-            } else {
-                //System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
-                // System.out.println("Pause ZombieThread: " +
-                // Thread.currentThread().getName());
-            }
+            zombCurX = zombCurX - 5;
+            zombLabel.repaint();
+            wbox.get(i).wbox_move(zombCurX - 30, zombCurY);
+
             zombLabel.repaint();
             try {
                 Thread.sleep(zombSpeed);
@@ -368,17 +330,8 @@ class ZombieThread extends Thread {
         } // end while
     }// end move
 
-    public int getCurX(){
+    public int getCurX() {
         return zombCurX;
-    }
-
-
-    public void pause() {
-        if (pauseGame == false) {
-            pauseGame = true;
-        } else if (pauseGame == true) {
-            pauseGame = false;
-        }
     }
 
     public int getTimeWait() {
