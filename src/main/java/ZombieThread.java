@@ -233,6 +233,7 @@ class ZombieThread extends Thread {
         move(tempPlayer, i);
 
         if (tempPlayer.getHP() == 0) {
+            kill_monster(i);
             tempPane.remove(zombLabel);
             tempPane.repaint();
             // removeZombie(10);
@@ -258,8 +259,9 @@ class ZombieThread extends Thread {
             tempPane.remove(zombLabel);
             tempPane.repaint();
             kill_monster(i);
+
+            program.setCount_death(); // death++
         }
-        program.setCount_death(); // death++
     }// end run
 
     public void kill_monster(int i) {

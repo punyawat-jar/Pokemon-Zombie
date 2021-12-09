@@ -1,1 +1,1 @@
-getPauseGame()
+setCount
