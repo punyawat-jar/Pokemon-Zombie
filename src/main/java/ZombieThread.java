@@ -222,7 +222,7 @@ class ZombieThread extends Thread {
                 + " , zombHeight" + zombHeight);
 
         System.out.println("Thread : " + Thread.currentThread().getName());
-        if (!pauseGame) {
+        if (!pauseGame) { // run normally
             if (mode == "Nightmare") {
                 waitGetInNightmare(i);
             } else if (mode == "Hard") {
@@ -230,8 +230,21 @@ class ZombieThread extends Thread {
             } else {
                 waitGetIn(i);
             }
+        } else if (pauseGame) { // if pauseGame
+            while (pauseGame) {
+                if (!pauseGame) { // run normally
+                    if (mode == "Nightmare") {
+                        waitGetInNightmare(i);
+                    } else if (mode == "Hard") {
+                        waitGetInHard(i);
+                    } else {
+                        waitGetIn(i);
+                    }
+                } // Loop until continue
+            }
         }
         program.setPBar();
+
         move(tempPlayer, i);
 
         if (tempPlayer.getHP() == 0) {
