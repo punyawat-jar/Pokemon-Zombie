@@ -568,28 +568,11 @@ public class MainApplication extends JFrame {
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
 
-        JButton button1 = new JButton();
-        JButton button2 = new JButton();
-        setUpButton(button1, restartButton);
-        setUpButton(button2, menuButton);
-        button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 50, 200, 50);
-        button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 50, 200, 50);
+        JButton button1 = new JButton();  //Back To Menu
+        setUpButton(button1, menuButton);
+        button1.setBounds((frameWidth / 2) -100, (frameHeight / 2) + 30, 200, 50);
 
-        /*
-         * // * Waiting For my Brain --Show Score
-         * JPanel scorepane = new JPanel();
-         * JTextField showScore = new JTextField("SCORE : 34",10);
-         * showScore.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,20));
-         * scorepane.add(showScore);
-         * //contentpane.add(scorepane,BorderLayout.CENTER);
-         */
-
-        // ----------------Stop All sound and delete All component in main
-        // game-----------------------
-        button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 40, 200, 50);
-        button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 40, 200, 50);
-
-        JTextField scoreText = new JTextField("  SCORE : " + score, 10);
+        JTextField scoreText = new JTextField("  SCORE : " + player.getScore() , 10);
         scoreText.setEditable(false);
         scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
         scoreText.setBackground(new Color(255, 255, 255, 100));
@@ -599,13 +582,7 @@ public class MainApplication extends JFrame {
         scorePanel.setBounds((frameWidth / 2) - 100, 350, 200, 30);
         scorePanel.add(scoreText, BorderLayout.CENTER);
 
-        // ----------------Stop All sound and delete All component in main
-        // game-----------------------
-        // normalHitSound.stop();
-        // softHitSound.stop();
-        // criHitSound.stop();
-        // usedItemSound.stop();
-        // readyGoSound.stop();
+        // ----------------Stop All sound in game-----------------------------
         beginnerSong.stop();
         mediumSong.stop();
         hardSong.stop();
@@ -615,7 +592,6 @@ public class MainApplication extends JFrame {
         gameEnd = true;
         count_death = 0;
         resetPBar();
-        // drawpane.removeAll();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult != "GameOver") { // Win
             drawpane.add(winLabel);
@@ -629,34 +605,26 @@ public class MainApplication extends JFrame {
             gameEnd = false;
             gameResult = "";
         }
-        button1.addActionListener(new ActionListener() { // Restart Game
+
+        button1.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
+                gameEnd = false;
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
-                gameEnd = false;
                 drawpane.removeAll();
                 repaint();
                 validate();
-                main_game(mode);
+                program.dispose(); 
+                program = new MainApplication();
+                
+                //mainmanu();
             }
         });
 
-        button2.addActionListener(new ActionListener() { // Back to Menu
-            public void actionPerformed(ActionEvent e) {
-                gameEnd = false;
-                buttonSound.playOnce();
-                winSound.stop();
-                gameOverSound.stop();
-                drawpane.removeAll();
-                repaint();
-                validate();
-                mainmanu();
-            }
-        });
         drawpane.add(scorePanel);
         drawpane.add(button1);
-        drawpane.add(button2);
+        validate();
     }// end stageEnd
 
     // ---------------------------- Set up Cursor & Button ------------------------
