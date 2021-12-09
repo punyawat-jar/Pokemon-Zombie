@@ -55,7 +55,12 @@ class Player {
         this.Score = x;
     }
 
+    public void heal() {
+
+    }
+
     public JLabel getLabel() {
         return playerLabel;
     }
+
 }// end Player

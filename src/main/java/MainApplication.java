@@ -62,8 +62,10 @@ public class MainApplication extends JFrame {
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
             "custom_poke/poke4.png", "custom_poke/poke5.png" };
-    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt","Vocab/Hard.txt", "Vocab/Nightmare.txt","Vocab/Boss.txt" };
-    //private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt" };
+    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
+            "Vocab/Boss.txt" };
+    // private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt",
+    // "Vocab/Hard.txt" };
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
@@ -343,7 +345,6 @@ public class MainApplication extends JFrame {
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
-
         if (comeIn == false) {
             comeIn = true;
             readyGoLabel.setBounds(525, 230, 380, 214);
@@ -415,7 +416,7 @@ public class MainApplication extends JFrame {
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
-        
+
         setup_thread_list();
 
     }
@@ -424,37 +425,36 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
-                    program,wbox_AL);
+                    program, wbox_AL);
             zombielist.add(zombThread);
 
             System.out.println("i main = " + i);
-            
+
         }
     }
 
-    public void pause(){
-        for(int i =0;i<zombielist.size();i++){
-            if(zombielist.get(i).getPauseGame() == false){
+    public void pause() {
+        for (int i = 0; i < zombielist.size(); i++) {
+            if (zombielist.get(i).getPauseGame() == false) {
                 zombielist.get(i).setPauseGame(true);
-            }
-            else if(zombielist.get(i).getPauseGame() == true){
+            } else if (zombielist.get(i).getPauseGame() == true) {
                 zombielist.get(i).setPauseGame(false);
             }
         }
     }
 
-    public void kill_zombie(int i){
+    public void kill_zombie(int i) {
         // drawpane.remove(mobLabel.get(i));
-        for(int j =0;j<zombielist.size();j++){
+        for (int j = 0; j < zombielist.size(); j++) {
             zombielist.get(i).kill_monster(i);
         }
         // wbox_AL.get(i).setvisible(false);
-        //drawpane.remove(wbox_AL.get(i));
+        // drawpane.remove(wbox_AL.get(i));
         // drawpane.repaint();
         setCount_death();
 
     }
-    
+
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
     // try {
@@ -464,20 +464,20 @@ public class MainApplication extends JFrame {
     // }
     // }
 
-    public void setup_thread_list(){
+    public void setup_thread_list() {
         threadlist.add(0);
-        for(int i=9;i>0;i--){
+        for (int i = 9; i > 0; i--) {
             threadlist.add(i);
         }
     }
 
-    public void print_list_thread(){
-        for(int i =0;i<threadlist.size();i++){
-            System.out.println("->>>>>>>>"+threadlist.get(i));
+    public void print_list_thread() {
+        for (int i = 0; i < threadlist.size(); i++) {
+            System.out.println("->>>>>>>>" + threadlist.get(i));
         }
     }
 
-    //wbox_AL.get(i).wbox_move(mobCurX.get(i),mobCurY.get(i)-50);
+    // wbox_AL.get(i).wbox_move(mobCurX.get(i),mobCurY.get(i)-50);
 
     public void setPBar() {
         count += 1;
@@ -502,8 +502,6 @@ public class MainApplication extends JFrame {
         gameResult = result;
     }
 
-  
-
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
         winGif = new MyImageIcon("gameOver/win.gif");
@@ -519,18 +517,19 @@ public class MainApplication extends JFrame {
         setUpButton(button2, menuButton);
         button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 40, 200, 50);
         button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 40, 200, 50);
-        
-        JTextField scoreText = new JTextField("  SCORE : "+score,10);
+
+        JTextField scoreText = new JTextField("  SCORE : " + score, 10);
         scoreText.setEditable(false);
-        scoreText.setFont(new Font("Comic Sans Ms",Font.BOLD+Font.ITALIC,25));
-        scoreText.setBackground(new Color(255,255,255,100));
-    
+        scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
+        scoreText.setBackground(new Color(255, 255, 255, 100));
+
         JPanel scorePanel = new JPanel();
         scorePanel.setLayout(new BorderLayout());
-        scorePanel.setBounds((frameWidth/2)-100,350, 200, 30);
-        scorePanel.add(scoreText,BorderLayout.CENTER);
+        scorePanel.setBounds((frameWidth / 2) - 100, 350, 200, 30);
+        scorePanel.add(scoreText, BorderLayout.CENTER);
 
-        // ----------------Stop All sound and delete All component in main game-----------------------
+        // ----------------Stop All sound and delete All component in main
+        // game-----------------------
         // normalHitSound.stop();
         // softHitSound.stop();
         // criHitSound.stop();
@@ -544,7 +543,7 @@ public class MainApplication extends JFrame {
         comeIn = false;
         gameEnd = true;
         resetPBar();
-        //drawpane.removeAll();
+        // drawpane.removeAll();
 
         if (player.getHP() > 0 && gameEnd == true) { // Win
             drawpane.add(winLabel);
@@ -640,8 +639,7 @@ public class MainApplication extends JFrame {
                     if (countLine == 0) {
                         name = buf[0].trim();
                         countLine++;
-                    }
-                    else {
+                    } else {
                         vList.add(buf[0].trim());
 
                     }
@@ -655,7 +653,6 @@ public class MainApplication extends JFrame {
             }
         } // end while
     }
-
 
     public void printReadFile() { // print read file
         for (int i = 0; i < modeList.size(); i++) {
@@ -676,10 +673,6 @@ public class MainApplication extends JFrame {
 
     }
 }// end Class MainApplication
-
-
-
-
 
 // class Vocab {
 // private String mode;

@@ -16,7 +16,7 @@ class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
     private ImageIcon bombIcon;
     private Thread zomThread;
 
-    public Bomb(MainApplication program) {
+    public Bomb(MainApplication program, JLabel x) {
         bombIcon = new ImageIcon("items/bomb.png");
         curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
@@ -72,13 +72,55 @@ class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
 
 }
 
-class Potion {
+class Potion extends JButton implements MouseInputListener, MouseMotionListener {
     private int width = 50;
     private int height = 50;
 
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        // TODO Auto-generated method stub
+
+    }
+
 }
 
-class Stopwatch {
+class Stopwatch extends JButton implements MouseInputListener, MouseMotionListener {
     private int width = 50;
     private int height = 50;
 
