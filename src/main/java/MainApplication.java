@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.Random;
 import java.io.*;
 import javax.swing.border.*;
+import java.util.Timer;
 
 //Main Frame
 public class MainApplication extends JFrame {
@@ -52,6 +53,7 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
+    private long timebegin;
 
     private boolean ismove = true;
     private Player player;
@@ -325,6 +327,7 @@ public class MainApplication extends JFrame {
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
+
                     main_game(modeSelected);
                 }
             }

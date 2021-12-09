@@ -24,7 +24,7 @@ class ZombieThread extends Thread {
     private MySoundEffect hurtSound;
     private JProgressBar tempProgressBar;
     private ArrayList<Wordbox> wbox = new ArrayList<Wordbox>();
-
+    
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
             MainApplication prog, ArrayList<Wordbox> wb) {
@@ -367,7 +367,7 @@ class ZombieThread extends Thread {
                 zombLabel.repaint();
                 wbox.get(i).wbox_move(zombCurX - 30, zombCurY);
             } else {
-                System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
+                //System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
             }
             zombLabel.repaint();
             try {
@@ -377,6 +377,11 @@ class ZombieThread extends Thread {
             }
         } // end while
     }// end move
+
+    public int getCurX(){
+        return zombCurX;
+    }
+
 
 }
 
