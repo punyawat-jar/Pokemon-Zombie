@@ -19,7 +19,6 @@ class Keyboard_bar {
     public Keyboard_bar(ArrayList<Wordbox> wAL) {
         word_AL = wAL;
         typearea = new JTextArea();
-        
         typearea.setBounds(50, 100, 500, 30);
         typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
         // typearea.grabFocus();
@@ -31,26 +30,28 @@ class Keyboard_bar {
                         //main.kill_monster(main.threadlist.get(main.getCount_death()));
 
                     //}
-                    
-                    a = typearea.getText().trim();
-                    b = word_AL.get(main.getCount_death()).getWord().trim();
-
-                    if(a.equals(b)){
+                    // a = typearea.getText().trim();
+                    // b = word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim();
+                    // System.out.println("-" + a + "-");
+                    // System.out.println("*" + b + "*");
+                    // System.out.println("death count = " + main.getCount_death() );
+                    // for(int i =0;i<10;i++){
+                    //     System.out.println("WordAL = " + word_AL.get(i).getWord());
+                    // }
+                    if(typearea.getText().trim().equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())){
                         ///score++
-                        main.kill_monster(main.threadlist.get(main.getCount_death()));
-                        System.out.println("*" + a + "*");
-                        System.out.println("+" + b + "+");
-                       
+                        main.kill_zombie(main.threadlist.get(main.getCount_death()));
+                        System.out.println("count is = " + main.getCount_death());
+                        System.out.println("thread is = " + main.threadlist);
+                        System.out.println("mY name is your");
                     }
                     typearea.setText(null);
                     
                 }
-                if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == false){
-                    main.setPauseGame(true);
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE){
+                    main.pause();
                 }
-                else if (e.getKeyCode() == KeyEvent.VK_ESCAPE && main.getPauseGame() == true){
-                    main.setPauseGame(false);
-                }
+
             }
 
             public void keyTyped(KeyEvent e) {
@@ -60,7 +61,7 @@ class Keyboard_bar {
             }
         });
     }
-
+    
     public JTextArea getTypearea() {
         return typearea;
     }
@@ -69,6 +70,7 @@ class Keyboard_bar {
         main = m;
         x.add(typearea);
     }
+
 
     public void setposition(int x, int y) {
         typearea.setBounds(x, y, width, height);

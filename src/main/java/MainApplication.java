@@ -44,6 +44,7 @@ public class MainApplication extends JFrame {
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
+    ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
     private MyImageIcon winGif, gameOverGif;
 
     private JProgressBar PBar = new JProgressBar();
@@ -52,6 +53,7 @@ public class MainApplication extends JFrame {
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
 
+    private boolean ismove = true;
     private Player player;
     private Wordbox wbox;
     // private Bomb bomb;
@@ -60,10 +62,10 @@ public class MainApplication extends JFrame {
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
             "custom_poke/poke4.png", "custom_poke/poke5.png" };
+    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
+            "Vocab/Boss.txt" };
     // private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt",
-    // "Vocab/Hard.txt", "Vocab/Nightmare.txt",
-    // "Vocab/Boss.txt" };
-    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt" };
+    // "Vocab/Hard.txt" };
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
@@ -361,6 +363,17 @@ public class MainApplication extends JFrame {
             readyGoSound.playOnce();
         }
         wbox_AL.clear();
+
+        PBar.setValue(0);
+        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
+        PBar.setForeground(new Color(255, 199, 56));
+        PBar.setStringPainted(false);
+        drawpane.add(PBar);
+
+        keybar = new Keyboard_bar(wbox_AL);
+        keybar.setPane(drawpane, this);
+        keybar.getTypearea().grabFocus();
+
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
@@ -368,6 +381,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
                 player = new Player(drawpane);
+                input_word(0);
                 createZombieThread(mode);
 
                 break;
@@ -377,6 +391,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
                 player = new Player(drawpane);
+                input_word(1);
                 createZombieThread(mode);
                 break;
             case "Hard":
@@ -385,6 +400,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
                 player = new Player(drawpane);
+                input_word(2);
                 createZombieThread(mode);
                 break;
             case "Nightmare":
@@ -393,6 +409,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 nightmareSong.playLoop();
                 player = new Player(drawpane);
+                input_word(3);
                 createZombieThread(mode);
                 break;
             case "Boss":
@@ -401,15 +418,16 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 bossSong.playLoop();
                 player = new Player(drawpane);
-                // input_word(4);
+                input_word(4);
                 // addZombieHard();
 
                 break;
         }
+        // player = new Player();
+        // player.draw_player(drawpane);
+        // player.draw_healthbar(drawpane);
 
-        keybar = new Keyboard_bar(wbox_AL);
-        keybar.setPane(drawpane, this);
-        keybar.getTypearea().grabFocus();
+        setup_thread_list();
 
     }
 
@@ -418,7 +436,9 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
-                    program);
+                    program, wbox_AL);
+            zombielist.add(zombThread);
+
             System.out.println("i main = " + i);
         }
         // allZombThread.add(zombThread);
@@ -431,7 +451,31 @@ public class MainApplication extends JFrame {
         // }
         // }
         // System.out.println("Join Complete");
+
     }
+
+    public void pause() {
+        for (int i = 0; i < zombielist.size(); i++) {
+            if (zombielist.get(i).getPauseGame() == false) {
+                zombielist.get(i).setPauseGame(true);
+            } else if (zombielist.get(i).getPauseGame() == true) {
+                zombielist.get(i).setPauseGame(false);
+            }
+        }
+    }
+
+    public void kill_zombie(int i) {
+        // drawpane.remove(mobLabel.get(i));
+        for (int j = 0; j < zombielist.size(); j++) {
+            zombielist.get(i).kill_monster(i);
+        }
+        // wbox_AL.get(i).setvisible(false);
+        // drawpane.remove(wbox_AL.get(i));
+        // drawpane.repaint();
+        setCount_death();
+
+    }
+
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
     // try {
@@ -440,6 +484,21 @@ public class MainApplication extends JFrame {
     // }
     // }
     // }
+
+    public void setup_thread_list() {
+        threadlist.add(0);
+        for (int i = 9; i > 0; i--) {
+            threadlist.add(i);
+        }
+    }
+
+    public void print_list_thread() {
+        for (int i = 0; i < threadlist.size(); i++) {
+            System.out.println("->>>>>>>>" + threadlist.get(i));
+        }
+    }
+
+    // wbox_AL.get(i).wbox_move(mobCurX.get(i),mobCurY.get(i)-50);
 
     public void setPBar() {
         count += 1;
@@ -488,8 +547,8 @@ public class MainApplication extends JFrame {
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         JLabel winLabel = new JLabel(winGif);
         JLabel gameOverLabel = new JLabel(gameOverGif);
-        winLabel.setBounds((frameWidth / 2) - 280, 120, 620, 200);
-        gameOverLabel.setBounds((frameWidth / 2) - 400, 120, 800, 200);
+        winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
+        gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
 
         JButton button1 = new JButton();
         JButton button2 = new JButton();
@@ -509,6 +568,26 @@ public class MainApplication extends JFrame {
 
         // ----------------Stop All sound and delete All component in main
         // game-----------------------
+        button1.setBounds((frameWidth / 2) - 225, (frameHeight / 2) + 40, 200, 50);
+        button2.setBounds((frameWidth / 2) + 25, (frameHeight / 2) + 40, 200, 50);
+
+        JTextField scoreText = new JTextField("  SCORE : " + score, 10);
+        scoreText.setEditable(false);
+        scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
+        scoreText.setBackground(new Color(255, 255, 255, 100));
+
+        JPanel scorePanel = new JPanel();
+        scorePanel.setLayout(new BorderLayout());
+        scorePanel.setBounds((frameWidth / 2) - 100, 350, 200, 30);
+        scorePanel.add(scoreText, BorderLayout.CENTER);
+
+        // ----------------Stop All sound and delete All component in main
+        // game-----------------------
+        // normalHitSound.stop();
+        // softHitSound.stop();
+        // criHitSound.stop();
+        // usedItemSound.stop();
+        // readyGoSound.stop();
         beginnerSong.stop();
         mediumSong.stop();
         hardSong.stop();
@@ -537,13 +616,7 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
-                // winLabel.setVisible(false);
-                // gameOverLabel.setVisible(false);
-                // button1.setVisible(false);
-                // button2.setVisible(false);
                 gameEnd = false;
-                // drawpane.remove(PBar);
-                // drawpane.remove(player);
                 drawpane.removeAll();
                 repaint();
                 validate();
@@ -557,18 +630,13 @@ public class MainApplication extends JFrame {
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
-                // winLabel.setVisible(false);
-                // gameOverLabel.setVisible(false);
-                // button1.setVisible(false);
-                // button2.setVisible(false);
-                // PBar.setVisible(false);
                 drawpane.removeAll();
                 repaint();
                 validate();
                 mainmanu();
             }
         });
-
+        drawpane.add(scorePanel);
         drawpane.add(button1);
         drawpane.add(button2);
     }// end stageEnd
@@ -627,7 +695,6 @@ public class MainApplication extends JFrame {
                         name = buf[0].trim();
                         countLine++;
                     } else {
-
                         vList.add(buf[0].trim());
 
                     }
@@ -651,9 +718,7 @@ public class MainApplication extends JFrame {
 
     public void input_word(int n) {
         for (int i = 0; i < 10; i++) {
-            wbox = new Wordbox(drawpane, "Helloworld");
-
-            // modeList.get(n).randomWord()
+            wbox = new Wordbox(drawpane, modeList.get(n).randomWord());
             wbox_AL.add(wbox);
         }
 

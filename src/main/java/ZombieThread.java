@@ -16,17 +16,18 @@ class ZombieThread extends Thread {
     private int zombWidth, zombHeight;
     private String mode;
     private int i; // Order of each thread Ex, zombie'0 1 2 3 4' << i
-    private boolean pauseGame = false;
+    private boolean pauseGame = false, killed = false;
     private JLabel tempPane;
     private int tempCount;
     private MainApplication program;
     private Player tempPlayer;
     private MySoundEffect hurtSound;
     private JProgressBar tempProgressBar;
+    private ArrayList<Wordbox> wbox = new ArrayList<Wordbox>();
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
-            MainApplication prog) {
+            MainApplication prog, ArrayList<Wordbox> wb) {
         super(n);
         // The temp use for run();
         i = order;
@@ -37,6 +38,8 @@ class ZombieThread extends Thread {
         tempProgressBar = PBar;
         zombCurX = pane.getWidth();
         mode = m;
+
+        wbox = wb;
         importZombie(pane);
         pane.add(zombLabel);
         // pane.validate();
@@ -197,6 +200,10 @@ class ZombieThread extends Thread {
         pauseGame = b;
     }
 
+    public boolean getPauseGame() {
+        return pauseGame;
+    }
+
     public int randomNum(int amount) {
         Random random = new Random();
         int randomNum = random.nextInt(amount);
@@ -250,9 +257,17 @@ class ZombieThread extends Thread {
             tempPlayer.hitplayer(tempPane);
             tempPane.remove(zombLabel);
             tempPane.repaint();
+            kill_monster(i);
         }
         program.setCount_death(); // death++
     }// end run
+
+    public void kill_monster(int i) {
+        tempPane.remove(zombLabel);
+        tempPane.repaint();
+        wbox.get(i).setvisible(false);
+        killed = true;
+    }
 
     // -------------------- For randoming time Zombie Appear--------------
     // Use static method to lock class * If lock only Obj. all other thread will
@@ -328,11 +343,12 @@ class ZombieThread extends Thread {
         System.out.println("Thread: Zombie" + i + " -> move");
         // While not Hit player & player not die. walk left
         while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())) &&
-                player.getHP() != 0) {
+                player.getHP() != 0 && killed == false) {
             zombLabel.setLocation(zombCurX, zombCurY);
             if (!pauseGame) {
                 zombCurX = zombCurX - 5;
                 zombLabel.repaint();
+                wbox.get(i).wbox_move(zombCurX - 30, zombCurY);
             } else {
                 System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
             }
@@ -345,4 +361,6 @@ class ZombieThread extends Thread {
         } // end while
     }// end move
 
-}// end Class ZombieThread
+}
+
+// end Class ZombieThread
