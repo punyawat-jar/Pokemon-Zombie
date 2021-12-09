@@ -14,7 +14,6 @@ class Keyboard_bar {
     private JTextArea typearea;
     private int width, height;
     private MainApplication main;
-    private ZombieThread zt;
     private ArrayList<Wordbox> word_AL;
     private String a,b;
     public Keyboard_bar(ArrayList<Wordbox> wAL) {
@@ -31,15 +30,15 @@ class Keyboard_bar {
                         //main.kill_monster(main.threadlist.get(main.getCount_death()));
 
                     //}
-                    a = typearea.getText().trim();
-                    b = word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim();
-                    System.out.println("-" + a + "-");
-                    System.out.println("*" + b + "*");
-                    System.out.println("death count = " + main.getCount_death() );
+                    // a = typearea.getText().trim();
+                    // b = word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim();
+                    // System.out.println("-" + a + "-");
+                    // System.out.println("*" + b + "*");
+                    // System.out.println("death count = " + main.getCount_death() );
                     // for(int i =0;i<10;i++){
                     //     System.out.println("WordAL = " + word_AL.get(i).getWord());
                     // }
-                    if(a.equals(b)){
+                    if(typearea.getText().trim().equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())){
                         ///score++
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
                         System.out.println("count is = " + main.getCount_death());
@@ -71,9 +70,7 @@ class Keyboard_bar {
         main = m;
         x.add(typearea);
     }
-    public void setZombieThread(ZombieThread z){
-        zt = z;
-    }
+
 
     public void setposition(int x, int y) {
         typearea.setBounds(x, y, width, height);

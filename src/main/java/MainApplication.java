@@ -370,7 +370,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
                 player = new Player(drawpane);
-                // input_word(0);
+                input_word(0);
                 createZombieThread(mode);
 
                 break;
@@ -380,7 +380,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
                 player = new Player(drawpane);
-                // input_word(1);
+                input_word(1);
                 createZombieThread(mode);
                 break;
             case "Hard":
@@ -389,7 +389,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
                 player = new Player(drawpane);
-                // input_word(2);
+                input_word(2);
                 createZombieThread(mode);
                 break;
             case "Nightmare":
@@ -407,7 +407,7 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 bossSong.playLoop();
                 player = new Player(drawpane);
-                // input_word(4);
+                input_word(4);
                 // addZombieHard();
 
                 break;

@@ -11,15 +11,21 @@ import javax.swing.border.*;
 public class Wordbox {
     private JLabel wlabel,pane;
     private String word;
-    
+    //Font f = la
+    private MyImageIcon wbox_bg =  new MyImageIcon("Wbox/wbox.png").resize(120, 40);
     public Wordbox(JLabel p,String s) {
-        wlabel = new JLabel(s,SwingConstants.CENTER);
+        wlabel = new JLabel(s);
         //dtext = new DoubleText(wlabel,word);
-        wlabel.setLayout(new FlowLayout());
+       
+        wlabel.setLayout(null);
+        wlabel.setForeground(Color.WHITE);
+        wlabel.setIcon(new MyImageIcon("Wbox/wbox.png").resize(120, 40));
+        wlabel.setHorizontalTextPosition(JLabel.CENTER);
         wlabel.setSize(120, 40);
-        wlabel.setOpaque(true);
+        wlabel.setOpaque(false);
         wlabel.setVisible(false);
-        wlabel.setBackground(Color.lightGray);
+
+        //wlabel.setBackground(Color.lightGray);
         pane = p;
         pane.add(wlabel);
         word = s;
@@ -27,11 +33,13 @@ public class Wordbox {
     }
 
     public void wbox_move(int cur_x, int cur_y){
-        wlabel.setLocation(cur_x,cur_y);
+        wlabel.setLocation(cur_x,cur_y-20);
         //System.out.println("x = " + cur_x + "y = " + cur_y);
         wlabel.setVisible(true);
+        //wwlabel.setVisible(true);
         pane.validate(); 
         pane.repaint();
+
     }
     public void setWord(String w){
         word = w;
