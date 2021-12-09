@@ -66,8 +66,7 @@ public class MainApplication extends JFrame {
             "custom_poke/poke4.png", "custom_poke/poke5.png" };
     private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
             "Vocab/Boss.txt" };
-    // private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt",
-    // "Vocab/Hard.txt" };
+   
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
 
