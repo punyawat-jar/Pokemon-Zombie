@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.Random;
 import java.io.*;
 import javax.swing.border.*;
+import java.util.Timer;
 
 //Main Frame
 public class MainApplication extends JFrame {
@@ -52,6 +53,7 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
+    private long timebegin;
 
     private boolean ismove = true;
     private Player player;
@@ -325,6 +327,7 @@ public class MainApplication extends JFrame {
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
+
                     main_game(modeSelected);
                 }
             }
@@ -352,13 +355,9 @@ public class MainApplication extends JFrame {
         PBar.setForeground(new Color(255, 199, 56));
         PBar.setStringPainted(false);
         drawpane.add(PBar);
-<<<<<<< HEAD
-
-=======
         gameResult = "";
         countStageEnd = 0;
         comeIn = false;
->>>>>>> main
         if (comeIn == false) {
             comeIn = true;
             readyGoLabel.setBounds(525, 230, 380, 214);
@@ -444,10 +443,6 @@ public class MainApplication extends JFrame {
             zombielist.add(zombThread);
 
             System.out.println("i main = " + i);
-<<<<<<< HEAD
-
-=======
->>>>>>> main
         }
         // allZombThread.add(zombThread);
         // }
@@ -536,8 +531,6 @@ public class MainApplication extends JFrame {
         gameResult = result;
     }
 
-<<<<<<< HEAD
-=======
     public String getGameResult() {
         return gameResult;
     }
@@ -551,7 +544,6 @@ public class MainApplication extends JFrame {
 
     // }
 
->>>>>>> main
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
         winGif = new MyImageIcon("gameOver/win.gif");

@@ -24,6 +24,10 @@ class ZombieThread extends Thread {
     private MySoundEffect hurtSound;
     private JProgressBar tempProgressBar;
     private ArrayList<Wordbox> wbox = new ArrayList<Wordbox>();
+    private MyImageIcon readyGoImg;
+    private JLabel readyGoLabel;
+    private MySoundEffect readyGoSound;
+    private int zombTimeWait;
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
@@ -38,16 +42,19 @@ class ZombieThread extends Thread {
         tempProgressBar = PBar;
         zombCurX = pane.getWidth();
         mode = m;
+        readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
+        readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
+        readyGoLabel = new JLabel(readyGoImg);
 
         wbox = wb;
-        importZombie(pane);
+        setUpZombie(pane);
         pane.add(zombLabel);
         // pane.validate();
         hurtSound = new MySoundEffect("sound_effect/Hurt_soundeffect.wav");
         start();
     }// end Constructor
 
-    public void importZombie(JLabel pane) {
+    public void setUpZombie(JLabel pane) {
         if (mode == "Beginner") {
             // for (int i = 0; i < 10; i++) {
             int zombie = randomNum(4);
@@ -81,6 +88,11 @@ class ZombieThread extends Thread {
             zombCurY = pane.getHeight() - 185 - zombHeight;
             zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
             zombSpeed = 250;
+
+            Random r = new Random();
+            int low = 5000;
+            int high = 15000;
+            zombTimeWait = r.nextInt(high - low) + low;
         } // end Beginner
         else if (mode == "Medium") {
 
@@ -115,6 +127,10 @@ class ZombieThread extends Thread {
             zombCurY = pane.getHeight() - 185 - zombHeight;
             zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
             zombSpeed = 200;
+            Random r = new Random();
+            int low = 5000;
+            int high = 10000;
+            zombTimeWait = r.nextInt(high - low) + low;
         } // end Medium
         else if (mode == "Hard") {
             int zombie = randomNum(4);
@@ -150,6 +166,10 @@ class ZombieThread extends Thread {
             }
             zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
             zombSpeed = 150;
+            Random r = new Random();
+            int low = 5000;
+            int high = 10000;
+            zombTimeWait = r.nextInt(high - low) + low;
         } // end Hard
         else if (mode == "Nightmare") {
             int zombie = randomNum(4);
@@ -192,7 +212,11 @@ class ZombieThread extends Thread {
             }
             zombCurY = pane.getHeight() - 185 - zombHeight;
             zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
-            zombSpeed = 100;
+            zombSpeed = 80;
+            Random r = new Random();
+            int low = 2500;
+            int high = 5000;
+            zombTimeWait = r.nextInt(high - low) + low;
         } // end NightMare
     }
 
@@ -222,27 +246,30 @@ class ZombieThread extends Thread {
                 + " , zombHeight" + zombHeight);
 
         System.out.println("Thread : " + Thread.currentThread().getName());
-        if (!pauseGame) { // run normally
-            if (mode == "Nightmare") {
-                waitGetInNightmare(i);
-            } else if (mode == "Hard") {
-                waitGetInHard(i);
-            } else {
-                waitGetIn(i);
-            }
-        } else if (pauseGame) { // if pauseGame
-            while (pauseGame) {
-                if (!pauseGame) { // run normally
-                    if (mode == "Nightmare") {
-                        waitGetInNightmare(i);
-                    } else if (mode == "Hard") {
-                        waitGetInHard(i);
-                    } else {
-                        waitGetIn(i);
-                    }
-                } // Loop until continue
-            }
+
+        if (pauseGame == false) { // First Come'n is not pause
+            waitGetIn(i, pauseGame, zombTimeWait); // loop if PauseGame == true;
+            // }
         }
+        // while (pauseGame) {
+        // System.out.println("pauseGame = " + pauseGame);
+        // System.out.println("Thread " + i + " Sleep " + zombTimeWait / 1000 + "sec");
+        // try {
+        // Thread.sleep(zombTimeWait);
+        // if (pauseGame == false)
+        // throw new InterruptedException("Earlier");
+        // } catch (InterruptedException e) {
+        // System.out.println("Thread " + i + " wake up." + e);
+        // }
+        // }
+        System.out.println("pauseGame = " + pauseGame);
+
+        // else if (pauseGame == true) {// First Come'n is pausing
+        // if (pauseGame == true) {
+        // waitGetInPauseLoop(i, pauseGame, zombTimeWait); // loop if PauseGame == true;
+        // }
+        // }
+
         program.setPBar();
 
         move(tempPlayer, i);
@@ -289,70 +316,31 @@ class ZombieThread extends Thread {
     // -------------------- For randoming time Zombie Appear--------------
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
-    synchronized public static void waitGetIn(int i) {
-        int timeWait = 0;
+
+    synchronized public static void waitGetIn(int i, Boolean pauseGame, int timeWait) {
+        // We can't use while(pauseGame) in synch, because can't changed pause;
         if (i == 0) {
             try {
                 timeWait = 3000;
                 Thread.sleep(timeWait);
+                if (pauseGame == false)
+                    throw new InterruptedException();
             } catch (InterruptedException e) {
-            }
-        } else {
-            Random r = new Random();
-            int low = 5000;
-            int high = 15000;
-            timeWait = r.nextInt(high - low) + low;
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting"
-                + timeWait / 1000 + "sec");
-    }
 
-    synchronized public static void waitGetInHard(int i) {
-        int timeWait = 0;
-        if (i == 0) {
-            try {
-                timeWait = 3000;
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
+                System.out.println("Thread " + i + " wake up.");
             }
         } else {
-            Random r = new Random();
-            int low = 5000;
-            int high = 10000;
-            timeWait = r.nextInt(high - low) + low;
             try {
                 Thread.sleep(timeWait);
+                if (pauseGame == false)
+                    throw new InterruptedException();
             } catch (InterruptedException e) {
-            }
-        }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting"
-                + timeWait / 1000 + "sec");
-    }
 
-    synchronized public static void waitGetInNightmare(int i) {
-        int timeWait;
-        if (i == 0) {
-            timeWait = 3000;
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
-            }
-        } else {
-            Random r = new Random();
-            int low = 4000;
-            int high = 7500;
-            timeWait = r.nextInt(high - low) + low;
-            try {
-                Thread.sleep(timeWait);
-            } catch (InterruptedException e) {
+                System.out.println("Thread " + i + " wake up.");
             }
         }
         System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting"
-                + timeWait / 1000 + "sec");
+                + timeWait / 1000 + " sec");
     }
 
     // ----------------- If zombie not hit pikachu, it walks toleft----------------
@@ -367,7 +355,9 @@ class ZombieThread extends Thread {
                 zombLabel.repaint();
                 wbox.get(i).wbox_move(zombCurX - 30, zombCurY);
             } else {
-                System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
+                //System.out.println("Pause ZombieThread: " + Thread.currentThread().getName());
+                // System.out.println("Pause ZombieThread: " +
+                // Thread.currentThread().getName());
             }
             zombLabel.repaint();
             try {
@@ -378,6 +368,22 @@ class ZombieThread extends Thread {
         } // end while
     }// end move
 
+    public int getCurX(){
+        return zombCurX;
+    }
+
+
+    public void pause() {
+        if (pauseGame == false) {
+            pauseGame = true;
+        } else if (pauseGame == true) {
+            pauseGame = false;
+        }
+    }
+
+    public int getTimeWait() {
+        return zombTimeWait;
+    }
 }
 
 // end Class ZombieThread
