@@ -35,7 +35,7 @@ public class MainApplication extends JFrame {
     private JRadioButton[] radio;
     private String[] accessory = { "poke1", "poke2", "poke3", "poke4", "poke5" };
 
-    private MyImageIcon emptyButton, startButton, creditButton, tutorialButton, exitButton, playButton, restartButton,
+    private MyImageIcon emptyButton, startButton, creditButton, tutorialButton, exitButton, playButton,
             menuButton,
             nextButton, backButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, gameOverSound, winSound,
@@ -69,6 +69,7 @@ public class MainApplication extends JFrame {
    
     ArrayList<Vocab> modeList = new ArrayList<Vocab>();
 
+    JLabel winLabel,gameOverLabel;
 
 
     // ------------------------------- Main Method -------------------------------
@@ -138,8 +139,7 @@ public class MainApplication extends JFrame {
         tutorialButton = new MyImageIcon("button_and_cursor/TutorialButton.png").resize(138, 50);
         exitButton = new MyImageIcon("button_and_cursor/ExitButton.png").resize(138, 50);
         playButton = new MyImageIcon("button_and_cursor/PlayButton.png").resize(138, 50);
-        restartButton = new MyImageIcon("button_and_cursor/RestartButton.png").resize(138, 50);
-        menuButton = new MyImageIcon("button_and_cursor/NextButton.png").resize(138, 50);
+        menuButton = new MyImageIcon("button_and_cursor/MenuButton.png").resize(138, 50);
         nextButton = new MyImageIcon("button_and_cursor/nextButton.png").resize(138, 50);
         backButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
 
@@ -149,6 +149,11 @@ public class MainApplication extends JFrame {
         readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
         readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
         readyGoLabel = new JLabel(readyGoImg);
+
+        winGif = new MyImageIcon("gameOver/win.gif");
+        gameOverGif = new MyImageIcon("gameOver/game_over.gif");
+        winLabel = new JLabel(winGif);
+        gameOverLabel = new JLabel(gameOverGif);
         // ------------------------------- Zombie -----------------------------------
 
         // ---------------------------- Sound --------------------------------------
@@ -568,10 +573,10 @@ public class MainApplication extends JFrame {
 
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
-        winGif = new MyImageIcon("gameOver/win.gif");
-        gameOverGif = new MyImageIcon("gameOver/game_over.gif");
-        JLabel winLabel = new JLabel(winGif);
-        JLabel gameOverLabel = new JLabel(gameOverGif);
+        // winGif = new MyImageIcon("gameOver/win.gif");
+        // gameOverGif = new MyImageIcon("gameOver/game_over.gif");
+        // JLabel winLabel = new JLabel(winGif);
+        // JLabel gameOverLabel = new JLabel(gameOverGif);
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
 
@@ -620,6 +625,7 @@ public class MainApplication extends JFrame {
         button1.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 gameEnd = false;
+                comeIn = false;
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
