@@ -433,7 +433,7 @@ public class MainApplication extends JFrame {
             public void run(){
                 JLabel tempLabel;
                 readyGoSound.playOnce();
-                for(int i=1 ;i<=147;i++){
+                for(int i=1 ;i<=146;i++){
                     try{
                         //System.out.println("i is =======================" + i);
                         tempLabel = new JLabel (new MyImageIcon("readyGo/readyGO ("+i+").png").resize(380,210));
