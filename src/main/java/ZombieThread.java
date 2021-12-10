@@ -16,7 +16,7 @@ class ZombieThread extends Thread {
     private int zombWidth, zombHeight;
     private String mode;
     private int i; // Order of each thread Ex, zombie'0 1 2 3 4' << i
-    private boolean pauseGame = false, killed = false,kill_thread = false;
+    private boolean pauseGame = false, killed = false;
     private JLabel tempPane;
     private int tempCount;
     private MainApplication program;
@@ -28,10 +28,11 @@ class ZombieThread extends Thread {
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
     private int zombTimeWait;
+    private Keyboard_bar keyb;
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
-            MainApplication prog, ArrayList<Wordbox> wb) {
+            MainApplication prog, ArrayList<Wordbox> wb,Keyboard_bar k) {
         super(n);
         // The temp use for run();
         i = order;
@@ -40,6 +41,7 @@ class ZombieThread extends Thread {
         tempPane = pane;
         tempCount = count;
         tempProgressBar = PBar;
+        keyb = k;
         zombCurX = pane.getWidth();
         mode = m;
         readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
@@ -349,54 +351,55 @@ class ZombieThread extends Thread {
     }
 
     public void run() {
-        while(kill_thread!=true){
-            System.out.println("mode = " + mode);
-            System.out.println("zombCurX = " + zombCurX + ", zombCurY = " + zombCurY + " zombWidth = " + zombWidth
-                    + " , zombHeight" + zombHeight);
+        
+        System.out.println("mode = " + mode);
+        System.out.println("zombCurX = " + zombCurX + ", zombCurY = " + zombCurY + " zombWidth = " + zombWidth
+                + " , zombHeight" + zombHeight);
     
-            System.out.println("Thread : " + Thread.currentThread().getName());
+        System.out.println("Thread : " + Thread.currentThread().getName());
     
-            waitGetIn(i, zombTimeWait); // loop if PauseGame == true;
+        waitGetIn(i, zombTimeWait); // loop if PauseGame == true;
     
-            System.out.println("pauseGame = " + pauseGame);
+        System.out.println("pauseGame = " + pauseGame);
     
-            program.setPBar();
+        program.setPBar();
     
-            move(tempPlayer, i);
+        move(tempPlayer, i);
     
-            if (tempPlayer.getHP() == 0) {
-                kill_monster(i);
-                tempPane.remove(zombLabel);
-                tempPane.repaint();
-                // removeZombie(10);
-                program.setGameResult("GameOver");
-                program.addCountStageEnd();
-                // return;
-            }
-    
-            else if (program.getCount_death() == 10) { // Win
-                tempPane.remove(zombLabel);
-                tempPane.repaint();
-                program.setGameResult("Win");
-                program.addCountStageEnd();
-            }
-    
-            if ((program.getGameResult() == "GameOver" || program.getGameResult() == "Win")
-                    && program.getCountStageEnd() == 1) {
-                // program.setCountStageEnd(0);
-                program.stageEnd(mode);
-            }
-            // --------- Remove Zombie when Hit Pikachu & decrease heart
-            if (zombLabel.getBounds().intersects(tempPlayer.getLabel().getBounds())) {
-                hurtSound.playOnce();
-                tempPlayer.hitplayer(tempPane);
-                tempPane.remove(zombLabel);
-                tempPane.repaint();
-                kill_monster(i);
-    
-                program.setCount_death(); // death++
-            }
+        if (tempPlayer.getHP() == 0) {
+            kill_monster(i);
+            tempPane.remove(zombLabel);
+            tempPane.repaint();
+            // removeZombie(10);
+            program.setGameResult("GameOver");
+            program.addCountStageEnd();
+            // return;
         }
+    
+        else if (program.getCount_death() == 10) { // Win
+            tempPane.remove(zombLabel);
+            tempPane.repaint();
+            program.setGameResult("Win");
+            program.addCountStageEnd();
+        }
+    
+        if ((program.getGameResult() == "GameOver" || program.getGameResult() == "Win")
+                && program.getCountStageEnd() == 1) {
+            // program.setCountStageEnd(0);
+            program.stageEnd(mode);
+        }
+        // --------- Remove Zombie when Hit Pikachu & decrease heart
+        if (zombLabel.getBounds().intersects(tempPlayer.getLabel().getBounds())) {
+            hurtSound.playOnce();
+            tempPlayer.hitplayer(tempPane);
+            tempPane.remove(zombLabel);
+            tempPane.repaint();
+            keyb.clearTypearea();
+            kill_monster(i);
+    
+            program.setCount_death(); // death++
+        }
+        
         // -------------------------
         
     }// end run
@@ -408,9 +411,9 @@ class ZombieThread extends Thread {
         killed = true;
     }
 
-    public void setkill_thread(boolean x){
-        kill_thread = x;
-    }
+    // public void setkill_thread(boolean x){
+    //     kill_thread = x;
+    // }
     // -------------------- For randoming time Zombie Appear--------------
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
@@ -440,7 +443,7 @@ class ZombieThread extends Thread {
         System.out.println("Thread: Zombie" + i + " -> move");
         // While not Hit player & player not die. walk left
         while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())) &&
-                player.getHP() != 0 && killed == false && kill_thread!=true) {
+                player.getHP() != 0 && killed == false ) {
             zombLabel.setLocation(zombCurX, zombCurY);
             zombCurX = zombCurX - 1;
             zombLabel.repaint();
