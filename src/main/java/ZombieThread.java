@@ -58,10 +58,10 @@ class ZombieThread extends Thread {
 
     public void setUpZombie(JLabel pane) {
         if (i == 0) {
-            readyGoLabel.setBounds(525, 230, 380, 214);
-            tempPane.add(readyGoLabel);
-            tempPane.validate();
-            readyGoSound.playOnce();
+            // readyGoLabel.setBounds(525, 230, 380, 214);
+            // tempPane.add(readyGoLabel);
+            // tempPane.validate();
+            // readyGoSound.playOnce();
         }
         if (mode == "Beginner") {
             // for (int i = 0; i < 10; i++) {
