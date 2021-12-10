@@ -42,7 +42,8 @@ public class MainApplication extends JFrame {
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, gameOverSound, winSound,
             usedItemSound;
 
-    private MyImageIcon winGif, gameOverGif,pokeWinGif;
+    private MyImageIcon winGif, gameOverGif,pokeWinGif,pokeGameOverGif;
+    JLabel winLabel, gameOverLabel,pokeWinLabel,pokeGameOverLabel;
 
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
@@ -76,8 +77,6 @@ public class MainApplication extends JFrame {
             "Vocab/Boss.txt", "Vocab/OnlyBoss.txt" };
     
     ArrayList<Vocab> vocabList = new ArrayList<Vocab>();
-    ArrayList<Vocab> modeList = new ArrayList<Vocab>();
-    JLabel winLabel, gameOverLabel,pokeWinLabel;
 
     // ------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
@@ -158,9 +157,11 @@ public class MainApplication extends JFrame {
         winGif = new MyImageIcon("gameOver/win.gif");
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
         pokeWinGif = new MyImageIcon("gameOver/pokeWin.gif");
+        pokeGameOverGif = new MyImageIcon("gameOver/pokeGameOver.gif");
         winLabel = new JLabel(winGif);
         gameOverLabel = new JLabel(gameOverGif);
         pokeWinLabel = new JLabel(pokeWinGif);
+        pokeGameOverLabel = new JLabel(pokeGameOverGif);
 
         // ------------------------------- Zombie -----------------------------------
 
@@ -430,14 +431,14 @@ public class MainApplication extends JFrame {
         menuSong.stop();
         gameResult = "";
         countStageEnd = 0;
-        // comeIn = false;
-        // if (comeIn == false) {
-        // // comeIn = true;
-        // readyGoLabel.setBounds(525, 230, 380, 214);
-        // drawpane.add(readyGoLabel);
-        // drawpane.validate();
-        // readyGoSound.playOnce();
-        // }
+        comeIn = false;
+        if (comeIn == false) {
+        comeIn = true;
+        readyGoLabel.setBounds(525, 230, 380, 214);
+        drawpane.add(readyGoLabel);
+        drawpane.validate();
+        readyGoSound.playOnce();
+        }
         wbox_AL.clear();
 
         PBar.setValue(0);
@@ -669,6 +670,7 @@ public class MainApplication extends JFrame {
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
         pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight/2)-400, 1281, 720);
         drawpane.remove(end_btn);
+        pokeGameOverLabel.setBounds((frameWidth / 2) - 640, (frameHeight/2)-400, 1281, 720);
 
         // Back To Menu
         JButton button1 = new JButton();
@@ -699,17 +701,23 @@ public class MainApplication extends JFrame {
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
-            //drawpane.repaint();
             drawpane.add(pokeWinLabel);
-            try{Thread.sleep(1700);} 
+            try{Thread.sleep(1500);} 
             catch(InterruptedException e) { System.out.println(e);}
             pokeWinLabel.setVisible(false);
+            repaint();
 
             drawpane.add(winLabel);
             winSound.playOnce();
             gameEnd = false;
             gameResult = "";
         } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
+            drawpane.add(pokeGameOverLabel);
+            try{Thread.sleep(1500);} 
+            catch(InterruptedException e) { System.out.println(e);}
+            pokeGameOverLabel.setVisible(false);
+            repaint();
+            
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
             gameEnd = false;
