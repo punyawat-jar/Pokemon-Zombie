@@ -26,7 +26,7 @@ class Keyboard_bar {
         typearea.setBounds(50, 100, 500, 30);
         typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
 
-        correct = new MySoundEffect("sound_effect/correct_sound.wav");
+        correct = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
         wrong = new MySoundEffect("sound_effect/wrong_sound.wav");
         // typearea.grabFocus();
         compare = new Compare_text(typearea, word_AL,main);

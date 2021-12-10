@@ -19,7 +19,7 @@ public class MainApplication extends JFrame {
     private JComboBox combo;
     private JToggleButton[] tb;
     private JTextField scoreText;
-    private JLabel Label;
+    private JLabel Label,custom_bg_label;
     private ButtonGroup bgroup;
     private String modeSelected;
     private MyImageIcon readyGoImg;
@@ -29,7 +29,7 @@ public class MainApplication extends JFrame {
     private boolean gameEnd = false;
     private String gameResult;
     private int countStageEnd = 0;
-    private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img;
+    private MyImageIcon bgImg, bgImg2, in_gamebg1Img, in_gamebg2Img, in_gamebg3Img, in_gamebg4Img, in_gamebg5Img, custom_bg;
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
 
     private JRadioButton[] radio;
@@ -53,7 +53,7 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
-    private long timebegin;
+    private int selected_rbox = 0;
 
     private boolean ismove = true;
     private Player player;
@@ -131,6 +131,7 @@ public class MainApplication extends JFrame {
         in_gamebg4Img = new MyImageIcon("bg/nightmare_bg.png").resize(frameWidth, frameHeight);
         in_gamebg5Img = new MyImageIcon("bg/boss_bg.png").resize(frameWidth, frameHeight);
 
+
         emptyButton = new MyImageIcon("button_and_cursor/button.png").resize(138, 50);
         startButton = new MyImageIcon("button_and_cursor/StartButton.png").resize(138, 50);
         creditButton = new MyImageIcon("button_and_cursor/CreditButton.png").resize(138, 50);
@@ -141,7 +142,9 @@ public class MainApplication extends JFrame {
         menuButton = new MyImageIcon("button_and_cursor/NextButton.png").resize(138, 50);
         nextButton = new MyImageIcon("button_and_cursor/nextButton.png").resize(138, 50);
         backButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
+
         drawpane = new JLabel();
+
 
         readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
         readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
@@ -246,7 +249,7 @@ public class MainApplication extends JFrame {
         ButtonGroup rgroup = new ButtonGroup();
         for (int i = 0; i < 5; i++) {
             radio[i] = new JRadioButton(accessory[i]);
-            if (i == 0) {
+            if (i == count_pic) {
                 radio[i].setSelected(true);
             }
             rgroup.add(radio[i]);
@@ -397,7 +400,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-                player = new Player(drawpane);
+                player = new Player(drawpane,count_pic);
                 input_word(0);
                 createZombieThread(mode);
 
@@ -407,7 +410,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
-                player = new Player(drawpane);
+                player = new Player(drawpane,count_pic);
                 input_word(1);
                 createZombieThread(mode);
                 break;
@@ -416,7 +419,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
-                player = new Player(drawpane);
+                player = new Player(drawpane,count_pic);
                 input_word(2);
                 createZombieThread(mode);
                 break;
@@ -425,7 +428,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 nightmareSong.playLoop();
-                player = new Player(drawpane);
+                player = new Player(drawpane,count_pic);
                 input_word(3);
                 createZombieThread(mode);
                 break;
@@ -434,7 +437,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 bossSong.playLoop();
-                player = new Player(drawpane);
+                player = new Player(drawpane,count_pic);
                 input_word(4);
                 // addZombieHard();
 
@@ -656,8 +659,12 @@ public class MainApplication extends JFrame {
 
     public void read_poke_custom() {
         for (int i = 0; i < poke_list.length; i++) {
+            
             JLabel label = new JLabel(new ImageIcon(poke_list[i]));
-            label.setBounds(450, 40, 500, 250);
+            label.setOpaque(false);
+            label.setLayout(null);
+            label.setHorizontalTextPosition(JLabel.CENTER);
+            label.setBounds(frameWidth-850, 100, 320, 267);
             custom_poke_AL.add(label);
             // poke_list_AL.add(poke_list[i]);
         }
