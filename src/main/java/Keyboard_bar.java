@@ -29,7 +29,10 @@ class Keyboard_bar {
         correct = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
         wrong = new MySoundEffect("sound_effect/wrong_sound.wav");
         // typearea.grabFocus();
-        compare = new Compare_text(typearea, word_AL, main);
+        try{
+            compare = new Compare_text(typearea, word_AL, main);
+        }
+        catch (Exception e) {}
 
         typearea.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -124,7 +127,6 @@ class Compare_text implements CaretListener {
                 } else if (!(text[i].trim().equals(word[i]))) {
                     wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
                 }
-
                 // else{
                 // wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.GREEN);
                 // }

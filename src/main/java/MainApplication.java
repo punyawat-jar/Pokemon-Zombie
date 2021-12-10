@@ -58,7 +58,7 @@ public class MainApplication extends JFrame {
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
     private int selected_rbox = 0;
-
+    private JButton end_btn;
     private boolean ismove = true;
     private Player player;
     private Wordbox wbox;
@@ -227,6 +227,18 @@ public class MainApplication extends JFrame {
             }
         });
 
+        button2.addActionListener(new ActionListener() { // credit button3
+            public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
+                button1.setVisible(false);
+                button2.setVisible(false);
+                button3.setVisible(false);
+                button4.setVisible(false);
+                drawpane.setIcon(bgImg2);
+                credit();
+            }
+        });
+
         button3.addActionListener(new ActionListener() { // Tutorial button3
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
@@ -254,6 +266,25 @@ public class MainApplication extends JFrame {
         });
 
         validate();
+    }
+
+    public void credit(){
+        JButton backbtn = new JButton();
+        backbtn.setBounds(frameWidth / 4, frameHeight - 300 / 1, 200, 50);
+        backbtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
+                backbtn.setVisible(false);
+                repaint();
+                mainmanu();
+
+            }
+        });
+        setUpButton(backbtn, backButton);
+        drawpane.add(backbtn);
+        validate();
+        repaint();
     }
 
     public void custom() {
@@ -421,13 +452,49 @@ public class MainApplication extends JFrame {
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
 
+        end_btn = new JButton();
+        setUpButton(end_btn, menuButton);
+        end_btn.setBounds((frameWidth / 2) - 700, (frameHeight / 2) + 290, 200, 50);
+
+        end_btn.addActionListener(new ActionListener() { // Back to Menu
+            public void actionPerformed(ActionEvent e) {
+                buttonSound.playOnce();
+                //System.exit(0);
+                int exit = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to quit the game?",
+                        "PokemonGame! - Message", JOptionPane.YES_NO_OPTION);
+                if (exit == JOptionPane.YES_OPTION) {
+                    gameEnd = false;
+                    for(int i=0;i<zombielist.size();i++){
+                        zombielist.get(i).interrupt();
+                        zombielist.get(i).setkill_thread(true);
+                    }
+                    beginnerSong.stop();
+                    mediumSong.stop();
+                    hardSong.stop();
+                    nightmareSong.stop();
+                    bossSong.stop();
+                    comeIn = false;
+                    gameEnd = true;
+                    count_death = 0;
+
+                    resetPBar();
+                    
+                    program.dispose();
+                    program = new MainApplication();
+                } else {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
+            }
+        });
+        drawpane.add(end_btn);
+
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-                player = new Player(drawpane, count_pic);
+                player = new Player(drawpane, count_pic,0);
                 input_word(0);
                 createZombieThread(mode);
 
@@ -437,7 +504,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
-                player = new Player(drawpane, count_pic);
+                player = new Player(drawpane, count_pic,1);
                 input_word(1);
                 createZombieThread(mode);
                 break;
@@ -446,7 +513,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
-                player = new Player(drawpane, count_pic);
+                player = new Player(drawpane, count_pic,2);
                 input_word(2);
                 createZombieThread(mode);
                 break;
@@ -455,7 +522,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 nightmareSong.playLoop();
-                player = new Player(drawpane, count_pic);
+                player = new Player(drawpane, count_pic,3);
                 input_word(3);
                 createZombieThread(mode);
                 break;
@@ -464,13 +531,15 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 bossSong.playLoop();
-                player = new Player(drawpane, count_pic);
+                player = new Player(drawpane, count_pic,4);
                 input_word(4);
                 // createZombieThread("Nightmare");
                 createZombieThread(mode);
 
                 break;
         }
+
+
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
@@ -549,9 +618,12 @@ public class MainApplication extends JFrame {
     // wbox_AL.get(i).wbox_move(mobCurX.get(i),mobCurY.get(i)-50);
 
     public void setPBar() {
-        count += 1;
-        PBar.setValue(count * 10);
-        System.out.println("Add Count + = 1");
+        if(count <10){
+            count += 1;
+            PBar.setValue(count * 10);
+            System.out.println("Add Count + = 1");
+        }
+        
     }
 
     public int getCount() {
@@ -598,6 +670,7 @@ public class MainApplication extends JFrame {
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
         pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight/2)-400, 1281, 720);
+        drawpane.remove(end_btn);
         pokeGameOverLabel.setBounds((frameWidth / 2) - 640, (frameHeight/2)-400, 1281, 720);
 
         // Back To Menu
@@ -655,6 +728,10 @@ public class MainApplication extends JFrame {
         button1.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 gameEnd = false;
+                for(int i=0;i<zombielist.size();i++){
+                    zombielist.get(i).interrupt();
+                    zombielist.get(i).setkill_thread(true);
+                }
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
@@ -669,6 +746,7 @@ public class MainApplication extends JFrame {
         drawpane.add(scorePanel);
         drawpane.add(button1);
         validate();
+        repaint();
     }// end stageEnd
 
     // ---------------------------- Set up Cursor & Button ------------------------
