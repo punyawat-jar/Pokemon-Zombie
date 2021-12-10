@@ -14,8 +14,8 @@ public class Wordbox {
 
     public Wordbox(JLabel p, String s, int i, int n) {
         wlabel = new JLabel(s);
-        // dtext = new DoubleText(wlabel,word);
-
+        //dtext = new DoubleText(wlabel,word);
+        
         wlabel.setLayout(null);
         wlabel.setForeground(Color.WHITE);
         // wlabel.setFont(new Font(wlabel.getFont().getName(), Font.BOLD, 17));

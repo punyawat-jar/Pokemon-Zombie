@@ -96,18 +96,15 @@ class Compare_text implements CaretListener {
     private JTextArea text_type;
     private ArrayList<Wordbox> wbox;
     private MainApplication main;
-    private int position;
     private String[] word;
     private String[] text;
-    private int countword;
 
     public Compare_text(JTextArea T, ArrayList<Wordbox> W, MainApplication m) {
         text_type = T;
         wbox = W;
         main = m;
-        text_type.addCaretListener(this);
-        position = main.getCount_death();
-
+	    text_type.addCaretListener(this);
+        
     }
 
     public void caretUpdate(CaretEvent e) {
@@ -115,7 +112,7 @@ class Compare_text implements CaretListener {
         wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.YELLOW);
         for (int i = 0; i < word.length; i++) {
             text = text_type.getText().trim().split("");
-            System.out.println(word[i]);
+            //System.out.println(word[i]);
         }
         for (int i = 0; i < text.length; i++) {
             try {
@@ -132,7 +129,8 @@ class Compare_text implements CaretListener {
                 // wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.GREEN);
                 // }
                 // System.out.println(i + "Text = -" + text[i] + "- Word = " + word[i]);
-            } catch (Exception er) {
+            }
+            catch(Exception error){
                 wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
             }
 

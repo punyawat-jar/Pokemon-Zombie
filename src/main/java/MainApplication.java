@@ -34,8 +34,8 @@ public class MainApplication extends JFrame {
     private MySoundEffect menuSong, creditSong, beginnerSong, mediumSong, hardSong, nightmareSong, bossSong;
 
     private JRadioButton[] radio;
-    private String[] accessory = { "poke1", "poke2", "poke3", "poke4", "poke5" };
-
+    private String[] accessory = { "No Item", "Conan's Bow", "Joy's Hat", "Pajamas", "Just Sunglasses" };
+    private String[] message = {};
     private MyImageIcon emptyButton, startButton, creditButton, tutorialButton, exitButton, playButton,
             menuButton,
             nextButton, backButton;
@@ -48,6 +48,7 @@ public class MainApplication extends JFrame {
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
+    ArrayList<JLabel> custom_info_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
     ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
 
@@ -65,8 +66,12 @@ public class MainApplication extends JFrame {
     // private Potion potion;
 
     Tutorial Tframe;
-    private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
-            "custom_poke/poke4.png", "custom_poke/poke5.png" };
+    private String[] poke_list = { "custom_poke/No.png", "custom_poke/Conan.png", "custom_poke/Joy.png",
+            "custom_poke/Pajamas.png", "custom_poke/Just.png" };
+    private String[] custom_info = {"item_info/info1.png","item_info/info2.png","item_info/info3.png","item_info/info4.png","item_info/info5.png"};
+    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
+            "Vocab/Boss.txt" };
+            
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
             "Vocab/Boss.txt", "Vocab/OnlyBoss.txt" };
@@ -257,7 +262,7 @@ public class MainApplication extends JFrame {
         JLabel rlabel = new JLabel();
 
         rlabel.setLayout(new FlowLayout());
-        rlabel.setBounds(frameWidth - 900, frameHeight / 2, 400, 35);
+        rlabel.setBounds(frameWidth - 900, frameHeight / 2, 500, 35);
         rlabel.setOpaque(true);
         rlabel.setBackground(Color.lightGray);
 
@@ -275,27 +280,25 @@ public class MainApplication extends JFrame {
                 public void itemStateChanged(ItemEvent e) {
                     JRadioButton x = (JRadioButton) e.getItem();
                     if (x.isSelected()) {
-                        // IntStream.range(0,poke_list_AL.size())
-                        // .filter(arg->poke_list_AL.get(arg).contains(x.getText()))
-                        // .forEach(arg->{
-                        // drawpane.remove(custom_poke_AL.get(count));
-                        // count = arg;
-                        // drawpane.add(custom_poke_AL.get(arg));
-
-                        // repaint();
-                        // });
-
-                        for (int i = 0; i < poke_list.length; i++) {
-                            if (poke_list[i].contains(x.getText())) {
+                        for (int i = 0; i < accessory.length; i++) {
+                            System.out.println(poke_list[i] + " " + x.getText());
+                            if (accessory[i].toLowerCase().contains(x.getText().toLowerCase())) {
                                 drawpane.remove(custom_poke_AL.get(count_pic));
+                                drawpane.remove(custom_info_AL.get(count_pic));
                                 count_pic = i;
                                 drawpane.add(custom_poke_AL.get(count_pic));
+                                drawpane.add(custom_info_AL.get(count_pic));
+                                
                                 repaint();
+                                validate();
                             }
                         }
                     }
                 }
             });
+            
+            
+
         }
 
         read_poke_custom();
@@ -311,6 +314,7 @@ public class MainApplication extends JFrame {
                 backbtn.setVisible(false);
 
                 drawpane.remove(custom_poke_AL.get(count_pic));
+                drawpane.remove(custom_info_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mainmanu();
@@ -323,6 +327,7 @@ public class MainApplication extends JFrame {
                 nextbtn.setVisible(false);
                 backbtn.setVisible(false);
                 drawpane.remove(custom_poke_AL.get(count_pic));
+                drawpane.remove(custom_info_AL.get(count_pic));
                 rlabel.setVisible(false);
                 repaint();
                 mode_panel();
@@ -331,12 +336,22 @@ public class MainApplication extends JFrame {
         drawpane.add(nextbtn);
         drawpane.add(backbtn);
         drawpane.add(custom_poke_AL.get(count_pic));
+        drawpane.add(custom_info_AL.get(count_pic));
         drawpane.add(rlabel);
         setUpButton(backbtn, backButton);
         setUpButton(nextbtn, nextButton);
         validate();
         repaint();
     }
+
+    // public void radiobox_message(int i){
+    //     JLabel messagebox = new JLabel();
+    //     messagebox.setIcon(new MyImageIcon("Wbox/wbox.png").resize(120, 40));
+    //     messagebox.setBounds(100,200,120,40);
+    //     messagebox.setVisible(true);
+    //     drawpane.add(messagebox);
+    // }
+
 
     public void mode_panel() {
         // mode button
@@ -680,11 +695,18 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < poke_list.length; i++) {
 
             JLabel label = new JLabel(new ImageIcon(poke_list[i]));
+            JLabel info = new JLabel(new ImageIcon(custom_info[i]));
             label.setOpaque(false);
             label.setLayout(null);
             label.setHorizontalTextPosition(JLabel.CENTER);
             label.setBounds(frameWidth - 850, 100, 320, 267);
             custom_poke_AL.add(label);
+
+            info.setOpaque(false);
+            info.setLayout(null);
+            info.setHorizontalTextPosition(JLabel.CENTER);
+            info.setBounds(frameWidth-350, 100, 267, 320);
+            custom_info_AL.add(info);
             // poke_list_AL.add(poke_list[i]);
         }
     }
