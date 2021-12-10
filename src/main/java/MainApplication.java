@@ -446,7 +446,7 @@ public class MainApplication extends JFrame {
 
                         validate();
                         repaint();
-                        Thread.sleep(13);
+                        Thread.sleep(15);
                         drawpane.remove(tempLabel);
                     }
                     catch(Exception e){ System.out.println(e);}
@@ -734,8 +734,8 @@ public class MainApplication extends JFrame {
             drawpane.add(pokeWinLabel);
             try{Thread.sleep(1500);} 
             catch(InterruptedException e) { System.out.println(e);}
-            pokeWinLabel.setVisible(false);
-            repaint(); validate();
+            drawpane.remove(pokeWinLabel);
+            validate(); repaint(); 
 
             drawpane.add(winLabel);
             winSound.playOnce();
@@ -745,8 +745,8 @@ public class MainApplication extends JFrame {
             drawpane.add(pokeGameOverLabel);
             try{Thread.sleep(1500);} 
             catch(InterruptedException e) { System.out.println(e);}
-            pokeGameOverLabel.setVisible(false);
-            repaint(); validate();
+            drawpane.remove(pokeGameOverLabel);
+            validate(); repaint(); 
             
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
@@ -765,7 +765,6 @@ public class MainApplication extends JFrame {
                 winSound.stop();
                 gameOverSound.stop();
                 drawpane.removeAll();
-                //repaint();validate();
                 program.dispose();
                 program = new MainApplication();
 
