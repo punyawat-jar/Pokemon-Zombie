@@ -428,22 +428,24 @@ public class MainApplication extends JFrame {
     }// end mode Panel
 
     public void showReadyGo(){
-        JLabel tempLabel ;
-        readyGoSound.playOnce();
-        for(int i=1 ;i<=147;i++){
-            try{
-                tempLabel = new JLabel (new MyImageIcon("readyGo/redyGO ("+i+").png").resize(380,214));
-                tempLabel.setBounds(525, 230, 380, 214);
-                drawpane.add(tempLabel);
-                validate();
-                Thread.sleep(10000);
+        Thread animation = new Thread(){
+            public void run(){
+                JLabel tempLabel;
+                readyGoSound.playOnce();
+                for(int i=1 ;i<=147;i++){
+                    try{
+                        System.out.printf("Input readyGo %3d\n",i);
+                        tempLabel = new JLabel(new MyImageIcon("readyGo/redy ("+i+").png").resize(380,214));
+                        tempLabel.setBounds(525,230,380,214);
+                        drawpane.add(tempLabel);
+                        validate();
+                        repaint();
+                        Thread.sleep(100);
+                    }catch(InterruptedException e) {System.out.println(e);}
+                }
             }
-            catch(InterruptedException e){ System.out.println(e);}
-        }
-        // for(int i=1 ;i<=147;i++){
-        //     readyGoLabelList.get(i).setVisible(false);
-        // }
-        //validate();
+        };
+        animation.start();
     }
     
     public void main_game(String mode) {
