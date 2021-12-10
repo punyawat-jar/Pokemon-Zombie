@@ -19,14 +19,17 @@ class Keyboard_bar {
     Compare_text compare;
 
     // private String a,b;
-    public Keyboard_bar(ArrayList<Wordbox> wAL) {
+    public Keyboard_bar(ArrayList<Wordbox> wAL, MainApplication m) {
         word_AL = wAL;
+        main = m;
         typearea = new JTextArea();
         typearea.setBounds(50, 100, 500, 30);
         typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
-        correct = new MySoundEffect("sound_effect/correct_sound.wav");
+
+        correct = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
         wrong = new MySoundEffect("sound_effect/wrong_sound.wav");
         // typearea.grabFocus();
+        compare = new Compare_text(typearea, word_AL, main);
 
         typearea.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -44,8 +47,11 @@ class Keyboard_bar {
                     // }
                     if (typearea.getText().trim()
                             .equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
-                        /// score++
+
+                        // score++
+                        main.getPlayer().setscore();
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
+
                         correct.playOnce();
                         System.out.println("count is = " + main.getCount_death());
                         System.out.println("thread is = " + main.threadlist);
@@ -64,7 +70,7 @@ class Keyboard_bar {
             }
 
             public void keyTyped(KeyEvent e) {
-                // compare = new Compare_text( typearea, word_AL,main,2);
+
             }
 
             public void keyReleased(KeyEvent e) {
@@ -90,24 +96,53 @@ class Compare_text implements CaretListener {
     private JTextArea text_type;
     private ArrayList<Wordbox> wbox;
     private MainApplication main;
-    int position;
+    private int position;
+    private String[] word;
+    private String[] text;
+    private int countword;
 
-    public Compare_text(JTextArea T, ArrayList<Wordbox> W, MainApplication m, int count) {
+    public Compare_text(JTextArea T, ArrayList<Wordbox> W, MainApplication m) {
         text_type = T;
         wbox = W;
         main = m;
         text_type.addCaretListener(this);
-        text_type.addCaretListener(this);
-        position = count;
+        position = main.getCount_death();
+
     }
 
     public void caretUpdate(CaretEvent e) {
-        if (text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
-            if (text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
-                System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
+        word = wbox.get(main.threadlist.get(main.getCount_death())).getWord().split("");
+        wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.YELLOW);
+        for (int i = 0; i < word.length; i++) {
+            text = text_type.getText().trim().split("");
+            System.out.println(word[i]);
+        }
+        for (int i = 0; i < text.length; i++) {
+            try {
+                // System.out.println("Length = " + text.length + " i = " + i);
+
+                if (text[i].trim().equals(word[i]) || text[0].isEmpty() == true) {
+                    // System.out.println("WOWhihi");
+                    wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.WHITE);
+                } else if (!(text[i].trim().equals(word[i]))) {
+                    wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
+                }
+
+                // else{
+                // wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.GREEN);
+                // }
+                // System.out.println(i + "Text = -" + text[i] + "- Word = " + word[i]);
+            } catch (Exception er) {
+                wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
             }
 
-            // out.setText( in.getText() );
         }
+
+        // if(text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())
+        // ){
+        // System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
+        // }
+
+        // out.setText( in.getText() );
     }
 }

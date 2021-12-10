@@ -14,11 +14,17 @@ class Player {
     private MyImageIcon player, healthbar_pic;
     private JLabel playerLabel, HP_Label;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
+    private String[] poke_list;
+    private int mode;
     String[] HP_bar = { "health bar/H0.png", "health bar/H1.png", "health bar/H2.png", "health bar/H3.png",
             "health bar/H4.png", "health bar/H5.png" };
 
-    public Player(JLabel x) {
-        player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth, playerhight);
+    String[] list_player = { "custom_poke/poke11.png", "custom_poke/poke22.png", "custom_poke/poke33.png",
+    "custom_poke/poke44.png", "custom_poke/poke55.png" };
+
+    public Player(JLabel x,int m) {
+        mode = m;
+        player = new MyImageIcon(list_player[mode]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
         playerLabel.setBounds(0, 440, playerwidth, playerhight);
         x.add(playerLabel);
@@ -34,7 +40,10 @@ class Player {
         }
         HP = HP_AL.size() - 1;
         x.add(HP_AL.get(5));
+
+        Score = 0;
     }
+
 
     public void hitplayer(JLabel x) {
         x.remove(HP_AL.get(HP));
@@ -51,11 +60,17 @@ class Player {
         return HP;
     }
 
-    synchronized public void setscore(int x) {
-        this.Score = x;
+    synchronized public void setscore(/*int x*/) {
+        //this.Score = x;
+        Score++;
+        System.out.printf("Your Score: %d\n",Score);
     }
 
     public JLabel getLabel() {
         return playerLabel;
+    }
+    
+    public int getScore(){
+        return Score;
     }
 }// end Player
