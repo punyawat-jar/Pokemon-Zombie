@@ -485,8 +485,7 @@ public class MainApplication extends JFrame {
                 if (exit == JOptionPane.YES_OPTION) {
                     gameEnd = false;
                     for(int i=0;i<zombielist.size();i++){
-                        zombielist.get(i).interrupt();
-                        zombielist.get(i).setkill_thread(true);
+                        zombielist.get(i).stop();
                     }
                     beginnerSong.stop();
                     mediumSong.stop();
@@ -573,7 +572,7 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
-                    program, wbox_AL);
+                    program, wbox_AL,keybar);
             zombielist.add(zombThread);
 
             System.out.println("i main = " + i);
@@ -748,10 +747,10 @@ public class MainApplication extends JFrame {
         button1.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 gameEnd = false;
-                for(int i=0;i<zombielist.size();i++){
-                    zombielist.get(i).interrupt();
-                    zombielist.get(i).setkill_thread(true);
-                }
+                // for(int i=0;i<zombielist.size();i++){
+                //     zombielist.get(i).interrupt();
+                //     zombielist.get(i).setkill_thread(true);
+                // }
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();

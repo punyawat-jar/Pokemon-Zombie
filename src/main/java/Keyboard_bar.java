@@ -93,6 +93,9 @@ class Keyboard_bar {
     public void setposition(int x, int y) {
         typearea.setBounds(x, y, width, height);
     }
+    public void clearTypearea(){
+        typearea.setText(null);
+    }
 }
 
 class Compare_text implements CaretListener {
@@ -111,6 +114,7 @@ class Compare_text implements CaretListener {
     }
 
     public void caretUpdate(CaretEvent e) {
+        int flag =0;
         word = wbox.get(main.threadlist.get(main.getCount_death())).getWord().split("");
         wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.YELLOW);
         for (int i = 0; i < word.length; i++) {
@@ -121,10 +125,11 @@ class Compare_text implements CaretListener {
             try {
                 // System.out.println("Length = " + text.length + " i = " + i);
 
-                if (text[i].trim().equals(word[i]) || text[0].isEmpty() == true) {
+                if ((text[i].trim().equals(word[i]) || text[0].isEmpty() == true) && flag != 1) {
                     // System.out.println("WOWhihi");
                     wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.WHITE);
                 } else if (!(text[i].trim().equals(word[i]))) {
+                    flag =1;
                     wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
                 }
                 // else{
