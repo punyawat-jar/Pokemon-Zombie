@@ -42,12 +42,13 @@ public class MainApplication extends JFrame {
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, gameOverSound, winSound,
             usedItemSound;
 
+    private MyImageIcon winGif, gameOverGif,pokeWinGif;
+
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
     ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
-    private MyImageIcon winGif, gameOverGif;
 
     private JProgressBar PBar = new JProgressBar();
     private Keyboard_bar keybar;
@@ -68,11 +69,10 @@ public class MainApplication extends JFrame {
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
             "Vocab/Boss.txt", "Vocab/OnlyBoss.txt" };
-    // private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt",
-    // "Vocab/Hard.txt" };
+    
     ArrayList<Vocab> vocabList = new ArrayList<Vocab>();
 
-    JLabel winLabel, gameOverLabel;
+    JLabel winLabel, gameOverLabel,pokeWinLabel;
 
     // ------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
@@ -152,8 +152,11 @@ public class MainApplication extends JFrame {
 
         winGif = new MyImageIcon("gameOver/win.gif");
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
+        pokeWinGif = new MyImageIcon("gameOver/pokeWin.gif");
         winLabel = new JLabel(winGif);
         gameOverLabel = new JLabel(gameOverGif);
+        pokeWinLabel = new JLabel(pokeWinGif);
+
         // ------------------------------- Zombie -----------------------------------
 
         // ---------------------------- Sound --------------------------------------
@@ -575,12 +578,9 @@ public class MainApplication extends JFrame {
 
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
-        // winGif = new MyImageIcon("gameOver/win.gif");
-        // gameOverGif = new MyImageIcon("gameOver/game_over.gif");
-        // JLabel winLabel = new JLabel(winGif);
-        // JLabel gameOverLabel = new JLabel(gameOverGif);
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
+        pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight/2)-400, 1281, 720);
 
         // Back To Menu
         JButton button1 = new JButton();
@@ -590,7 +590,6 @@ public class MainApplication extends JFrame {
 
         // Show Score
         JTextField scoreText = new JTextField("  SCORE : " + player.getScore(), 10);
-        // JTextField scoreText = new JTextField(" SCORE : " + score , 10);
         scoreText.setEditable(false);
         scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
         scoreText.setBackground(new Color(255, 255, 255, 100));
@@ -612,13 +611,17 @@ public class MainApplication extends JFrame {
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
-            drawpane.repaint();
+            //drawpane.repaint();
+            drawpane.add(pokeWinLabel);
+            try{Thread.sleep(1700);} 
+            catch(InterruptedException e) { System.out.println(e);}
+            pokeWinLabel.setVisible(false);
+
             drawpane.add(winLabel);
             winSound.playOnce();
             gameEnd = false;
             gameResult = "";
-        } else if (player.getHP() == 0 && gameEnd == true &&
-                gameResult == "GameOver") { // gameOver
+        } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
             gameEnd = false;
@@ -628,13 +631,11 @@ public class MainApplication extends JFrame {
         button1.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 gameEnd = false;
-                comeIn = false;
                 buttonSound.playOnce();
                 winSound.stop();
                 gameOverSound.stop();
                 drawpane.removeAll();
-                repaint();
-                validate();
+                //repaint();validate();
                 program.dispose();
                 program = new MainApplication();
 
