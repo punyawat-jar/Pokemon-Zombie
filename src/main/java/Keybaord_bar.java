@@ -49,14 +49,15 @@ class Keyboard_bar {
                     // }
                     if (typearea.getText().trim().equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
                         
-                        /// score++
+                        // score++
+                        main.getPlayer().setscore();
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
                         
                         correct.playOnce();
                         System.out.println("count is = " + main.getCount_death());
                         System.out.println("thread is = " + main.threadlist);
                         System.out.println("mY name is your");
-                        //main.callSetScore();
+                       
                     } else {
                         wrong.playOnce();
                     }

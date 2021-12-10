@@ -549,11 +549,10 @@ public class MainApplication extends JFrame {
         return gameResult;
     }
 
-    /*
-    public void callSetScore(){
-        player.setscore();
+    public Player getPlayer(){
+        return player;
     }
-    */
+    
 
     // public void kill_monster(int i) {
     // drawpane.remove(mobLabel.get(i));
@@ -577,11 +576,11 @@ public class MainApplication extends JFrame {
         JButton button1 = new JButton(); 
         setUpButton(button1, menuButton);
         button1.setBounds((frameWidth / 2) -100, (frameHeight / 2) + 30, 200, 50);
-        //System.out.printf("Score : %d \n",player.getScore());
+        System.out.printf("Game Over -Score : %d \n",player.getScore());
 
         //Show Score
-        //JTextField scoreText = new JTextField("  SCORE : " + player.getScore() , 10);
-        JTextField scoreText = new JTextField("  SCORE : " + score , 10);
+        JTextField scoreText = new JTextField("  SCORE : " + player.getScore() , 10);
+        //JTextField scoreText = new JTextField("  SCORE : " + score , 10);
         scoreText.setEditable(false);
         scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
         scoreText.setBackground(new Color(255, 255, 255, 100));
