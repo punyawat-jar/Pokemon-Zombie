@@ -446,7 +446,7 @@ public class MainApplication extends JFrame {
 
                         validate();
                         repaint();
-                        Thread.sleep(10);
+                        Thread.sleep(13);
                         drawpane.remove(tempLabel);
                     }
                     catch(Exception e){ System.out.println(e);}
