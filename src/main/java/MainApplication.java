@@ -64,11 +64,12 @@ public class MainApplication extends JFrame {
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/poke1.png", "custom_poke/poke2.png", "custom_poke/poke3.png",
             "custom_poke/poke4.png", "custom_poke/poke5.png" };
-    private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
-            "Vocab/Boss.txt" };
+    private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
+            "Vocab/Nightmare.txt",
+            "Vocab/Boss.txt", "Vocab/OnlyBoss.txt" };
     // private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt",
     // "Vocab/Hard.txt" };
-    ArrayList<Vocab> modeList = new ArrayList<Vocab>();
+    ArrayList<Vocab> vocabList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
     public static void main(String[] args) {
@@ -102,8 +103,8 @@ public class MainApplication extends JFrame {
 
         AddComponents();
 
-        // add Vocab
-        readFile(mode);
+        // add Vocab from file to variable
+        readFile(vocabFilename_list);
     }// end MainApplication Constructor;
 
     public void AddComponents() {
@@ -357,21 +358,15 @@ public class MainApplication extends JFrame {
         drawpane.add(PBar);
         gameResult = "";
         countStageEnd = 0;
-        comeIn = false;
-        if (comeIn == false) {
-            comeIn = true;
-            readyGoLabel.setBounds(525, 230, 380, 214);
-            drawpane.add(readyGoLabel);
-            drawpane.validate();
-            readyGoSound.playOnce();
-        }
+        // comeIn = false;
+        // if (comeIn == false) {
+        // // comeIn = true;
+        // readyGoLabel.setBounds(525, 230, 380, 214);
+        // drawpane.add(readyGoLabel);
+        // drawpane.validate();
+        // readyGoSound.playOnce();
+        // }
         wbox_AL.clear();
-
-        PBar.setValue(0);
-        PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
-        PBar.setForeground(new Color(255, 199, 56));
-        PBar.setStringPainted(false);
-        drawpane.add(PBar);
 
         keybar = new Keyboard_bar(wbox_AL);
         keybar.setPane(drawpane, this);
@@ -422,7 +417,8 @@ public class MainApplication extends JFrame {
                 bossSong.playLoop();
                 player = new Player(drawpane);
                 input_word(4);
-                // addZombieHard();
+                // createZombieThread("Nightmare");
+                createZombieThread(mode);
 
                 break;
         }
@@ -602,7 +598,8 @@ public class MainApplication extends JFrame {
         resetPBar();
         // drawpane.removeAll();
 
-        if (player.getHP() > 0 && gameEnd == true && gameResult != "GameOver") { // Win
+        if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
+            drawpane.repaint();
             drawpane.add(winLabel);
             winSound.playOnce();
             gameEnd = false;
@@ -642,6 +639,7 @@ public class MainApplication extends JFrame {
         drawpane.add(scorePanel);
         drawpane.add(button1);
         drawpane.add(button2);
+        validate();
     }// end stageEnd
 
     // ---------------------------- Set up Cursor & Button ------------------------
@@ -673,9 +671,9 @@ public class MainApplication extends JFrame {
         }
     }
 
-    public void readFile(String[] mode) {
-        for (int i = 0; i < mode.length; i++) {
-            enforceFile(mode[i]);
+    public void readFile(String[] vocabFilename_list) {
+        for (int i = 0; i < vocabFilename_list.length; i++) {
+            enforceFile(vocabFilename_list[i]);
         }
         // System.out.printf("----------------------------------------------\n");
         // printReadFile();
@@ -685,10 +683,11 @@ public class MainApplication extends JFrame {
         String fileName = fname;
         int countLine = 0;
         boolean opensuccess = false;
-        ArrayList<String> vList = new ArrayList<String>();
+        ArrayList<String> vList = new ArrayList<String>(); // Keep words
         String name = "";
 
         while (!opensuccess) {
+            // Add vocab from file.txt to variable vocabList
             try (Scanner filescan = new Scanner(new File(fileName));) {
                 opensuccess = true;
                 while (filescan.hasNext()) {
@@ -699,11 +698,10 @@ public class MainApplication extends JFrame {
                         countLine++;
                     } else {
                         vList.add(buf[0].trim());
-
                     }
                 }
-                Vocab m = new Vocab(name, vList);
-                modeList.add(m);
+                Vocab modeVocab = new Vocab(name, vList);
+                vocabList.add(modeVocab);
             }
 
             catch (FileNotFoundException e) {
@@ -713,18 +711,21 @@ public class MainApplication extends JFrame {
     }
 
     public void printReadFile() { // print read file
-        for (int i = 0; i < modeList.size(); i++) {
-            modeList.get(i).printFileWord();
+        for (int i = 0; i < vocabList.size(); i++) {
+            vocabList.get(i).printFileWord();
         }
         System.out.println("");
     }
 
     public void input_word(int n) {
         for (int i = 0; i < 10; i++) {
-            wbox = new Wordbox(drawpane, modeList.get(n).randomWord());
+            if (i == 1) {
+                wbox = new Wordbox(drawpane, vocabList.get(n + 1).randomWord(), i, n);
+            } else {
+                wbox = new Wordbox(drawpane, vocabList.get(n).randomWord(), i, n);
+            }
             wbox_AL.add(wbox);
         }
-
         for (int i = 0; i < wbox_AL.size(); i++) {
             System.out.println(i + " = " + wbox_AL.get(i).getWord());
         }

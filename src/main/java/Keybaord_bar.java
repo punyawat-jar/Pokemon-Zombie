@@ -32,9 +32,7 @@ class Keyboard_bar {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
                     // if(typearea.getText().trim().contains(word_AL.get(main.getCount_death()).getWord().trim())){
-
                     // main.kill_monster(main.threadlist.get(main.getCount_death()));
-
                     // }
                     // a = typearea.getText().trim();
                     // b = word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim();
@@ -52,6 +50,7 @@ class Keyboard_bar {
                         System.out.println("count is = " + main.getCount_death());
                         System.out.println("thread is = " + main.threadlist);
                         System.out.println("mY name is your");
+
                     } else {
                         wrong.playOnce();
                     }
@@ -98,14 +97,17 @@ class Compare_text implements CaretListener {
         wbox = W;
         main = m;
         text_type.addCaretListener(this);
+        text_type.addCaretListener(this);
         position = count;
     }
 
     public void caretUpdate(CaretEvent e) {
         if (text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
-            System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
-        }
+            if (text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
+                System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
+            }
 
-        // out.setText( in.getText() );
+            // out.setText( in.getText() );
+        }
     }
-};
+}
