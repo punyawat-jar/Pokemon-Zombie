@@ -400,14 +400,14 @@ public class MainApplication extends JFrame {
         menuSong.stop();
         gameResult = "";
         countStageEnd = 0;
-        // comeIn = false;
-        // if (comeIn == false) {
-        // // comeIn = true;
-        // readyGoLabel.setBounds(525, 230, 380, 214);
-        // drawpane.add(readyGoLabel);
-        // drawpane.validate();
-        // readyGoSound.playOnce();
-        // }
+        comeIn = false;
+        if (comeIn == false) {
+        comeIn = true;
+        readyGoLabel.setBounds(525, 230, 380, 214);
+        drawpane.add(readyGoLabel);
+        drawpane.validate();
+        readyGoSound.playOnce();
+        }
         wbox_AL.clear();
 
         PBar.setValue(0);
@@ -628,23 +628,22 @@ public class MainApplication extends JFrame {
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
-            //Not Sure About This(it effects to show button)
-            drawpane.repaint();
             drawpane.add(pokeWinLabel);
-            try{Thread.sleep(1000);} 
+            try{Thread.sleep(1500);} 
             catch(InterruptedException e) { System.out.println(e);}
             pokeWinLabel.setVisible(false);
+            repaint();
 
             drawpane.add(winLabel);
             winSound.playOnce();
             gameEnd = false;
             gameResult = "";
         } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
-             //Not Sure About This(it effects to show button)
             drawpane.add(pokeGameOverLabel);
-            try{Thread.sleep(1000);} 
+            try{Thread.sleep(1500);} 
             catch(InterruptedException e) { System.out.println(e);}
             pokeGameOverLabel.setVisible(false);
+            repaint();
             
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
