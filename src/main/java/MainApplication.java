@@ -427,10 +427,30 @@ public class MainApplication extends JFrame {
         drawpane.add(backbtn);
     }// end mode Panel
 
+    public void showReadyGo(){
+        JLabel tempLabel ;
+        readyGoSound.playOnce();
+        for(int i=1 ;i<=147;i++){
+            try{
+                tempLabel = new JLabel (new MyImageIcon("readyGo/redyGO ("+i+").png").resize(380,214));
+                tempLabel.setBounds(525, 230, 380, 214);
+                drawpane.add(tempLabel);
+                validate();
+                Thread.sleep(10000);
+            }
+            catch(InterruptedException e){ System.out.println(e);}
+        }
+        // for(int i=1 ;i<=147;i++){
+        //     readyGoLabelList.get(i).setVisible(false);
+        // }
+        //validate();
+    }
+    
     public void main_game(String mode) {
         menuSong.stop();
         gameResult = "";
         countStageEnd = 0;
+        showReadyGo();
         // comeIn = false;
         //if (comeIn == false) {
         //     comeIn = true;
