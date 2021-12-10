@@ -9,7 +9,7 @@ import java.io.*;
 import javax.swing.border.*;
 
 class ZombieThread extends Thread {
-    private MyImageIcon zomb1Img, zomb2Img, zomb3Img, zomb4Img, zomb5Img, zombBossImg; // Beginner & Boss
+    private MyImageIcon zomb1Img, zomb2Img, zomb3Img, zomb4Img, zomb5Img, zombBossImg, zombImg;// Beginner & Boss
     private int zombSpeed = 300;
     private int zombCurX, zombCurY;
     private JLabel zombLabel;
@@ -55,6 +55,12 @@ class ZombieThread extends Thread {
     }// end Constructor
 
     public void setUpZombie(JLabel pane) {
+        if (i == 0) {
+            readyGoLabel.setBounds(525, 230, 380, 214);
+            tempPane.add(readyGoLabel);
+            tempPane.validate();
+            readyGoSound.playOnce();
+        }
         if (mode == "Beginner") {
             // for (int i = 0; i < 10; i++) {
             int zombie = randomNum(4);
@@ -62,37 +68,43 @@ class ZombieThread extends Thread {
                 case 0:
                     zombWidth = 98;
                     zombHeight = 157;
-                    zomb1Img = new MyImageIcon("zombie/z01.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb1Img);
+                    zombImg = new MyImageIcon("zombie/z01.png").resize(zombWidth, zombHeight);
                     break;
                 case 1:
                     zombWidth = 140;
                     zombHeight = 139;
-                    zomb2Img = new MyImageIcon("zombie/z02.png").resize(140, 139);
-                    zombLabel = new JLabel(zomb2Img);
+                    zombImg = new MyImageIcon("zombie/z02.png").resize(140, 139);
                     break;
                 case 2:
                     zombWidth = 138;
                     zombHeight = 153;
-                    zomb3Img = new MyImageIcon("zombie/z03.png").resize(138, 153);
-                    zombLabel = new JLabel(zomb3Img);
+                    zombImg = new MyImageIcon("zombie/z03.png").resize(138, 153);
                     break;
                 case 3:
-
                     zombWidth = 140;
                     zombHeight = 140;
-                    zomb4Img = new MyImageIcon("zombie/z04.png").resize(140, 140);
-                    zombLabel = new JLabel(zomb4Img);
+                    zombImg = new MyImageIcon("zombie/z04.png").resize(140, 140);
                     break;
             }
-            zombCurY = pane.getHeight() - 185 - zombHeight;
-            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
-            zombSpeed = 250;
+            zombLabel = new JLabel(zombImg);
+            zombCurY = pane.getHeight() - 150 - zombHeight;
+            zombSpeed = 25;
 
             Random r = new Random();
             int low = 5000;
-            int high = 15000;
+            int high = 9000;
             zombTimeWait = r.nextInt(high - low) + low;
+            zombTimeWait = r.nextInt(high - low) + low;
+            if (i == 1) {
+                zombWidth = 287;
+                zombHeight = 290;
+                zombImg = new MyImageIcon("zombie/zboss_beginner.png").resize(zombWidth, zombHeight);
+                zombLabel = new JLabel(zombImg);
+                zombCurY = pane.getHeight() - 150 - zombHeight;
+                zombSpeed = 30;
+                // break;
+            }
+            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
         } // end Beginner
         else if (mode == "Medium") {
 
@@ -102,35 +114,42 @@ class ZombieThread extends Thread {
                 case 0:
                     zombWidth = 98;
                     zombHeight = 157;
-                    zomb1Img = new MyImageIcon("zombie/z01.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb1Img);
+                    zombImg = new MyImageIcon("zombie/z01.png").resize(zombWidth, zombHeight);
                     break;
                 case 1:
                     zombWidth = 140;
                     zombHeight = 139;
-                    zomb2Img = new MyImageIcon("zombie/z02.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb2Img);
+                    zombImg = new MyImageIcon("zombie/z02.png").resize(zombWidth, zombHeight);
                     break;
                 case 2:
                     zombWidth = 138;
                     zombHeight = 153;
-                    zomb3Img = new MyImageIcon("zombie/z03.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb3Img);
+                    zombImg = new MyImageIcon("zombie/z03.png").resize(zombWidth, zombHeight);
                     break;
                 case 3:
                     zombWidth = 140;
                     zombHeight = 140;
-                    zomb4Img = new MyImageIcon("zombie/z04.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb4Img);
+                    zombImg = new MyImageIcon("zombie/z04.png").resize(zombWidth, zombHeight);
                     break;
             }
-            zombCurY = pane.getHeight() - 185 - zombHeight;
-            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
-            zombSpeed = 200;
+            zombLabel = new JLabel(zombImg);
+            zombCurY = pane.getHeight() - 150 - zombHeight;
+            zombSpeed = 20;
             Random r = new Random();
             int low = 5000;
-            int high = 10000;
+            int high = 7000;
             zombTimeWait = r.nextInt(high - low) + low;
+            zombTimeWait = r.nextInt(high - low) + low;
+            if (i == 1) {
+                zombWidth = 290;
+                zombHeight = 351;
+                zombImg = new MyImageIcon("zombie/zboss_medium.png").resize(zombWidth, zombHeight);
+                zombLabel = new JLabel(zombImg);
+                zombCurY = pane.getHeight() - 150 - zombHeight;
+                zombSpeed = 25;
+                // break;
+            }
+            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
         } // end Medium
         else if (mode == "Hard") {
             int zombie = randomNum(4);
@@ -138,38 +157,44 @@ class ZombieThread extends Thread {
                 case 0:
                     zombWidth = 143;
                     zombHeight = 140;
-                    zomb1Img = new MyImageIcon("zombie/ez01.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb1Img);
-                    zombCurY = pane.getHeight() - 180 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/ez01.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 145 - zombHeight;
                     break;
                 case 1:
                     zombWidth = 140;
                     zombHeight = 117;
-                    zomb2Img = new MyImageIcon("zombie/ez02.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb2Img);
-                    zombCurY = pane.getHeight() - 160 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/ez02.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 125 - zombHeight;
                     break;
                 case 2:
                     zombWidth = 140;
                     zombHeight = 153;
-                    zomb3Img = new MyImageIcon("zombie/ez03.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb3Img);
-                    zombCurY = pane.getHeight() - 180 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/ez03.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 145 - zombHeight;
                     break;
                 case 3:
                     zombWidth = 170;
                     zombHeight = 170;
-                    zomb4Img = new MyImageIcon("zombie/ez04.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb4Img);
-                    zombCurY = pane.getHeight() - 180 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/ez04.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 145 - zombHeight;
                     break;
             }
-            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
-            zombSpeed = 150;
+            zombLabel = new JLabel(zombImg);
+            zombSpeed = 18;
             Random r = new Random();
-            int low = 5000;
-            int high = 10000;
+            int low = 4000;
+            int high = 6500;
             zombTimeWait = r.nextInt(high - low) + low;
+            if (i == 1) {
+                zombWidth = 237;
+                zombHeight = 290;
+                zombImg = new MyImageIcon("zombie/zboss_hard.png").resize(zombWidth, zombHeight);
+                zombLabel = new JLabel(zombImg);
+                zombCurY = pane.getHeight() - 145 - zombHeight;
+                zombSpeed = 23;
+                // break;
+            }
+            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
         } // end Hard
         else if (mode == "Nightmare") {
             int zombie = randomNum(4);
@@ -177,48 +202,140 @@ class ZombieThread extends Thread {
                 case 0:
                     zombWidth = 140;
                     zombHeight = 140;
-                    zomb1Img = new MyImageIcon("zombie/sz01.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb1Img);
-                    zombCurY = pane.getHeight() - 170 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/sz01.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 130 - zombHeight;
                     break;
                 case 1:
                     zombWidth = 187;
                     zombHeight = 140;
-                    zomb2Img = new MyImageIcon("zombie/sz02.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb2Img);
-                    zombCurY = pane.getHeight() - 200 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/sz02.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 165 - zombHeight;
                     break;
                 case 2:
                     zombWidth = 140;
                     zombHeight = 140;
-                    zomb3Img = new MyImageIcon("zombie/sz03.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb3Img);
-                    zombCurY = pane.getHeight() - 200 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/sz03.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 165 - zombHeight;
                     break;
                 case 3:
                     zombWidth = 140;
                     zombHeight = 140;
-                    zomb4Img = new MyImageIcon("zombie/z04.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb4Img);
-                    zombCurY = pane.getHeight() - 170 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/z04.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 130 - zombHeight;
                     break;
                 case 4:
                     zombWidth = 170;
                     zombHeight = 170;
-                    zomb5Img = new MyImageIcon("zombie/ez04.png").resize(zombWidth, zombHeight);
-                    zombLabel = new JLabel(zomb4Img);
-                    zombCurY = pane.getHeight() - 170 - zombHeight;
+                    zombImg = new MyImageIcon("zombie/ez04.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 165 - zombHeight;
                     break;
             }
-            zombCurY = pane.getHeight() - 185 - zombHeight;
-            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
-            zombSpeed = 80;
+            zombLabel = new JLabel(zombImg);
+            zombSpeed = 15;
             Random r = new Random();
             int low = 2500;
             int high = 5000;
             zombTimeWait = r.nextInt(high - low) + low;
+            if (i == 1) {
+                zombWidth = 445;
+                zombHeight = 300;
+                zombImg = new MyImageIcon("zombie/zboss_nightmare.png").resize(zombWidth, zombHeight);
+                zombLabel = new JLabel(zombImg);
+                zombCurY = pane.getHeight() - 130 - zombHeight;
+                zombSpeed = 20;
+                // break;
+            }
+            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
         } // end NightMare
-    }
+        else if (mode == "Boss") {
+            int zombie = randomNum(11);
+            switch (zombie) {
+                case 0:
+                    zombWidth = 98;
+                    zombHeight = 157;
+                    zombImg = new MyImageIcon("zombie/z01.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+                case 1:
+                    zombWidth = 140;
+                    zombHeight = 139;
+                    zombImg = new MyImageIcon("zombie/z02.png").resize(140, 139);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+                case 2:
+                    zombWidth = 138;
+                    zombHeight = 153;
+                    zombImg = new MyImageIcon("zombie/z03.png").resize(138, 153);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+                case 3:
+                    zombWidth = 140;
+                    zombHeight = 140;
+                    zombImg = new MyImageIcon("zombie/z04.png").resize(140, 140);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+                case 4:
+                    zombWidth = 140;
+                    zombHeight = 140;
+                    zombImg = new MyImageIcon("zombie/sz01.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 220 - zombHeight;
+                    break;
+                case 5:
+                    zombWidth = 187;
+                    zombHeight = 140;
+                    zombImg = new MyImageIcon("zombie/sz02.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 270 - zombHeight;
+                    break;
+                case 6:
+                    zombWidth = 140;
+                    zombHeight = 140;
+                    zombImg = new MyImageIcon("zombie/sz03.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 270 - zombHeight;
+                    break;
+                case 7:
+                    zombWidth = 140;
+                    zombHeight = 140;
+                    zombImg = new MyImageIcon("zombie/nz04.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+                case 8:
+                    zombWidth = 143;
+                    zombHeight = 140;
+                    zombImg = new MyImageIcon("zombie/ez01.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+                case 9:
+                    zombWidth = 140;
+                    zombHeight = 153;
+                    zombImg = new MyImageIcon("zombie/ez03.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+                case 10:
+                    zombWidth = 170;
+                    zombHeight = 170;
+                    zombImg = new MyImageIcon("zombie/ez04.png").resize(zombWidth, zombHeight);
+                    zombCurY = pane.getHeight() - 215 - zombHeight;
+                    break;
+            }
+            zombLabel = new JLabel(zombImg);
+            zombSpeed = 10;
+
+            Random r = new Random();
+            int low = 2500;
+            int high = 5500;
+            zombTimeWait = r.nextInt(high - low) + low;
+            if (i == 1) {
+                zombWidth = 237;
+                zombHeight = 290;
+                zombImg = new MyImageIcon("zombie/zboss.png").resize(zombWidth, zombHeight);
+                zombLabel = new JLabel(zombImg);
+                zombCurY = pane.getHeight() - 210 - zombHeight;
+                zombSpeed = 15;
+                // break;
+            }
+            zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
+        } // end Boss
+    }// end setUpZombie
 
     public int randomNum(int amount) {
         Random random = new Random();
@@ -258,6 +375,8 @@ class ZombieThread extends Thread {
         }
 
         else if (program.getCount_death() == 10) { // Win
+            tempPane.remove(zombLabel);
+            tempPane.repaint();
             program.setGameResult("Win");
             program.addCountStageEnd();
         }
@@ -317,9 +436,9 @@ class ZombieThread extends Thread {
         while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())) &&
                 player.getHP() != 0 && killed == false) {
             zombLabel.setLocation(zombCurX, zombCurY);
-            zombCurX = zombCurX - 5;
+            zombCurX = zombCurX - 1;
             zombLabel.repaint();
-            wbox.get(i).wbox_move(zombCurX - 30, zombCurY);
+            wbox.get(i).wbox_move(zombCurX - 10, zombCurY);
 
             zombLabel.repaint();
             try {
