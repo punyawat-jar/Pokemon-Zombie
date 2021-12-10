@@ -233,7 +233,14 @@ public class MainApplication extends JFrame {
         button4.addActionListener(new ActionListener() { // Exit button4
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                System.exit(0);
+                //System.exit(0);
+                int exit = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to quit the game?",
+                        "PokemonGame! - Message", JOptionPane.YES_NO_OPTION);
+                if (exit == JOptionPane.YES_OPTION) {
+                    System.exit(0);
+                } else {
+                    setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+                }
             }
         });
 
@@ -390,7 +397,7 @@ public class MainApplication extends JFrame {
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
-        keybar = new Keyboard_bar(wbox_AL, this);
+        keybar = new Keyboard_bar(wbox_AL, program);
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
 
