@@ -428,20 +428,28 @@ public class MainApplication extends JFrame {
     }// end mode Panel
 
     public void showReadyGo(){
-        Thread animation = new Thread(){
+        
+        Thread animation = new Thread() {
             public void run(){
                 JLabel tempLabel;
                 readyGoSound.playOnce();
                 for(int i=1 ;i<=147;i++){
                     try{
-                        System.out.printf("Input readyGo %3d\n",i);
-                        tempLabel = new JLabel(new MyImageIcon("readyGo/redy ("+i+").png").resize(380,214));
-                        tempLabel.setBounds(525,230,380,214);
+                        //System.out.println("i is =======================" + i);
+                        tempLabel = new JLabel (new MyImageIcon("readyGo/readyGO ("+i+").png").resize(380,210));
+                        tempLabel.setBounds(525, 230, 380, 210);
+                        tempLabel.setOpaque(false);
+                        tempLabel.setLayout(null);
+                        tempLabel.setHorizontalTextPosition(JLabel.CENTER);
+                        tempLabel.setVisible(true);
                         drawpane.add(tempLabel);
+
                         validate();
                         repaint();
-                        Thread.sleep(100);
-                    }catch(InterruptedException e) {System.out.println(e);}
+                        Thread.sleep(10);
+                        drawpane.remove(tempLabel);
+                    }
+                    catch(Exception e){ System.out.println(e);}
                 }
             }
         };
@@ -727,7 +735,7 @@ public class MainApplication extends JFrame {
             try{Thread.sleep(1500);} 
             catch(InterruptedException e) { System.out.println(e);}
             pokeWinLabel.setVisible(false);
-            repaint();
+            repaint(); validate();
 
             drawpane.add(winLabel);
             winSound.playOnce();
@@ -738,7 +746,7 @@ public class MainApplication extends JFrame {
             try{Thread.sleep(1500);} 
             catch(InterruptedException e) { System.out.println(e);}
             pokeGameOverLabel.setVisible(false);
-            repaint();
+            repaint(); validate();
             
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
