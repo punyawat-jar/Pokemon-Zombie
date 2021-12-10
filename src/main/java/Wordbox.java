@@ -14,7 +14,7 @@ public class Wordbox {
     public Wordbox(JLabel p,String s) {
         wlabel = new JLabel(s);
         //dtext = new DoubleText(wlabel,word);
-       
+        
         wlabel.setLayout(null);
         wlabel.setForeground(Color.WHITE);
         wlabel.setIcon(new MyImageIcon("Wbox/wbox.png").resize(120, 40));
