@@ -431,14 +431,15 @@ public class MainApplication extends JFrame {
         menuSong.stop();
         gameResult = "";
         countStageEnd = 0;
-        comeIn = false;
-        if (comeIn == false) {
-        comeIn = true;
-        readyGoLabel.setBounds(525, 230, 380, 214);
-        drawpane.add(readyGoLabel);
-        drawpane.validate();
-        readyGoSound.playOnce();
-        }
+        // comeIn = false;
+        //if (comeIn == false) {
+        //     comeIn = true;
+        //     readyGoLabel.setBounds(525, 230, 380, 214);
+        //     drawpane.add(readyGoLabel);
+        //     drawpane.validate();
+        //     readyGoSound.playOnce();
+        // }
+        
         wbox_AL.clear();
 
         PBar.setValue(0);
