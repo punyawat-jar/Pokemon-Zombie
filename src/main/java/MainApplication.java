@@ -40,8 +40,7 @@ public class MainApplication extends JFrame {
             menuButton,
             nextButton, backButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, gameOverSound, winSound,
-            usedItemSound;
-
+            usedItemSound, ding;
     private MyImageIcon winGif, gameOverGif, pokeWinGif, pokeGameOverGif;
     JLabel winLabel, gameOverLabel, pokeWinLabel, pokeGameOverLabel;
 
@@ -177,7 +176,7 @@ public class MainApplication extends JFrame {
         gameOverSound = new MySoundEffect("sound_effect/GameOver_soundeffect.wav");
         winSound = new MySoundEffect("sound_effect/Win_soundeffect.wav");
         usedItemSound = new MySoundEffect("sound_effect/UsedItem_soundeffect.wav");
-
+        ding = new MySoundEffect("sound_effect/ding.wav");
         menuSong = new MySoundEffect("song/menu_song.wav");
         creditSong = new MySoundEffect("song/credit_song.wav");
         beginnerSong = new MySoundEffect("song/beginner_and_tutorial_song.wav");
@@ -533,7 +532,7 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
 
-        bomb = new Bomb(program, drawpane);
+        bomb = new Bomb(program, drawpane,zombielist);
 
         switch (mode) {
             case "Beginner":
@@ -541,10 +540,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-<<<<<<< Updated upstream
-=======
-                bomb = new Bomb(program, drawpane, zombielist);
->>>>>>> Stashed changes
+                //bomb = new Bomb(program, drawpane, zombielist);
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
@@ -830,6 +826,7 @@ public class MainApplication extends JFrame {
     // ---------------------------- Read File -----------------------
 
     public void read_picture() {
+
         for (int i = 0; i < poke_list.length; i++) {
             JLabel label = new JLabel(new MyImageIcon(poke_list[i]));
             JLabel info = new JLabel(new MyImageIcon(custom_info[i]));
@@ -852,6 +849,58 @@ public class MainApplication extends JFrame {
             item_label.setLayout(null);
             item_label.setHorizontalTextPosition(JLabel.CENTER);
             item_label.setSize(200, 200);
+            item_label.addMouseListener(new MouseAdapter(){
+            });
+            switch(i){
+                case 0:
+                    item_label.addMouseListener(new MouseAdapter(){
+                        public void mouseEntered(MouseEvent e) {
+                            System.out.println("Hello world1");
+                            item_label.setVisible(false);
+                            ding.playOnce();
+                            
+                        }
+                    });
+                    break;
+                case 1:
+                    item_label.addMouseListener(new MouseAdapter(){
+                        public void mouseEntered(MouseEvent e) {
+                            System.out.println("Hello world2");
+                            item_label.setVisible(false);
+                            ding.playOnce();
+                        }
+                    });
+                    break;
+                case 2:
+                    item_label.addMouseListener(new MouseAdapter(){
+                        public void mouseEntered(MouseEvent e) {
+                            System.out.println("Hello world3");
+                            item_label.setVisible(false);
+                            ding.playOnce();
+                            
+                        }
+                    });
+                    break;
+                case 3:
+                    item_label.addMouseListener(new MouseAdapter(){
+                        public void mouseEntered(MouseEvent e) {
+                            System.out.println("Hello world4");
+                            item_label.setVisible(false);
+                            ding.playOnce();
+                        }
+                    });
+                    break;
+                case 4:
+                    item_label.addMouseListener(new MouseAdapter(){
+                        public void mouseEntered(MouseEvent e) {
+                            System.out.println("Hello world5");
+                            item_label.setVisible(false);
+                            ding.playOnce();
+                        }
+                    });
+                    break;
+            }
+
             itemdrop_AL.add(item_label);
         }
     }

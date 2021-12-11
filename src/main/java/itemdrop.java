@@ -14,7 +14,7 @@ import java.util.Timer;
 public class itemdrop extends Thread {
     JLabel pane;
     MainApplication main;
-    boolean end = false;
+    boolean end = false,floor=false;
     ArrayList<JLabel> Item_AL = new ArrayList<JLabel>();
     public itemdrop(JLabel p,MainApplication m,ArrayList<JLabel> iAL){
         pane = p;
@@ -25,17 +25,17 @@ public class itemdrop extends Thread {
     public void run(){
         while(!end){
             int rand_time = (int) Math.floor(Math.random()*(30000-15000+1)+15000);
-            Item_AL.add(new JLabel(new MyImageIcon("item_fall/potion.png").resize(100,100)));
-            
+            //Item_AL.add(new JLabel(new MyImageIcon("item_fall/potion.png").resize(100,100)));
+            floor = false;
             Item_AL.get(0).setVisible(true);
             try{
-                Thread.sleep(rand_time);         /// 1000 for debug only, use rand_time
+                Thread.sleep(15000);         /// 1000 for debug only, use rand_time
             }
             catch(Exception e) {}
             Thread item = new Thread(){
                 public void run(){
                     Random r = new Random();
-                    Boolean floor = false;
+                    
                     int CurX = r.nextInt(main.get_framewidth());
                     int CurY = 50;
                     
@@ -44,7 +44,6 @@ public class itemdrop extends Thread {
                     //Item_AL.get(0);
                     pane.add(Item_AL.get(rand_item)); ///Note change 0 to rand_item
                     while(!floor){
-                        
                         Item_AL.get(rand_item).setBounds(CurX,CurY,100,100);
                         if(CurY < main.get_frameheight() - 150){        //Move item down
                             CurY += 10;
@@ -55,7 +54,7 @@ public class itemdrop extends Thread {
                         }
                         pane.repaint();
                         try{
-                            Thread.sleep(40);
+                            Thread.sleep(100);
                         }
                         catch(Exception e) {}
                     }
