@@ -17,9 +17,11 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     private MyImageIcon SpeedIcon;
     private JLabel SpeedAmount;
     private MainApplication program;
+    private ArrayList<ZombieThread> zombielist;
 
-    public Speed_Stopwatch(MainApplication program, JLabel x, Player player) {
+    public Speed_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
         this.program = program;
+        zombielist = zombie_AL;
         SpeedIcon = new MyImageIcon("items/speed_stopwatch.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 9;
         curY = height / 2;

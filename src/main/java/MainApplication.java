@@ -65,7 +65,7 @@ public class MainApplication extends JFrame {
     private Player player;
     private Wordbox wbox;
     private Bomb bomb;
-    // private Potion potion;
+    private Potion potion;
     private Speed_Stopwatch speed_stopwatch;
     private Slow_Stopwatch slow_stopwatch;
 
@@ -609,10 +609,11 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
         bomb = new Bomb(program, drawpane, zombielist);
-        slow_stopwatch = new Slow_Stopwatch(program, drawpane, player);
-        speed_stopwatch = new Speed_Stopwatch(program, drawpane, player);
+        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist);
+        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist);
+        potion = new Potion(program, drawpane, player);
 
-        bomb = new Bomb(program, drawpane,zombielist);
+        bomb = new Bomb(program, drawpane, zombielist);
 
         switch (mode) {
             case "Beginner":
@@ -620,7 +621,6 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-                //bomb = new Bomb(program, drawpane, zombielist);
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
@@ -927,21 +927,21 @@ public class MainApplication extends JFrame {
             item_label.setLayout(null);
             item_label.setHorizontalTextPosition(JLabel.CENTER);
             item_label.setSize(200, 200);
-            item_label.addMouseListener(new MouseAdapter(){
+            item_label.addMouseListener(new MouseAdapter() {
             });
-            switch(i){
+            switch (i) {
                 case 0:
-                    item_label.addMouseListener(new MouseAdapter(){
+                    item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             System.out.println("Hello world1");
                             item_label.setVisible(false);
                             ding.playOnce();
-                            
+
                         }
                     });
                     break;
                 case 1:
-                    item_label.addMouseListener(new MouseAdapter(){
+                    item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             System.out.println("Hello world2");
                             item_label.setVisible(false);
@@ -950,17 +950,17 @@ public class MainApplication extends JFrame {
                     });
                     break;
                 case 2:
-                    item_label.addMouseListener(new MouseAdapter(){
+                    item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             System.out.println("Hello world3");
                             item_label.setVisible(false);
                             ding.playOnce();
-                            
+
                         }
                     });
                     break;
                 case 3:
-                    item_label.addMouseListener(new MouseAdapter(){
+                    item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             System.out.println("Hello world4");
                             item_label.setVisible(false);
@@ -969,7 +969,7 @@ public class MainApplication extends JFrame {
                     });
                     break;
                 case 4:
-                    item_label.addMouseListener(new MouseAdapter(){
+                    item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             System.out.println("Hello world5");
                             item_label.setVisible(false);

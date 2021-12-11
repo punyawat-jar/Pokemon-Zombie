@@ -17,9 +17,11 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
     private MyImageIcon SlowIcon;
     private JLabel SlowAmount;
     private MainApplication program;
+    private ArrayList<ZombieThread> zombielist;
 
-    public Slow_Stopwatch(MainApplication program, JLabel x, Player player) {
+    public Slow_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
         this.program = program;
+        zombielist = zombie_AL;
         SlowIcon = new MyImageIcon("items/slow_stopwatch.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 6;
         curY = height / 2;
