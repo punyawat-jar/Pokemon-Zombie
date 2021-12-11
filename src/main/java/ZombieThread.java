@@ -16,7 +16,7 @@ class ZombieThread extends Thread {
     private int zombWidth, zombHeight;
     private String mode;
     private int i; // Order of each thread Ex, zombie'0 1 2 3 4' << i
-    private boolean pauseGame = false, killed = false;
+    private boolean killed = false;
     private JLabel tempPane;
     private int tempCount;
     private MainApplication program;
@@ -29,11 +29,13 @@ class ZombieThread extends Thread {
     private MySoundEffect readyGoSound;
     private int zombTimeWait;
     private Keyboard_bar keyb;
+    private String name;
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
             MainApplication prog, ArrayList<Wordbox> wb,Keyboard_bar k) {
         super(n);
+        name = n;
         // The temp use for run();
         i = order;
         program = prog;
@@ -358,9 +360,7 @@ class ZombieThread extends Thread {
     
         System.out.println("Thread : " + Thread.currentThread().getName());
     
-        waitGetIn(i, zombTimeWait); // loop if PauseGame == true;
-    
-        System.out.println("pauseGame = " + pauseGame);
+        waitGetIn(i, zombTimeWait);     
     
         program.setPBar();
     
@@ -465,6 +465,30 @@ class ZombieThread extends Thread {
     public int getTimeWait() {
         return zombTimeWait;
     }
+
+    // public int slowDown(){
+    //     zombSpeed += 30;
+    //     System.out.println(name + " is slowing down");
+    //     int curX = zombCurX;
+    //     return curX;
+    // }
+    
+    // public int speedUp(){
+    //     zombSpeed -= 6;
+    //     System.out.println(name + " is Speeding Up!");
+    //     int curX = zombCurX;
+    //     return curX;
+    // }
+
+    // public void slowDownToNormal(){
+    //             zombSpeed += 6;
+    //             System.out.println(name + "is back to normal speed");
+    // }
+
+    // public void speedUpToNormal(){
+    //             zombSpeed -= 30;
+    //             System.out.println(name + "is back to normal speed");
+    // }
 }
 
 // end Class ZombieThread
