@@ -745,7 +745,7 @@ public class MainApplication extends JFrame {
         comeIn = false;
         gameEnd = true;
         count_death = 0;
-        //drawpane.remove(keybar.getTypearea());
+        drawpane.remove(keybar.getTypearea());
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
