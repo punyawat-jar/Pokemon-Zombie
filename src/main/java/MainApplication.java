@@ -722,7 +722,6 @@ public class MainApplication extends JFrame {
         JButton button1 = new JButton();
         setUpButton(button1, menuButton);
         button1.setBounds((frameWidth / 2) - 100, (frameHeight / 2) + 30, 200, 50);
-        System.out.printf("Game Over -Score : %d \n", player.getScore());
 
         // Show Score
         JTextField scoreText = new JTextField("  SCORE : " + player.getScore(), 10);
@@ -744,9 +743,11 @@ public class MainApplication extends JFrame {
         comeIn = false;
         gameEnd = true;
         count_death = 0;
+        //drawpane.remove(keybar.getTypearea());
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
+            System.out.printf("--------------- WIN [score = %2d]---------------\n\n",player.getScore());
             drawpane.add(pokeWinLabel);
             try {
                 Thread.sleep(1500);
@@ -762,6 +763,7 @@ public class MainApplication extends JFrame {
             gameEnd = false;
             gameResult = "";
         } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
+            System.out.printf("--------------- GAME OVER [score = %2d]---------------\n\n",player.getScore());
             drawpane.add(pokeGameOverLabel);
             try {
                 Thread.sleep(1500);
