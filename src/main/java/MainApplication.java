@@ -402,14 +402,12 @@ public class MainApplication extends JFrame {
     public void showThemeMode() {
         int themeWidth = frameWidth / 3, themeHeight = frameHeight / 3;
         JLabel tempLabel = new JLabel();
-        String[] bg = { "bg/beginner_bg.png", "bg/medium_bg.png", "bg/hard_bg.png", "bg/nightmare_bg.png",
-                "bg/boss_bg.png" };
-        for (int i = 0; i < bg.length; i++) {
+        String []bg = {"bg_border/bg_beginner.png","bg_border/bg_medium.png","bg_border/bg_hard.png","bg_border/bg_nightmare.png","bg_border/bg_boss.png"};
+        for(int i=0 ;i<bg.length;i++){
             tempLabel = new JLabel(new MyImageIcon(bg[i]).resize(themeWidth, themeHeight));
-            tempLabel.setBounds(frameWidth - themeWidth - 255, (frameHeight / 2) - (themeHeight / 2) - 30, themeWidth,
-                    themeHeight);
-            themePicLabel_AL.add(tempLabel);
-            themePicLabel_AL.get(i).setVisible(false);
+            tempLabel.setBounds(frameWidth-themeWidth-255, (frameHeight/2)-(themeHeight/2)-45,themeWidth, themeHeight);
+           themePicLabel_AL.add(tempLabel);
+           themePicLabel_AL.get(i).setVisible(false);
             drawpane.add(tempLabel);
         }
     }// end showThemeMode
@@ -418,15 +416,15 @@ public class MainApplication extends JFrame {
         // mode button
         String[] mode = { "--- Please select difficulty ---", "Beginner", "Medium", "Hard", "Nightmare", "Boss" };
         combo = new JComboBox(mode);
-        combo.setBounds(frameWidth / 4, frameHeight / 4, 200, 50);
+        combo.setBounds(frameWidth / 4, (frameHeight / 4)+115, 200, 50);
 
         // Play button
         JButton play = new JButton();
         JButton backbtn = new JButton();
         setUpButton(play, playButton);
         setUpButton(backbtn, backButton);
-        play.setBounds(frameWidth / 4, frameHeight / 2, 200, 50);
-        backbtn.setBounds(frameWidth - 1400, frameHeight / 2, 500, 50);
+        play.setBounds((frameWidth / 2), (frameHeight / 2)+130, 500, 50);
+        backbtn.setBounds((frameWidth / 2)-240, (frameHeight / 2)+130, 200, 50);
 
         showThemeMode();
 
