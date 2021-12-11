@@ -73,6 +73,7 @@ public class MainApplication extends JFrame {
             "item_info/info4.png", "item_info/info5.png" };
     private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
             "Vocab/Boss.txt" };
+    private String[] itemdrop_list = {"item_fall/bomb.png","item_fall/potion.png","item_fall/slow_stopwatch.png","item_fall/speed_stopwatch.png","item_fall/bomb.png",};
 
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
@@ -343,7 +344,7 @@ public class MainApplication extends JFrame {
 
         }
 
-        read_poke_custom();
+        read_picture();
 
         // (custom_poke_AL)
         nextbtn.setBounds(frameWidth / 2, frameHeight - 300 / 1, 200, 50);
@@ -823,7 +824,7 @@ public class MainApplication extends JFrame {
 
     // ---------------------------- Read File -----------------------
 
-    public void read_poke_custom() {
+    public void read_picture() {
         for (int i = 0; i < poke_list.length; i++) {
 
             JLabel label = new JLabel(new ImageIcon(poke_list[i]));
@@ -833,7 +834,6 @@ public class MainApplication extends JFrame {
             label.setHorizontalTextPosition(JLabel.CENTER);
             label.setBounds(frameWidth - 850, 100, 320, 267);
             custom_poke_AL.add(label);
-
             info.setOpaque(false);
             info.setLayout(null);
             info.setHorizontalTextPosition(JLabel.CENTER);
