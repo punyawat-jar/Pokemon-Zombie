@@ -14,13 +14,14 @@ class Vocab {
     private ArrayList<String> vocabList = new ArrayList<String>();
     private Random random = new Random();
 
-    public Vocab() {}
+    public Vocab() {
+    }
 
     public Vocab(String m, ArrayList<String> li) {
         mode = m;
         vocabList = li;
         sizeList = vocabList.size();
-        System.out.println("VOcab complete");
+        System.out.println("Importing Vocab mode " + mode + " complete");
     }
 
     public String getMode() {
@@ -35,7 +36,7 @@ class Vocab {
     public void printFileWord() { // check Reading File
         System.out.printf("====== Mode %-9s reading... =====\n", mode);
         for (int i = 0; i < vocabList.size(); i++) {
-            System.out.printf("\t [%8s %4d] %-15s \n", mode,i, vocabList.get(i));
+            System.out.printf("\t [%8s %4d] %-15s \n", mode, i, vocabList.get(i));
         }
         System.out.println("");
     }
