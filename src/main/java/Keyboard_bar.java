@@ -54,8 +54,9 @@ class Keyboard_bar {
                     // for(int i =0;i<10;i++){
                     // System.out.println("WordAL = " + word_AL.get(i).getWord());
                     // }
+
                     if (typearea.getText().trim()
-                            .equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
+                        .equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
 
                         // score++
                         main.getPlayer().setscore();
@@ -66,10 +67,13 @@ class Keyboard_bar {
                         System.out.println("thread is = " + main.threadlist);
                         System.out.println("mY name is your");
 
-                    } else {
+                    } 
+                    else {
                         wrong.playOnce();
                     }
                     typearea.setText(null);
+
+
 
                 }
                 if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -120,40 +124,44 @@ class Compare_text implements CaretListener {
     }
 
     public void caretUpdate(CaretEvent e) {
-        int flag =0;
-        word = wbox.get(main.threadlist.get(main.getCount_death())).getWord().split("");
-        wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.YELLOW);
-        for (int i = 0; i < word.length; i++) {
-            text = text_type.getText().trim().split("");
-            //System.out.println(word[i]);
-        }
-        for (int i = 0; i < text.length; i++) {
-            try {
-                // System.out.println("Length = " + text.length + " i = " + i);
-
-                if ((text[i].trim().equals(word[i]) || text[0].isEmpty() == true) && flag != 1) {
-                    // System.out.println("WOWhihi");
-                    wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.WHITE);
-                } else if (!(text[i].trim().equals(word[i]))) {
-                    flag =1;
+        try{
+            int flag =0;
+            word = wbox.get(main.threadlist.get(main.getCount_death())).getWord().split("");
+            wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.YELLOW);
+            for (int i = 0; i < word.length; i++) {
+                text = text_type.getText().trim().split("");
+                //System.out.println(word[i]);
+            }
+            for (int i = 0; i < text.length; i++) {
+                try {
+                    // System.out.println("Length = " + text.length + " i = " + i);
+    
+                    if ((text[i].trim().equals(word[i]) || text[0].isEmpty() == true) && flag != 1) {
+                        // System.out.println("WOWhihi");
+                        wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.WHITE);
+                    } else if (!(text[i].trim().equals(word[i]))) {
+                        flag =1;
+                        wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
+                    }
+                    // else{
+                    // wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.GREEN);
+                    // }
+                    // System.out.println(i + "Text = -" + text[i] + "- Word = " + word[i]);
+                }
+                catch(Exception error){
                     wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
                 }
-                // else{
-                // wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.GREEN);
-                // }
-                // System.out.println(i + "Text = -" + text[i] + "- Word = " + word[i]);
+    
             }
-            catch(Exception error){
-                wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
-            }
-
+    
+            // if(text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())
+            // ){
+            // System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
+            // }
+    
+            // out.setText( in.getText() );
         }
+        catch (Exception error) {}
 
-        // if(text_type.getText().contains(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim())
-        // ){
-        // System.out.println(wbox.get(main.threadlist.get(main.getCount_death())).getWord().trim());
-        // }
-
-        // out.setText( in.getText() );
     }
 }

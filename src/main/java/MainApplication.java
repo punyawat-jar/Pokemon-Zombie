@@ -59,6 +59,7 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
     private int selected_rbox = 0;
     private JButton end_btn;
+    private itemdrop itemDrop;
     private boolean ismove = true;
     private Player player;
     private Wordbox wbox;
@@ -269,14 +270,23 @@ public class MainApplication extends JFrame {
         validate();
     }
 
-    public void credit() {
+    public void credit(){
+        MyImageIcon creditImg = new MyImageIcon("bg/Credit.gif");
+        MyImageIcon idImg = new MyImageIcon("credit/id.png").resize(403,55);
+        JLabel creditLabel  = new JLabel(creditImg);
+        JLabel idLabel = new JLabel(idImg);
+        idLabel.setBounds(frameWidth/2+40,600, 403, 55);
+        creditLabel.setBounds(280, 120, 850, 480);
+
         JButton backbtn = new JButton();
-        backbtn.setBounds(frameWidth / 4, frameHeight - 300 / 1, 200, 50);
+        backbtn.setBounds(frameWidth / 4-80, frameHeight - 160 / 1, 200, 50);
         backbtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
                 backbtn.setVisible(false);
+                idLabel.setVisible(false);
+                creditLabel.setVisible(false);
                 repaint();
                 mainmanu();
 
@@ -284,6 +294,8 @@ public class MainApplication extends JFrame {
         });
         setUpButton(backbtn, backButton);
         drawpane.add(backbtn);
+        drawpane.add(idLabel);
+        drawpane.add(creditLabel);
         validate();
         repaint();
     }
@@ -294,7 +306,7 @@ public class MainApplication extends JFrame {
         JLabel rlabel = new JLabel();
 
         rlabel.setLayout(new FlowLayout());
-        rlabel.setBounds(frameWidth - 900, frameHeight / 2, 500, 35);
+        rlabel.setBounds(frameWidth - 950, frameHeight / 2, 500, 35);
         rlabel.setOpaque(true);
         rlabel.setBackground(Color.lightGray);
 
@@ -444,7 +456,7 @@ public class MainApplication extends JFrame {
 
                         validate();
                         repaint();
-                        Thread.sleep(15);
+                        Thread.sleep(25);
                         drawpane.remove(tempLabel);
                     } catch (Exception e) {
                         System.out.println(e);
@@ -468,7 +480,9 @@ public class MainApplication extends JFrame {
         // drawpane.validate();
         // readyGoSound.playOnce();
         // }
-
+        itemDrop = new itemdrop(drawpane,this);
+        itemDrop.start();
+        
         wbox_AL.clear();
 
         PBar.setValue(0);
@@ -496,6 +510,7 @@ public class MainApplication extends JFrame {
                     for (int i = 0; i < zombielist.size(); i++) {
                         zombielist.get(i).stop();
                     }
+                    itemDrop.setEndgame(true);
                     beginnerSong.stop();
                     mediumSong.stop();
                     hardSong.stop();
@@ -516,13 +531,14 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
 
+        bomb = new Bomb(program, drawpane);
+
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-                bomb = new Bomb(program, drawpane);
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
@@ -568,6 +584,7 @@ public class MainApplication extends JFrame {
                 break;
         }
 
+        
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
