@@ -22,7 +22,7 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     public Potion(MainApplication program, JLabel x, Player player) {
         this.program = program;
         this.player = player;
-        PotionIcon = new MyImageIcon("potion/bomb.png").resize(width, height);
+        PotionIcon = new MyImageIcon("items/bomb.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 12;
         curY = height / 2;
         setBounds(curX, curY, width, height);
