@@ -17,9 +17,11 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     private MyImageIcon bombIcon;
     private JLabel BombAmount;
     private MainApplication program;
+    private boolean useornot;
     private ArrayList<ZombieThread> zombielist;
 
-    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
+    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, int a) {
+        amount = a;
         this.program = program;
         zombielist = zombie_AL;
         bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);

@@ -50,6 +50,7 @@ public class MainApplication extends JFrame {
     ArrayList<JLabel> custom_info_AL = new ArrayList<JLabel>();
     ArrayList<JLabel> itemdrop_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
+    int itemAmount[] = { 0, 0, 0, 0 }; // potion speed slow bomb
     ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
     ArrayList<JLabel> themePicLabel_AL = new ArrayList<JLabel>();
 
@@ -363,6 +364,9 @@ public class MainApplication extends JFrame {
                 drawpane.remove(custom_poke_AL.get(count_pic));
                 drawpane.remove(custom_info_AL.get(count_pic));
                 rlabel.setVisible(false);
+                for (int i = 0; i < itemAmount.length; i++) {
+                    itemAmount[i] = 0;
+                }
                 repaint();
                 mainmanu();
 
@@ -376,6 +380,14 @@ public class MainApplication extends JFrame {
                 drawpane.remove(custom_poke_AL.get(count_pic));
                 drawpane.remove(custom_info_AL.get(count_pic));
                 rlabel.setVisible(false);
+                if (count_pic != 0) {
+                    itemAmount[count_pic - 1] += 2;
+                }
+                for (int i = 0; i < itemAmount.length; i++) {
+                    System.out.printf("%d, ", itemAmount[i]);
+                }
+                System.out.println();
+                System.out.println();
                 repaint();
                 mode_panel();
             }
@@ -402,12 +414,14 @@ public class MainApplication extends JFrame {
     public void showThemeMode() {
         int themeWidth = frameWidth / 3, themeHeight = frameHeight / 3;
         JLabel tempLabel = new JLabel();
-        String []bg = {"bg_border/bg_beginner.png","bg_border/bg_medium.png","bg_border/bg_hard.png","bg_border/bg_nightmare.png","bg_border/bg_boss.png"};
-        for(int i=0 ;i<bg.length;i++){
+        String[] bg = { "bg_border/bg_beginner.png", "bg_border/bg_medium.png", "bg_border/bg_hard.png",
+                "bg_border/bg_nightmare.png", "bg_border/bg_boss.png" };
+        for (int i = 0; i < bg.length; i++) {
             tempLabel = new JLabel(new MyImageIcon(bg[i]).resize(themeWidth, themeHeight));
-            tempLabel.setBounds(frameWidth-themeWidth-255, (frameHeight/2)-(themeHeight/2)-45,themeWidth, themeHeight);
-           themePicLabel_AL.add(tempLabel);
-           themePicLabel_AL.get(i).setVisible(false);
+            tempLabel.setBounds(frameWidth - themeWidth - 255, (frameHeight / 2) - (themeHeight / 2) - 45, themeWidth,
+                    themeHeight);
+            themePicLabel_AL.add(tempLabel);
+            themePicLabel_AL.get(i).setVisible(false);
             drawpane.add(tempLabel);
         }
     }// end showThemeMode
@@ -416,15 +430,15 @@ public class MainApplication extends JFrame {
         // mode button
         String[] mode = { "--- Please select difficulty ---", "Beginner", "Medium", "Hard", "Nightmare", "Boss" };
         combo = new JComboBox(mode);
-        combo.setBounds(frameWidth / 4, (frameHeight / 4)+115, 200, 50);
+        combo.setBounds(frameWidth / 4, (frameHeight / 4) + 115, 200, 50);
 
         // Play button
         JButton play = new JButton();
         JButton backbtn = new JButton();
         setUpButton(play, playButton);
         setUpButton(backbtn, backButton);
-        play.setBounds((frameWidth / 2), (frameHeight / 2)+130, 500, 50);
-        backbtn.setBounds((frameWidth / 2)-240, (frameHeight / 2)+130, 200, 50);
+        play.setBounds((frameWidth / 2), (frameHeight / 2) + 130, 500, 50);
+        backbtn.setBounds((frameWidth / 2) - 240, (frameHeight / 2) + 130, 200, 50);
 
         showThemeMode();
 
@@ -504,6 +518,9 @@ public class MainApplication extends JFrame {
                 combo.setVisible(false);
                 play.setVisible(false);
                 backbtn.setVisible(false);
+                for (int i = 0; i < itemAmount.length; i++) {
+                    itemAmount[i] = 0;
+                }
                 for (int i = 0; i < 5; i++) {
                     themePicLabel_AL.get(i).setVisible(false);
                     drawpane.remove(themePicLabel_AL.get(i));
@@ -572,8 +589,6 @@ public class MainApplication extends JFrame {
         // drawpane.validate();
         // readyGoSound.playOnce();
         // }
-        itemDrop = new itemdrop(drawpane, this, itemdrop_AL);
-        itemDrop.start();
 
         wbox_AL.clear();
 
@@ -622,9 +637,9 @@ public class MainApplication extends JFrame {
             }
         });
         drawpane.add(end_btn);
-        bomb = new Bomb(program, drawpane, zombielist);
-        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist);
-        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist);
+        bomb = new Bomb(program, drawpane, zombielist, itemAmount[3]);
+        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist, itemAmount[2]);
+        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist, itemAmount[1]);
 
         switch (mode) {
             case "Beginner":
@@ -675,7 +690,9 @@ public class MainApplication extends JFrame {
 
                 break;
         }
-        potion = new Potion(program, drawpane, player);
+        potion = new Potion(program, drawpane, player, itemAmount[0]);
+        itemDrop = new itemdrop(drawpane, this, itemdrop_AL);
+        itemDrop.start();
 
         // player = new Player();
         // player.draw_player(drawpane);
@@ -1099,6 +1116,48 @@ public class MainApplication extends JFrame {
         }
 
     }
+
+    public void fastSpeed() {
+        Thread time = new Thread() {
+            public void run() {
+                for (int i = 0; i < zombielist.size(); i++) {
+                    zombielist.get(i).fastZomb();
+                }
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        };
+        time.start();
+    }
+
+    public void slowSpeed() {
+        Thread time = new Thread() {
+            public void run() {
+                for (int i = 0; i < zombielist.size(); i++) {
+                    zombielist.get(i).slowZomb();
+                }
+                try {
+                    Thread.sleep(5000);
+
+                } catch (InterruptedException e) {
+                    // TODO: handle exception
+                    e.printStackTrace();
+                }
+            }
+        };
+    }
+
+    public void normalSpeed(ArrayList<Integer> x) {
+        for (int i = 0; i < x.size(); i++) {
+            zombielist.get(i).setZombSpeed(x.get(i));
+        }
+
+    }
+
 }// end Class MainApplication
 
 // class Vocab {

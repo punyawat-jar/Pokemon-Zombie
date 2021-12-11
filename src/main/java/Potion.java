@@ -20,7 +20,8 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     private Player player;
     private JLabel pane;
 
-    public Potion(MainApplication program, JLabel x, Player p) {
+    public Potion(MainApplication program, JLabel x, Player p, int a) {
+        amount = a;
         this.program = program;
         player = p;
         pane = x;

@@ -14,12 +14,17 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     private int curX, curY;
     private int width = 50;
     private int height = 50;
+    private ArrayList<Integer> normalZombSpd;
     private MyImageIcon SpeedIcon;
     private JLabel SpeedAmount;
     private MainApplication program;
     private ArrayList<ZombieThread> zombielist;
 
-    public Speed_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
+    public Speed_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, int a) {
+        for (int i = 0; i < zombie_AL.size(); i++) {
+            normalZombSpd.add(zombie_AL.get(i).get_zombSpd());
+        }
+        amount = a;
         this.program = program;
         zombielist = zombie_AL;
         SpeedIcon = new MyImageIcon("items/speed_stopwatch.png").resize(width, height);
@@ -37,7 +42,8 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
-        //program.fastSpeed();
+        program.fastSpeed();
+        program.normalSpeed(normalZombSpd);
         amount--;
     }
 
@@ -56,6 +62,7 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
