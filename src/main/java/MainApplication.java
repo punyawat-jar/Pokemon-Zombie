@@ -59,6 +59,7 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
     private int selected_rbox = 0;
     private JButton end_btn;
+    private itemdrop itemDrop;
     private boolean ismove = true;
     private Player player;
     private Wordbox wbox;
@@ -455,7 +456,7 @@ public class MainApplication extends JFrame {
 
                         validate();
                         repaint();
-                        Thread.sleep(15);
+                        Thread.sleep(25);
                         drawpane.remove(tempLabel);
                     } catch (Exception e) {
                         System.out.println(e);
@@ -479,7 +480,9 @@ public class MainApplication extends JFrame {
         // drawpane.validate();
         // readyGoSound.playOnce();
         // }
-
+        itemDrop = new itemdrop(drawpane,this);
+        itemDrop.start();
+        
         wbox_AL.clear();
 
         PBar.setValue(0);
@@ -507,6 +510,7 @@ public class MainApplication extends JFrame {
                     for (int i = 0; i < zombielist.size(); i++) {
                         zombielist.get(i).stop();
                     }
+                    itemDrop.setEndgame(true);
                     beginnerSong.stop();
                     mediumSong.stop();
                     hardSong.stop();
@@ -527,13 +531,14 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
 
+        bomb = new Bomb(program, drawpane);
+
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-                bomb = new Bomb(program, drawpane);
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
@@ -579,6 +584,7 @@ public class MainApplication extends JFrame {
                 break;
         }
 
+        
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
@@ -716,7 +722,6 @@ public class MainApplication extends JFrame {
         JButton button1 = new JButton();
         setUpButton(button1, menuButton);
         button1.setBounds((frameWidth / 2) - 100, (frameHeight / 2) + 30, 200, 50);
-        System.out.printf("Game Over -Score : %d \n", player.getScore());
 
         // Show Score
         JTextField scoreText = new JTextField("  SCORE : " + player.getScore(), 10);
@@ -738,9 +743,11 @@ public class MainApplication extends JFrame {
         comeIn = false;
         gameEnd = true;
         count_death = 0;
+        //drawpane.remove(keybar.getTypearea());
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
+            System.out.printf("--------------- WIN [score = %2d]---------------\n\n",player.getScore());
             drawpane.add(pokeWinLabel);
             try {
                 Thread.sleep(1500);
@@ -756,6 +763,7 @@ public class MainApplication extends JFrame {
             gameEnd = false;
             gameResult = "";
         } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
+            System.out.printf("--------------- GAME OVER [score = %2d]---------------\n\n",player.getScore());
             drawpane.add(pokeGameOverLabel);
             try {
                 Thread.sleep(1500);

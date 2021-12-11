@@ -12,8 +12,8 @@ import javax.swing.event.MouseInputListener;
 public class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
     private int amount;
     private int curX, curY;
-    private int width = 50;
-    private int height = 50;
+    private int width = 100;
+    private int height = 100;
     private JLabel bombLabel;
     private ImageIcon bombIcon;
     private MainApplication program;
