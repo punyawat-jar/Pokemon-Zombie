@@ -23,16 +23,22 @@ class Keyboard_bar {
         word_AL = wAL;
         main = m;
         typearea = new JTextArea();
-        typearea.setBounds(50, 100, 500, 30);
-        typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
+        typearea.setBounds(475, 600, 505, 40);
+        typearea.setBackground(new Color(255, 220, 89, 240));
+        typearea.setFont(new Font("SanSerif", Font.BOLD | Font.ITALIC, 25));
 
-        correct = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
+        typearea.setForeground(new Color(28, 7, 87));
+        typearea.setBorder(
+                new BevelBorder(BevelBorder.RAISED, new Color(255, 158, 89, 255), new Color(255, 158, 89, 255)));
+
+        // correct = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
+        correct = new MySoundEffect("sound_effect/correct_sound.wav");
         wrong = new MySoundEffect("sound_effect/wrong_sound.wav");
         // typearea.grabFocus();
-        try{
+        try {
             compare = new Compare_text(typearea, word_AL, main);
+        } catch (Exception e) {
         }
-        catch (Exception e) {}
 
         typearea.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
@@ -93,9 +99,6 @@ class Keyboard_bar {
     public void setposition(int x, int y) {
         typearea.setBounds(x, y, width, height);
     }
-    public void clearTypearea(){
-        typearea.setText(null);
-    }
 }
 
 class Compare_text implements CaretListener {
@@ -109,35 +112,32 @@ class Compare_text implements CaretListener {
         text_type = T;
         wbox = W;
         main = m;
-	    text_type.addCaretListener(this);
-        
+        text_type.addCaretListener(this);
+
     }
 
     public void caretUpdate(CaretEvent e) {
-        int flag =0;
         word = wbox.get(main.threadlist.get(main.getCount_death())).getWord().split("");
         wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.YELLOW);
         for (int i = 0; i < word.length; i++) {
             text = text_type.getText().trim().split("");
-            //System.out.println(word[i]);
+            // System.out.println(word[i]);
         }
         for (int i = 0; i < text.length; i++) {
             try {
                 // System.out.println("Length = " + text.length + " i = " + i);
 
-                if ((text[i].trim().equals(word[i]) || text[0].isEmpty() == true) && flag != 1) {
+                if (text[i].trim().equals(word[i]) || text[0].isEmpty() == true) {
                     // System.out.println("WOWhihi");
                     wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.WHITE);
                 } else if (!(text[i].trim().equals(word[i]))) {
-                    flag =1;
                     wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
                 }
                 // else{
                 // wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.GREEN);
                 // }
                 // System.out.println(i + "Text = -" + text[i] + "- Word = " + word[i]);
-            }
-            catch(Exception error){
+            } catch (Exception error) {
                 wbox.get(main.threadlist.get(main.getCount_death())).setfontcolor(Color.RED);
             }
 
