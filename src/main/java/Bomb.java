@@ -50,14 +50,16 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
         for (int i = 0; i < 2; i++) {
-            if (zombielist.get(i).getCurX() < program.getWidth()) {// true
+            if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() < program.getWidth()) {// true
                 program.kill_zombie(program.threadlist.get(program.getCount_death()));
             }
         }
+
         curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
         setLocation(curX, curY);
 
+        amount--;
     }
 
     @Override
