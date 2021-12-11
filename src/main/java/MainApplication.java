@@ -630,9 +630,9 @@ public class MainApplication extends JFrame {
 
     public void kill_zombie(int i) {
         // drawpane.remove(mobLabel.get(i));
-        for (int j = 0; j < zombielist.size(); j++) {
+        // for (int j = 0; j < zombielist.size(); j++) {
             zombielist.get(i).kill_monster(i);
-        }
+        // }
         // wbox_AL.get(i).setvisible(false);
         // drawpane.remove(wbox_AL.get(i));
         // drawpane.repaint();

@@ -63,6 +63,9 @@ class Keyboard_bar {
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
 
                         correct.playOnce();
+                        // for(int i =0;i<main.threadlist.size();i++){
+                        //     System.out.println(main.threadlist.get(i) + " = " + main.zombielist.get(i).getState());
+                        // }
                         System.out.println("count is = " + main.getCount_death());
                         System.out.println("thread is = " + main.threadlist);
                         System.out.println("mY name is your");
