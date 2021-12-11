@@ -59,6 +59,7 @@ public class MainApplication extends JFrame {
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
     private int selected_rbox = 0;
     private JButton end_btn;
+    private itemdrop itemDrop;
     private boolean ismove = true;
     private Player player;
     private Wordbox wbox;
@@ -444,7 +445,7 @@ public class MainApplication extends JFrame {
 
                         validate();
                         repaint();
-                        Thread.sleep(15);
+                        Thread.sleep(25);
                         drawpane.remove(tempLabel);
                     } catch (Exception e) {
                         System.out.println(e);
@@ -468,7 +469,9 @@ public class MainApplication extends JFrame {
         // drawpane.validate();
         // readyGoSound.playOnce();
         // }
-
+        itemDrop = new itemdrop(drawpane,this);
+        itemDrop.start();
+        
         wbox_AL.clear();
 
         PBar.setValue(0);
@@ -496,6 +499,7 @@ public class MainApplication extends JFrame {
                     for (int i = 0; i < zombielist.size(); i++) {
                         zombielist.get(i).stop();
                     }
+                    itemDrop.setEndgame(true);
                     beginnerSong.stop();
                     mediumSong.stop();
                     hardSong.stop();
@@ -516,13 +520,14 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
 
+        bomb = new Bomb(program, drawpane);
+
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-                bomb = new Bomb(program, drawpane);
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
@@ -568,6 +573,7 @@ public class MainApplication extends JFrame {
                 break;
         }
 
+        
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
