@@ -366,7 +366,25 @@ class ZombieThread extends Thread {
 
         move(tempPlayer, i);
 
-        System.out.printf("before --> %d \n", program.getCount_death());
+        //System.out.printf("before --> %d \n", program.getCount_death());
+        if (zombLabel.getBounds().intersects(tempPlayer.getLabel().getBounds())) {
+            hurtSound.playOnce();
+            tempPlayer.hitplayer(tempPane);
+            tempPane.remove(zombLabel);
+            tempPane.repaint();
+            keyb.clearTypearea();
+            kill_monster(i);
+            //System.out.printf("after1 --> %d \n", program.getCount_death());
+            program.setCount_death(); // death++
+            
+            // if (program.getCount_death() >= 10) { // Win
+            // tempPane.remove(zombLabel);
+            // tempPane.repaint();
+            // program.setGameResult("Win");
+            // program.addCountStageEnd();
+            // }
+
+        }
 
         if (tempPlayer.getHP() == 0) {
             kill_monster(i);
@@ -384,31 +402,15 @@ class ZombieThread extends Thread {
             program.setGameResult("Win");
             program.addCountStageEnd();
         }
-
+        System.out.printf("Count  -----------------------> %d \n", program.getCount_death());
+        
         if ((program.getGameResult() == "GameOver" || program.getGameResult() == "Win")
                 && program.getCountStageEnd() == 1) {
             // program.setCountStageEnd(0);
             program.stageEnd(mode);
         }
         // --------- Remove Zombie when Hit Pikachu & decrease heart
-        if (zombLabel.getBounds().intersects(tempPlayer.getLabel().getBounds())) {
-            hurtSound.playOnce();
-            tempPlayer.hitplayer(tempPane);
-            tempPane.remove(zombLabel);
-            tempPane.repaint();
-            keyb.clearTypearea();
-            kill_monster(i);
 
-            program.setCount_death(); // death++
-            // System.out.printf("after --> %d \n", program.getCount_death());
-            // if (program.getCount_death() == 10) { // Win
-            // tempPane.remove(zombLabel);
-            // tempPane.repaint();
-            // program.setGameResult("Win");
-            // program.addCountStageEnd();
-            // }
-
-        }
 
         // -------------------------
 

@@ -78,6 +78,7 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     @Override
     public void mouseDragged(MouseEvent e) {
         // TODO Auto-generated method stub
+        System.out.println("Heal======================================");
         curX = curX + e.getX();
         curY = curY + e.getY();
         setLocation(curX, curY);

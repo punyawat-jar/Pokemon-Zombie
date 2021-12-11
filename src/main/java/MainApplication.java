@@ -876,6 +876,7 @@ public class MainApplication extends JFrame {
         hardSong.stop();
         nightmareSong.stop();
         bossSong.stop();
+        itemDrop.setEndgame(true);
         comeIn = false;
         gameEnd = true;
         count_death = 0;
