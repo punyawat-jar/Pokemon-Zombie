@@ -46,7 +46,6 @@ class Player {
         }
         HP = HP_AL.size() - 1;
         x.add(HP_AL.get(5));
-
         Score = 0;
     }
 
@@ -72,7 +71,7 @@ class Player {
     }
 
     public void heal() {
-
+        HP += 1;
     }
 
     public JLabel getLabel() {

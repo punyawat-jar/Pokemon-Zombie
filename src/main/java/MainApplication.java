@@ -541,6 +541,10 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
+<<<<<<< Updated upstream
+=======
+                bomb = new Bomb(program, drawpane, zombielist);
+>>>>>>> Stashed changes
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);

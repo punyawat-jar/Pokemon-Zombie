@@ -10,24 +10,27 @@ import javax.swing.border.*;
 import javax.swing.event.MouseInputListener;
 
 public class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
-    private int amount;
+    private int amount = 0;
     private int curX, curY;
-    private int width = 100;
-    private int height = 100;
-    private JLabel bombLabel;
+    private int width = 50;
+    private int height = 50;
     private ImageIcon bombIcon;
     private MainApplication program;
+    private ArrayList<ZombieThread> zombielist;
 
-    public Bomb(MainApplication program, JLabel x) {
+    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
         this.program = program;
+        zombielist = zombie_AL;
         bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);
-        bombLabel = new JLabel(bombIcon);
+        // bombLabel = new JLabel(bombIcon);
         curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
-        bombLabel.setBounds(curX, curY, width, height);
+        // bombLabel.setBounds(curX, curY, width, height);
+        setBounds(curX, curY, width, height);
+        setIcon(bombIcon);
         addMouseListener(this);
         addMouseMotionListener(this);
-        x.add(bombLabel);
+        x.add(this);
         x.validate();
     }
 
@@ -46,9 +49,13 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
+        for (int i = 0; i < 2; i++) {
+            if (zombielist.get(i).getCurX() < program.getWidth()) {// true
+                program.kill_zombie(program.threadlist.get(program.getCount_death()));
+            }
+        }
         curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
-
         setLocation(curX, curY);
 
     }
