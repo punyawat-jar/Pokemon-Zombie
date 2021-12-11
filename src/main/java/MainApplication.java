@@ -74,7 +74,8 @@ public class MainApplication extends JFrame {
             "item_info/info4.png", "item_info/info5.png" };
     private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
             "Vocab/Boss.txt" };
-    private String[] itemdrop_list = {"item_fall/bomb.png","item_fall/potion.png","item_fall/slow_stopwatch.png","item_fall/speed_stopwatch.png","item_fall/bomb.png",};
+    private String[] itemdrop_list = { "item_fall/bomb.png", "item_fall/potion.png", "item_fall/slow_stopwatch.png",
+            "item_fall/speed_stopwatch.png", "item_fall/bomb.png", };
 
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
@@ -272,16 +273,16 @@ public class MainApplication extends JFrame {
         validate();
     }
 
-    public void credit(){
+    public void credit() {
         MyImageIcon creditImg = new MyImageIcon("bg/Credit.gif");
-        MyImageIcon idImg = new MyImageIcon("credit/id.png").resize(403,55);
-        JLabel creditLabel  = new JLabel(creditImg);
+        MyImageIcon idImg = new MyImageIcon("credit/id.png").resize(403, 55);
+        JLabel creditLabel = new JLabel(creditImg);
         JLabel idLabel = new JLabel(idImg);
-        idLabel.setBounds(frameWidth/2+40,600, 403, 55);
+        idLabel.setBounds(frameWidth / 2 + 40, 600, 403, 55);
         creditLabel.setBounds(280, 120, 850, 480);
 
         JButton backbtn = new JButton();
-        backbtn.setBounds(frameWidth / 4-80, frameHeight - 160 / 1, 200, 50);
+        backbtn.setBounds(frameWidth / 4 - 80, frameHeight - 160 / 1, 200, 50);
         backbtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -482,9 +483,9 @@ public class MainApplication extends JFrame {
         // drawpane.validate();
         // readyGoSound.playOnce();
         // }
-        itemDrop = new itemdrop(drawpane,this,itemdrop_AL);
+        itemDrop = new itemdrop(drawpane, this, itemdrop_AL);
         itemDrop.start();
-        
+
         wbox_AL.clear();
 
         PBar.setValue(0);
@@ -533,18 +534,12 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
 
-        bomb = new Bomb(program, drawpane);
-
         switch (mode) {
             case "Beginner":
                 drawpane.setIcon(in_gamebg1Img);
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-<<<<<<< Updated upstream
-=======
-                bomb = new Bomb(program, drawpane, zombielist);
->>>>>>> Stashed changes
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
@@ -590,7 +585,6 @@ public class MainApplication extends JFrame {
                 break;
         }
 
-        
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
@@ -635,7 +629,7 @@ public class MainApplication extends JFrame {
     public void kill_zombie(int i) {
         // drawpane.remove(mobLabel.get(i));
         // for (int j = 0; j < zombielist.size(); j++) {
-            zombielist.get(i).kill_monster(i);
+        zombielist.get(i).kill_monster(i);
         // }
         // wbox_AL.get(i).setvisible(false);
         // drawpane.remove(wbox_AL.get(i));
@@ -753,7 +747,7 @@ public class MainApplication extends JFrame {
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
-            System.out.printf("--------------- WIN [score = %2d]---------------\n\n",player.getScore());
+            System.out.printf("--------------- WIN [score = %2d]---------------\n\n", player.getScore());
             drawpane.add(pokeWinLabel);
             try {
                 Thread.sleep(1500);
@@ -769,7 +763,7 @@ public class MainApplication extends JFrame {
             gameEnd = false;
             gameResult = "";
         } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
-            System.out.printf("--------------- GAME OVER [score = %2d]---------------\n\n",player.getScore());
+            System.out.printf("--------------- GAME OVER [score = %2d]---------------\n\n", player.getScore());
             drawpane.add(pokeGameOverLabel);
             try {
                 Thread.sleep(1500);
@@ -846,8 +840,8 @@ public class MainApplication extends JFrame {
             // poke_list_AL.add(poke_list[i]);
         }
 
-        for(int i=0;i<itemdrop_list.length;i++){
-            JLabel item_label = new JLabel(new MyImageIcon(itemdrop_list[i]).resize(100,100));
+        for (int i = 0; i < itemdrop_list.length; i++) {
+            JLabel item_label = new JLabel(new MyImageIcon(itemdrop_list[i]).resize(100, 100));
             item_label.setOpaque(false);
             item_label.setLayout(null);
             item_label.setHorizontalTextPosition(JLabel.CENTER);
