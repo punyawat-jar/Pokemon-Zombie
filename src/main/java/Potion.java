@@ -1,13 +1,36 @@
+import java.awt.*;
 import java.awt.event.*;
-import java.awt.event.MouseEvent;
-import javax.swing.JButton;
+import javax.swing.*;
+import javax.net.ssl.CertPathTrustManagerParameters;
+import javax.sound.sampled.*; // for sounds
+import java.util.*;
+import java.util.Random;
+import java.io.*;
+import javax.swing.border.*;
 import javax.swing.event.MouseInputListener;
 
 public class Potion extends JButton implements MouseInputListener, MouseMotionListener {
+    private int amount = 0;
+    private int curX, curY;
     private int width = 50;
     private int height = 50;
+    private MyImageIcon PotionIcon;
+    private JLabel PotionAmount;
+    private MainApplication program;
+    private Player player;
 
-    public Potion() {
+    public Potion(MainApplication program, JLabel x, Player player) {
+        this.program = program;
+        this.player = player;
+        PotionIcon = new MyImageIcon("potion/bomb.png").resize(width, height);
+        curX = program.getWidth() - (width / 2) * 12;
+        curY = height / 2;
+        setBounds(curX, curY, width, height);
+        setIcon(PotionIcon);
+        addMouseListener(this);
+        addMouseMotionListener(this);
+        x.add(this);
+        x.validate();
 
     }
 
