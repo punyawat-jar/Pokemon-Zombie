@@ -9,34 +9,34 @@ import java.io.*;
 import javax.swing.border.*;
 import javax.swing.event.MouseInputListener;
 
-public class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
-    private int amount = 0;
+public class Slow_Stopwatch extends JButton implements MouseInputListener, MouseMotionListener {
+    private int amount;
     private int curX, curY;
     private int width = 50;
     private int height = 50;
-    private MyImageIcon bombIcon;
-    private JLabel BombAmount;
+    private MyImageIcon SlowIcon;
+    private JLabel SlowAmount;
     private MainApplication program;
-    private ArrayList<ZombieThread> zombielist;
 
-    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
+    public Slow_Stopwatch(MainApplication program, JLabel x, Player player) {
         this.program = program;
-        zombielist = zombie_AL;
-        bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);
-        curX = program.getWidth() - (width / 2) * 3;
+        SlowIcon = new MyImageIcon("items/slow_stopwatch.png").resize(width, height);
+        curX = program.getWidth() - (width / 2) * 6;
         curY = height / 2;
         setBounds(curX, curY, width, height);
-        setIcon(bombIcon);
+        setIcon(SlowIcon);
         addMouseListener(this);
         addMouseMotionListener(this);
         x.add(this);
         x.validate();
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
 
+        amount--;
     }
 
     @Override
@@ -48,21 +48,13 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
-        for (int i = 0; i < 2; i++) {
-            if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program.getWidth()) {// true
-                program.kill_zombie(program.threadlist.get(program.getCount_death()));
-            }
-        }
-        curX = program.getWidth() - (width / 2) * 3;
-        curY = height / 2;
-        setLocation(curX, curY);
-        amount--;
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
-        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
     }
 
     @Override
@@ -74,9 +66,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     @Override
     public void mouseDragged(MouseEvent e) {
         // TODO Auto-generated method stub
-        curX = curX + e.getX();
-        curY = curY + e.getY();
-        setLocation(curX, curY);
+
     }
 
     @Override
