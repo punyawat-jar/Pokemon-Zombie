@@ -24,7 +24,7 @@ public class itemdrop extends Thread {
     public void run(){
         while(!end){
             int rand_time = (int) Math.floor(Math.random()*(15000-10000+1)+10000);
-            Item_AL.add(new JLabel(new MyImageIcon("items/potion.png").resize(100,100)));
+            Item_AL.add(new JLabel(new MyImageIcon("item_fall/potion.png").resize(100,100)));
             
             Item_AL.get(0).setVisible(true);
             try{
