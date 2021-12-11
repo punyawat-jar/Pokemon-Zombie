@@ -520,13 +520,12 @@ public class MainApplication extends JFrame {
         drawpane.add(backbtn);
     }// end mode Panel
 
-    public void set_example_pane(int i){
+    public void set_example_pane(int i) {
         themePicLabel_AL.get(i).setVisible(true);
-        for(int j=0;j<4;j++){
-            if(j == i){
+        for (int j = 0; j < 4; j++) {
+            if (j == i) {
                 continue;
-            }
-            else{
+            } else {
                 themePicLabel_AL.get(j).setVisible(false);
             }
         }
@@ -628,9 +627,6 @@ public class MainApplication extends JFrame {
         bomb = new Bomb(program, drawpane, zombielist);
         slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist);
         speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist);
-        potion = new Potion(program, drawpane, player);
-
-        bomb = new Bomb(program, drawpane, zombielist);
 
         switch (mode) {
             case "Beginner":
@@ -681,6 +677,7 @@ public class MainApplication extends JFrame {
 
                 break;
         }
+        potion = new Potion(program, drawpane, player);
 
         // player = new Player();
         // player.draw_player(drawpane);
@@ -735,50 +732,49 @@ public class MainApplication extends JFrame {
     }
 
     // class Reminder{
-    //     Timer timer;
-    //     String mode;
-        
-    //     public Reminder(int seconds, String m){
-    //     mode = m;
-    //     timer = new Timer();
-    //     timer.schedule(new RemindTask(), seconds*1000);
-    //     }
-	    
+    // Timer timer;
+    // String mode;
+
+    // public Reminder(int seconds, String m){
+    // mode = m;
+    // timer = new Timer();
+    // timer.schedule(new RemindTask(), seconds*1000);
+    // }
+
     // class RemindTask extends TimerTask {
-    //     public void run() {
-    //         System.out.println("Time's up!");
-    //         timer.cancel(); //Terminate the timer thread
-    //         for(int j=0; j<zombielist.size(); j++)
-    //             {
-    //                 if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    //                 if(mode == "slow") zombielist.get(j).speedUpToNormal();
-    //                 else if(mode =="speed") zombielist.get(j).slowDownToNormal();
-    //                 else System.out.println("Can't find mode in Reminder");
-                
-    //                 }
-    //             }
-    //     }
+    // public void run() {
+    // System.out.println("Time's up!");
+    // timer.cancel(); //Terminate the timer thread
+    // for(int j=0; j<zombielist.size(); j++)
+    // {
+    // if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
+    // if(mode == "slow") zombielist.get(j).speedUpToNormal();
+    // else if(mode =="speed") zombielist.get(j).slowDownToNormal();
+    // else System.out.println("Can't find mode in Reminder");
+
+    // }
+    // }
+    // }
     // }
     // }//end Class Reminder
 
     // public void slowSpeed(){
-    //     for(int i=0; i<zombielist.size(); i++)
-    //     {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    //         zombielist.get(i).slowDown();
-    //     }
-    //     }
-    //     new Reminder(5,"slow");
+    // for(int i=0; i<zombielist.size(); i++)
+    // {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
+    // zombielist.get(i).slowDown();
+    // }
+    // }
+    // new Reminder(5,"slow");
     // }
 
     // public void fastSpeed(){
-    //     for(int i=0; i<zombielist.size(); i++)
-    //     {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    //         zombielist.get(i).speedUp();
-    //     }
-    //     }
-    //     new Reminder(6,"speed");
+    // for(int i=0; i<zombielist.size(); i++)
+    // {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
+    // zombielist.get(i).speedUp();
     // }
-
+    // }
+    // new Reminder(6,"speed");
+    // }
 
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {

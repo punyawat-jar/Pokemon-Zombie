@@ -70,8 +70,13 @@ class Player {
         System.out.printf("Your Score: %d\n", Score);
     }
 
-    public void heal() {
-        HP += 1;
+    public void heal(JLabel x) {
+        if (HP < 5) {
+            x.remove(HP_AL.get(HP));
+            HP += 1;
+            System.out.println("HP is " + HP);
+            x.add(HP_AL.get(HP));
+        }
     }
 
     public JLabel getLabel() {

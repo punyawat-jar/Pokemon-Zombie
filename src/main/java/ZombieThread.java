@@ -33,7 +33,7 @@ class ZombieThread extends Thread {
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
-            MainApplication prog, ArrayList<Wordbox> wb,Keyboard_bar k) {
+            MainApplication prog, ArrayList<Wordbox> wb, Keyboard_bar k) {
         super(n);
         name = n;
         // The temp use for run();
@@ -49,7 +49,7 @@ class ZombieThread extends Thread {
         readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
         readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
         readyGoLabel = new JLabel(readyGoImg);
-        
+
         wbox = wb;
         setUpZombie(pane);
         pane.add(zombLabel);
@@ -353,19 +353,19 @@ class ZombieThread extends Thread {
     }
 
     public void run() {
-        
+
         System.out.println("mode = " + mode);
         System.out.println("zombCurX = " + zombCurX + ", zombCurY = " + zombCurY + " zombWidth = " + zombWidth
                 + " , zombHeight" + zombHeight);
-    
+
         System.out.println("Thread : " + Thread.currentThread().getName());
-    
-        waitGetIn(i, zombTimeWait);     
-    
+
+        waitGetIn(i, zombTimeWait);
+
         program.setPBar();
-    
+
         move(tempPlayer, i);
-    
+
         if (tempPlayer.getHP() == 0) {
             kill_monster(i);
             tempPane.remove(zombLabel);
@@ -375,14 +375,14 @@ class ZombieThread extends Thread {
             program.addCountStageEnd();
             // return;
         }
-    
+
         else if (program.getCount_death() == 10) { // Win
             tempPane.remove(zombLabel);
             tempPane.repaint();
             program.setGameResult("Win");
             program.addCountStageEnd();
         }
-    
+
         if ((program.getGameResult() == "GameOver" || program.getGameResult() == "Win")
                 && program.getCountStageEnd() == 1) {
             // program.setCountStageEnd(0);
@@ -396,12 +396,12 @@ class ZombieThread extends Thread {
             tempPane.repaint();
             keyb.clearTypearea();
             kill_monster(i);
-    
+
             program.setCount_death(); // death++
         }
-        
+
         // -------------------------
-        
+
     }// end run
 
     public void kill_monster(int i) {
@@ -412,7 +412,7 @@ class ZombieThread extends Thread {
     }
 
     // public void setkill_thread(boolean x){
-    //     kill_thread = x;
+    // kill_thread = x;
     // }
     // -------------------- For randoming time Zombie Appear--------------
     // Use static method to lock class * If lock only Obj. all other thread will
@@ -443,7 +443,7 @@ class ZombieThread extends Thread {
         System.out.println("Thread: Zombie" + i + " -> move");
         // While not Hit player & player not die. walk left
         while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())) &&
-                player.getHP() != 0 && killed == false ) {
+                player.getHP() != 0 && killed == false) {
             zombLabel.setLocation(zombCurX, zombCurY);
             zombCurX = zombCurX - 1;
             zombLabel.repaint();
@@ -467,27 +467,27 @@ class ZombieThread extends Thread {
     }
 
     // public int slowDown(){
-    //     zombSpeed += 30;
-    //     System.out.println(name + " is slowing down");
-    //     int curX = zombCurX;
-    //     return curX;
+    // zombSpeed += 30;
+    // System.out.println(name + " is slowing down");
+    // int curX = zombCurX;
+    // return curX;
     // }
-    
+
     // public int speedUp(){
-    //     zombSpeed -= 6;
-    //     System.out.println(name + " is Speeding Up!");
-    //     int curX = zombCurX;
-    //     return curX;
+    // zombSpeed -= 6;
+    // System.out.println(name + " is Speeding Up!");
+    // int curX = zombCurX;
+    // return curX;
     // }
 
     // public void slowDownToNormal(){
-    //             zombSpeed += 6;
-    //             System.out.println(name + "is back to normal speed");
+    // zombSpeed += 6;
+    // System.out.println(name + "is back to normal speed");
     // }
 
     // public void speedUpToNormal(){
-    //             zombSpeed -= 30;
-    //             System.out.println(name + "is back to normal speed");
+    // zombSpeed -= 30;
+    // System.out.println(name + "is back to normal speed");
     // }
 }
 

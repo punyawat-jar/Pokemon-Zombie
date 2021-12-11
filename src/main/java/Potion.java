@@ -18,11 +18,13 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     private JLabel PotionAmount;
     private MainApplication program;
     private Player player;
+    private JLabel pane;
 
-    public Potion(MainApplication program, JLabel x, Player player) {
+    public Potion(MainApplication program, JLabel x, Player p) {
         this.program = program;
-        this.player = player;
-        PotionIcon = new MyImageIcon("potion/bomb.png").resize(width, height);
+        player = p;
+        pane = x;
+        PotionIcon = new MyImageIcon("items/potion.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 12;
         curY = height / 2;
         setBounds(curX, curY, width, height);
@@ -49,12 +51,21 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
+        if (this.getBounds().intersects(player.getLabel().getBounds()) && player.getHP() < 5) {
+            // System.out.println("as;dfljas;dflj");
+            player.heal(pane);
+            amount--;
+        }
+        curX = program.getWidth() - (width / 2) * 12;
+        curY = height / 2;
+        setLocation(curX, curY);
 
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
         // TODO Auto-generated method stub
+        setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
@@ -67,7 +78,9 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     @Override
     public void mouseDragged(MouseEvent e) {
         // TODO Auto-generated method stub
-
+        curX = curX + e.getX();
+        curY = curY + e.getY();
+        setLocation(curX, curY);
     }
 
     @Override
