@@ -161,8 +161,8 @@ class Compare_text implements CaretListener {
             // }
 
             // out.setText( in.getText() );
-        } catch (Exception error) {
-        }
+        } 
+        catch (Exception error) {}
 
     }
 }
