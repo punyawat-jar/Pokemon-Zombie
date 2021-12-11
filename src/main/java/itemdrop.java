@@ -24,7 +24,7 @@ public class itemdrop extends Thread {
 
     public void run() {
         while (!end) {
-            int rand_time = (int) Math.floor(Math.random() * (20000 - 10000 + 1) + 10000);
+            int rand_time = (int) Math.floor(Math.random() * (25000 - 18000 + 1) + 18000);
             System.out.println("Rand time is =================" + rand_time);
             floor = false;
             // Item_AL.add(new JLabel(new
