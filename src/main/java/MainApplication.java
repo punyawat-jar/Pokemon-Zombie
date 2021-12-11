@@ -42,8 +42,8 @@ public class MainApplication extends JFrame {
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, gameOverSound, winSound,
             usedItemSound;
 
-    private MyImageIcon winGif, gameOverGif,pokeWinGif,pokeGameOverGif;
-    JLabel winLabel, gameOverLabel,pokeWinLabel,pokeGameOverLabel;
+    private MyImageIcon winGif, gameOverGif, pokeWinGif, pokeGameOverGif;
+    JLabel winLabel, gameOverLabel, pokeWinLabel, pokeGameOverLabel;
 
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
@@ -62,20 +62,21 @@ public class MainApplication extends JFrame {
     private boolean ismove = true;
     private Player player;
     private Wordbox wbox;
-    // private Bomb bomb;
+    private Bomb bomb;
     // private Potion potion;
 
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/No.png", "custom_poke/Conan.png", "custom_poke/Joy.png",
             "custom_poke/Pajamas.png", "custom_poke/Just.png" };
-    private String[] custom_info = {"item_info/info1.png","item_info/info2.png","item_info/info3.png","item_info/info4.png","item_info/info5.png"};
+    private String[] custom_info = { "item_info/info1.png", "item_info/info2.png", "item_info/info3.png",
+            "item_info/info4.png", "item_info/info5.png" };
     private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
             "Vocab/Boss.txt" };
-            
+
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
             "Vocab/Boss.txt", "Vocab/OnlyBoss.txt" };
-    
+
     ArrayList<Vocab> vocabList = new ArrayList<Vocab>();
 
     // ------------------------------- Main Method -------------------------------
@@ -254,7 +255,7 @@ public class MainApplication extends JFrame {
         button4.addActionListener(new ActionListener() { // Exit button4
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                //System.exit(0);
+                // System.exit(0);
                 int exit = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to quit the game?",
                         "PokemonGame! - Message", JOptionPane.YES_NO_OPTION);
                 if (exit == JOptionPane.YES_OPTION) {
@@ -330,7 +331,7 @@ public class MainApplication extends JFrame {
                                 count_pic = i;
                                 drawpane.add(custom_poke_AL.get(count_pic));
                                 drawpane.add(custom_info_AL.get(count_pic));
-                                
+
                                 repaint();
                                 validate();
                             }
@@ -338,8 +339,6 @@ public class MainApplication extends JFrame {
                     }
                 }
             });
-            
-            
 
         }
 
@@ -387,13 +386,12 @@ public class MainApplication extends JFrame {
     }
 
     // public void radiobox_message(int i){
-    //     JLabel messagebox = new JLabel();
-    //     messagebox.setIcon(new MyImageIcon("Wbox/wbox.png").resize(120, 40));
-    //     messagebox.setBounds(100,200,120,40);
-    //     messagebox.setVisible(true);
-    //     drawpane.add(messagebox);
+    // JLabel messagebox = new JLabel();
+    // messagebox.setIcon(new MyImageIcon("Wbox/wbox.png").resize(120, 40));
+    // messagebox.setBounds(100,200,120,40);
+    // messagebox.setVisible(true);
+    // drawpane.add(messagebox);
     // }
-
 
     public void mode_panel() {
         // mode button
@@ -438,16 +436,16 @@ public class MainApplication extends JFrame {
         drawpane.add(backbtn);
     }// end mode Panel
 
-    public void showReadyGo(){
-        
+    public void showReadyGo() {
+
         Thread animation = new Thread() {
-            public void run(){
+            public void run() {
                 JLabel tempLabel;
                 readyGoSound.playOnce();
-                for(int i=1 ;i<=146;i++){
-                    try{
-                        //System.out.println("i is =======================" + i);
-                        tempLabel = new JLabel (new MyImageIcon("readyGo/readyGO ("+i+").png").resize(380,210));
+                for (int i = 1; i <= 146; i++) {
+                    try {
+                        // System.out.println("i is =======================" + i);
+                        tempLabel = new JLabel(new MyImageIcon("readyGo/readyGO (" + i + ").png").resize(380, 210));
                         tempLabel.setBounds(525, 230, 380, 210);
                         tempLabel.setOpaque(false);
                         tempLabel.setLayout(null);
@@ -459,28 +457,29 @@ public class MainApplication extends JFrame {
                         repaint();
                         Thread.sleep(15);
                         drawpane.remove(tempLabel);
+                    } catch (Exception e) {
+                        System.out.println(e);
                     }
-                    catch(Exception e){ System.out.println(e);}
                 }
             }
         };
         animation.start();
     }
-    
+
     public void main_game(String mode) {
         menuSong.stop();
         gameResult = "";
         countStageEnd = 0;
         showReadyGo();
         // comeIn = false;
-        //if (comeIn == false) {
-        //     comeIn = true;
-        //     readyGoLabel.setBounds(525, 230, 380, 214);
-        //     drawpane.add(readyGoLabel);
-        //     drawpane.validate();
-        //     readyGoSound.playOnce();
+        // if (comeIn == false) {
+        // comeIn = true;
+        // readyGoLabel.setBounds(525, 230, 380, 214);
+        // drawpane.add(readyGoLabel);
+        // drawpane.validate();
+        // readyGoSound.playOnce();
         // }
-        
+
         wbox_AL.clear();
 
         PBar.setValue(0);
@@ -500,12 +499,12 @@ public class MainApplication extends JFrame {
         end_btn.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                //System.exit(0);
+                // System.exit(0);
                 int exit = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to quit the game?",
                         "PokemonGame! - Message", JOptionPane.YES_NO_OPTION);
                 if (exit == JOptionPane.YES_OPTION) {
                     gameEnd = false;
-                    for(int i=0;i<zombielist.size();i++){
+                    for (int i = 0; i < zombielist.size(); i++) {
                         zombielist.get(i).stop();
                     }
                     beginnerSong.stop();
@@ -518,7 +517,7 @@ public class MainApplication extends JFrame {
                     count_death = 0;
 
                     resetPBar();
-                    
+
                     program.dispose();
                     program = new MainApplication();
                 } else {
@@ -534,7 +533,8 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
-                player = new Player(drawpane, count_pic,0);
+                bomb = new Bomb(program, drawpane);
+                player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
 
@@ -544,7 +544,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
-                player = new Player(drawpane, count_pic,1);
+                player = new Player(drawpane, count_pic, 1);
                 input_word(1);
                 createZombieThread(mode);
                 break;
@@ -553,7 +553,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
-                player = new Player(drawpane, count_pic,2);
+                player = new Player(drawpane, count_pic, 2);
                 input_word(2);
                 createZombieThread(mode);
                 break;
@@ -562,7 +562,7 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 nightmareSong.playLoop();
-                player = new Player(drawpane, count_pic,3);
+                player = new Player(drawpane, count_pic, 3);
                 input_word(3);
                 createZombieThread(mode);
                 break;
@@ -571,14 +571,13 @@ public class MainApplication extends JFrame {
                 drawpane.setLayout(null);
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 bossSong.playLoop();
-                player = new Player(drawpane, count_pic,4);
+                player = new Player(drawpane, count_pic, 4);
                 input_word(4);
                 // createZombieThread("Nightmare");
                 createZombieThread(mode);
 
                 break;
         }
-
 
         // player = new Player();
         // player.draw_player(drawpane);
@@ -593,7 +592,7 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
-                    program, wbox_AL,keybar);
+                    program, wbox_AL, keybar);
             zombielist.add(zombThread);
 
             System.out.println("i main = " + i);
@@ -658,12 +657,12 @@ public class MainApplication extends JFrame {
     // wbox_AL.get(i).wbox_move(mobCurX.get(i),mobCurY.get(i)-50);
 
     public void setPBar() {
-        if(count <10){
+        if (count < 10) {
             count += 1;
             PBar.setValue(count * 10);
             System.out.println("Add Count + = 1");
         }
-        
+
     }
 
     public int getCount() {
@@ -709,9 +708,9 @@ public class MainApplication extends JFrame {
     public void stageEnd(String mode) {
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
-        pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight/2)-400, 1281, 720);
+        pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
         drawpane.remove(end_btn);
-        pokeGameOverLabel.setBounds((frameWidth / 2) - 640, (frameHeight/2)-400, 1281, 720);
+        pokeGameOverLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
 
         // Back To Menu
         JButton button1 = new JButton();
@@ -743,10 +742,14 @@ public class MainApplication extends JFrame {
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
             drawpane.add(pokeWinLabel);
-            try{Thread.sleep(1500);} 
-            catch(InterruptedException e) { System.out.println(e);}
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
             drawpane.remove(pokeWinLabel);
-            validate(); repaint(); 
+            validate();
+            repaint();
 
             drawpane.add(winLabel);
             winSound.playOnce();
@@ -754,11 +757,15 @@ public class MainApplication extends JFrame {
             gameResult = "";
         } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
             drawpane.add(pokeGameOverLabel);
-            try{Thread.sleep(1500);} 
-            catch(InterruptedException e) { System.out.println(e);}
+            try {
+                Thread.sleep(1500);
+            } catch (InterruptedException e) {
+                System.out.println(e);
+            }
             drawpane.remove(pokeGameOverLabel);
-            validate(); repaint(); 
-            
+            validate();
+            repaint();
+
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
             gameEnd = false;
@@ -769,8 +776,8 @@ public class MainApplication extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 gameEnd = false;
                 // for(int i=0;i<zombielist.size();i++){
-                //     zombielist.get(i).interrupt();
-                //     zombielist.get(i).setkill_thread(true);
+                // zombielist.get(i).interrupt();
+                // zombielist.get(i).setkill_thread(true);
                 // }
                 buttonSound.playOnce();
                 winSound.stop();
@@ -822,7 +829,7 @@ public class MainApplication extends JFrame {
             info.setOpaque(false);
             info.setLayout(null);
             info.setHorizontalTextPosition(JLabel.CENTER);
-            info.setBounds(frameWidth-350, 100, 267, 320);
+            info.setBounds(frameWidth - 350, 100, 267, 320);
             custom_info_AL.add(info);
             // poke_list_AL.add(poke_list[i]);
         }

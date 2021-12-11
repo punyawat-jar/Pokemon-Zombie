@@ -15,24 +15,24 @@ class Player {
     private JLabel playerLabel, HP_Label;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
     private String[] poke_list;
-    private int custom,mode;
+    private int custom, mode;
     String[] HP_bar = { "health bar/H0.png", "health bar/H1.png", "health bar/H2.png", "health bar/H3.png",
             "health bar/H4.png", "health bar/H5.png" };
 
     String[] list_player = { "custom_poke/poke11.png", "custom_poke/poke22.png", "custom_poke/poke33.png",
-    "custom_poke/poke44.png", "custom_poke/poke55.png" };
+            "custom_poke/poke44.png", "custom_poke/poke55.png" };
 
-    public Player(JLabel x,int c,int m) {
+    public Player(JLabel x, int c, int m) {
         custom = c;
         mode = m;
         player = new MyImageIcon(list_player[custom]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
-        
-        if(mode == 4){
+
+        if (mode == 4) {
             System.out.println("Test");
             playerLabel.setBounds(0, 370, playerwidth, playerhight);
-        } 
-        else playerLabel.setBounds(0, 455, playerwidth, playerhight);
+        } else
+            playerLabel.setBounds(0, 455, playerwidth, playerhight);
         x.add(playerLabel);
         x.validate();
 
@@ -50,7 +50,6 @@ class Player {
         Score = 0;
     }
 
-
     public void hitplayer(JLabel x) {
         x.remove(HP_AL.get(HP));
         HP -= 1;
@@ -66,17 +65,21 @@ class Player {
         return HP;
     }
 
-    synchronized public void setscore(/*int x*/) {
-        //this.Score = x;
+    synchronized public void setscore(/* int x */) {
+        // this.Score = x;
         Score++;
-        System.out.printf("Your Score: %d\n",Score);
+        System.out.printf("Your Score: %d\n", Score);
+    }
+
+    public void heal() {
+
     }
 
     public JLabel getLabel() {
         return playerLabel;
     }
-    
-    public int getScore(){
+
+    public int getScore() {
         return Score;
     }
 }// end Player

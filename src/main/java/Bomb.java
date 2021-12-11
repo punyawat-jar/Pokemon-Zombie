@@ -9,21 +9,26 @@ import java.io.*;
 import javax.swing.border.*;
 import javax.swing.event.MouseInputListener;
 
-class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
+public class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
+    private int amount;
     private int curX, curY;
     private int width = 50;
     private int height = 50;
+    private JLabel bombLabel;
     private ImageIcon bombIcon;
-    private Thread zomThread;
+    private MainApplication program;
 
-    public Bomb(MainApplication program) {
-        bombIcon = new ImageIcon("items/bomb.png");
+    public Bomb(MainApplication program, JLabel x) {
+        this.program = program;
+        bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);
+        bombLabel = new JLabel(bombIcon);
         curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
-        setBounds(curX, curY, width, height);
-        setIcon(bombIcon);
+        bombLabel.setBounds(curX, curY, width, height);
         addMouseListener(this);
         addMouseMotionListener(this);
+        x.add(bombLabel);
+        x.validate();
     }
 
     @Override
@@ -41,6 +46,11 @@ class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
+        curX = program.getWidth() - (width / 2) * 3;
+        curY = height / 2;
+
+        setLocation(curX, curY);
+
     }
 
     @Override
@@ -60,7 +70,6 @@ class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
         // TODO Auto-generated method stub
         curX = curX + e.getX();
         curY = curY + e.getY();
-
         setLocation(curX, curY);
     }
 
@@ -69,17 +78,5 @@ class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
         // TODO Auto-generated method stub
 
     }
-
-}
-
-class Potion {
-    private int width = 50;
-    private int height = 50;
-
-}
-
-class Stopwatch {
-    private int width = 50;
-    private int height = 50;
 
 }
