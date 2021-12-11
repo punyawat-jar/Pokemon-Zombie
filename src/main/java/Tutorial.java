@@ -90,8 +90,10 @@ public class Tutorial extends JFrame{
 
     public void readpic(){
         for(int i=0;i<p.length;i++){
-            JLabel label = new JLabel(new ImageIcon(p[i]));
-            label.setBounds(170,40,500,250);
+            MyImageIcon pic = new MyImageIcon(p[i]).resize(600, 324);;
+
+            JLabel label = new JLabel(pic);
+            label.setBounds(100,30,600,324);
             pic_AL.add(label);
         }
     }
