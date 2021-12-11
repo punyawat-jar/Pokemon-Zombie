@@ -366,6 +366,8 @@ class ZombieThread extends Thread {
 
         move(tempPlayer, i);
 
+        System.out.printf("before --> %d \n", program.getCount_death());
+
         if (tempPlayer.getHP() == 0) {
             kill_monster(i);
             tempPane.remove(zombLabel);
@@ -398,6 +400,14 @@ class ZombieThread extends Thread {
             kill_monster(i);
 
             program.setCount_death(); // death++
+            // System.out.printf("after --> %d \n", program.getCount_death());
+            // if (program.getCount_death() == 10) { // Win
+            // tempPane.remove(zombLabel);
+            // tempPane.repaint();
+            // program.setGameResult("Win");
+            // program.addCountStageEnd();
+            // }
+
         }
 
         // -------------------------
