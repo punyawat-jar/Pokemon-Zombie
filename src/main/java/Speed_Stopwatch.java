@@ -35,7 +35,7 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
-        program.fastSpeed();
+        //program.fastSpeed();
         amount--;
     }
 
