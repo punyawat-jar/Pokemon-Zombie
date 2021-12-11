@@ -51,7 +51,7 @@ public class MainApplication extends JFrame {
     ArrayList<JLabel> itemdrop_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
     ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
-    ArrayList <JLabel> themePicLabel_AL = new ArrayList<JLabel>();
+    ArrayList<JLabel> themePicLabel_AL = new ArrayList<JLabel>();
 
     private JProgressBar PBar = new JProgressBar();
     private Keyboard_bar keybar;
@@ -66,6 +66,8 @@ public class MainApplication extends JFrame {
     private Wordbox wbox;
     private Bomb bomb;
     // private Potion potion;
+    private Speed_Stopwatch speed_stopwatch;
+    private Slow_Stopwatch slow_stopwatch;
 
     Tutorial Tframe;
     private String[] poke_list = { "custom_poke/No.png", "custom_poke/Conan.png", "custom_poke/Joy.png",
@@ -397,18 +399,20 @@ public class MainApplication extends JFrame {
     // drawpane.add(messagebox);
     // }
 
-    public void showThemeMode(){
-        int themeWidth = frameWidth/3 ,themeHeight = frameHeight/3; 
+    public void showThemeMode() {
+        int themeWidth = frameWidth / 3, themeHeight = frameHeight / 3;
         JLabel tempLabel = new JLabel();
-        String []bg = {"bg/beginner_bg.png","bg/medium_bg.png","bg/hard_bg.png","bg/nightmare_bg.png","bg/boss_bg.png"};
-        for(int i=0 ;i<bg.length;i++){
+        String[] bg = { "bg/beginner_bg.png", "bg/medium_bg.png", "bg/hard_bg.png", "bg/nightmare_bg.png",
+                "bg/boss_bg.png" };
+        for (int i = 0; i < bg.length; i++) {
             tempLabel = new JLabel(new MyImageIcon(bg[i]).resize(themeWidth, themeHeight));
-            tempLabel.setBounds(frameWidth-themeWidth-255, (frameHeight/2)-(themeHeight/2)-30,themeWidth, themeHeight);
-           themePicLabel_AL.add(tempLabel);
-           themePicLabel_AL.get(i).setVisible(false);
+            tempLabel.setBounds(frameWidth - themeWidth - 255, (frameHeight / 2) - (themeHeight / 2) - 30, themeWidth,
+                    themeHeight);
+            themePicLabel_AL.add(tempLabel);
+            themePicLabel_AL.get(i).setVisible(false);
             drawpane.add(tempLabel);
         }
-    }//end showThemeMode
+    }// end showThemeMode
 
     public void mode_panel() {
         // mode button
@@ -426,49 +430,49 @@ public class MainApplication extends JFrame {
 
         showThemeMode();
 
-        combo.addActionListener(new ActionListener(){
-            public void actionPerformed (ActionEvent e) {
+        combo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 modeSelected = (String) combo.getSelectedItem();
-                if(modeSelected == "Beginner"){ 
-                   themePicLabel_AL.get(0).setVisible(true);
-                   themePicLabel_AL.get(1).setVisible(false);
-                   themePicLabel_AL.get(2).setVisible(false);
-                   themePicLabel_AL.get(3).setVisible(false);
-                   themePicLabel_AL.get(4).setVisible(false);
-                    System.out.printf("----- %s show -----\n",modeSelected);
+                if (modeSelected == "Beginner") {
+                    themePicLabel_AL.get(0).setVisible(true);
+                    themePicLabel_AL.get(1).setVisible(false);
+                    themePicLabel_AL.get(2).setVisible(false);
+                    themePicLabel_AL.get(3).setVisible(false);
+                    themePicLabel_AL.get(4).setVisible(false);
+                    System.out.printf("----- %s show -----\n", modeSelected);
                 }
-                if(modeSelected == "Medium"){  
-                   themePicLabel_AL.get(1).setVisible(true);
-                   themePicLabel_AL.get(0).setVisible(false);
-                   themePicLabel_AL.get(2).setVisible(false);
-                   themePicLabel_AL.get(3).setVisible(false);
-                   themePicLabel_AL.get(4).setVisible(false);
-                    System.out.printf("----- %s show -----\n",modeSelected);
+                if (modeSelected == "Medium") {
+                    themePicLabel_AL.get(1).setVisible(true);
+                    themePicLabel_AL.get(0).setVisible(false);
+                    themePicLabel_AL.get(2).setVisible(false);
+                    themePicLabel_AL.get(3).setVisible(false);
+                    themePicLabel_AL.get(4).setVisible(false);
+                    System.out.printf("----- %s show -----\n", modeSelected);
                 }
-                if(modeSelected == "Hard"){ 
-                   themePicLabel_AL.get(2).setVisible(true);
-                   themePicLabel_AL.get(0).setVisible(false);
-                   themePicLabel_AL.get(1).setVisible(false);
-                   themePicLabel_AL.get(3).setVisible(false);
-                   themePicLabel_AL.get(4).setVisible(false);
-                    System.out.printf("----- %s show -----\n",modeSelected);
+                if (modeSelected == "Hard") {
+                    themePicLabel_AL.get(2).setVisible(true);
+                    themePicLabel_AL.get(0).setVisible(false);
+                    themePicLabel_AL.get(1).setVisible(false);
+                    themePicLabel_AL.get(3).setVisible(false);
+                    themePicLabel_AL.get(4).setVisible(false);
+                    System.out.printf("----- %s show -----\n", modeSelected);
                 }
-                if(modeSelected == "Nightmare"){ 
-                   themePicLabel_AL.get(3).setVisible(true);
-                   themePicLabel_AL.get(0).setVisible(false);
-                   themePicLabel_AL.get(1).setVisible(false);
-                   themePicLabel_AL.get(2).setVisible(false);
-                   themePicLabel_AL.get(4).setVisible(false);
-                    System.out.printf("----- %s show -----\n",modeSelected);
+                if (modeSelected == "Nightmare") {
+                    themePicLabel_AL.get(3).setVisible(true);
+                    themePicLabel_AL.get(0).setVisible(false);
+                    themePicLabel_AL.get(1).setVisible(false);
+                    themePicLabel_AL.get(2).setVisible(false);
+                    themePicLabel_AL.get(4).setVisible(false);
+                    System.out.printf("----- %s show -----\n", modeSelected);
                 }
-                if(modeSelected == "Boss"){ 
-                   themePicLabel_AL.get(4).setVisible(true);
-                   themePicLabel_AL.get(0).setVisible(false);
-                   themePicLabel_AL.get(1).setVisible(false);
-                   themePicLabel_AL.get(2).setVisible(false);
-                   themePicLabel_AL.get(3).setVisible(false);
-                    System.out.printf("----- %s show -----\n",modeSelected);
-                }  
+                if (modeSelected == "Boss") {
+                    themePicLabel_AL.get(4).setVisible(true);
+                    themePicLabel_AL.get(0).setVisible(false);
+                    themePicLabel_AL.get(1).setVisible(false);
+                    themePicLabel_AL.get(2).setVisible(false);
+                    themePicLabel_AL.get(3).setVisible(false);
+                    System.out.printf("----- %s show -----\n", modeSelected);
+                }
                 repaint();
                 validate();
             }
@@ -481,11 +485,11 @@ public class MainApplication extends JFrame {
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
-                    for(int i=0 ;i<5;i++){
+                    for (int i = 0; i < 5; i++) {
                         themePicLabel_AL.get(i).setVisible(false);
-                         drawpane.remove(themePicLabel_AL.get(i));
-                     }
-                    drawpane.repaint(); 
+                        drawpane.remove(themePicLabel_AL.get(i));
+                    }
+                    drawpane.repaint();
                     main_game(modeSelected);
                 }
             }
@@ -497,11 +501,11 @@ public class MainApplication extends JFrame {
                 combo.setVisible(false);
                 play.setVisible(false);
                 backbtn.setVisible(false);
-                for(int i=0 ;i<5;i++){
+                for (int i = 0; i < 5; i++) {
                     themePicLabel_AL.get(i).setVisible(false);
-                     drawpane.remove(themePicLabel_AL.get(i));
-                 }
-                drawpane.repaint(); 
+                    drawpane.remove(themePicLabel_AL.get(i));
+                }
+                drawpane.repaint();
                 custom();
             }
         });
@@ -604,6 +608,9 @@ public class MainApplication extends JFrame {
             }
         });
         drawpane.add(end_btn);
+        bomb = new Bomb(program, drawpane, zombielist);
+        slow_stopwatch = new Slow_Stopwatch(program, drawpane, player);
+        speed_stopwatch = new Speed_Stopwatch(program, drawpane, player);
 
         bomb = new Bomb(program, drawpane,zombielist);
 
@@ -617,7 +624,6 @@ public class MainApplication extends JFrame {
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
                 createZombieThread(mode);
-
                 break;
             case "Medium":
                 drawpane.setIcon(in_gamebg2Img);
