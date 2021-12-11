@@ -7,7 +7,7 @@ public class Tutorial extends JFrame{
 
     private JPanel Tcontentpane;
     private JLabel Tdrawpane,bgImg;
-    private String[] p = {"tutorial/p1.jpg","tutorial/p2.jpg","tutorial/p3.jpg"};
+    private String[] p = {"tutorial/1.png","tutorial/2.png","tutorial/3.png","tutorial/4.png"};
     private MyImageIcon bg, prevButton, nextButton;
     private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
     private int count = 0;
