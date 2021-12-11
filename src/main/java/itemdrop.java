@@ -16,19 +16,20 @@ public class itemdrop extends Thread {
     MainApplication main;
     boolean end = false;
     ArrayList<JLabel> Item_AL = new ArrayList<JLabel>();
-    public itemdrop(JLabel p,MainApplication m){
+    public itemdrop(JLabel p,MainApplication m,ArrayList<JLabel> iAL){
         pane = p;
         main = m;
+        Item_AL = iAL;
     }
 
     public void run(){
         while(!end){
-            int rand_time = (int) Math.floor(Math.random()*(15000-10000+1)+10000);
+            int rand_time = (int) Math.floor(Math.random()*(30000-15000+1)+15000);
             Item_AL.add(new JLabel(new MyImageIcon("item_fall/potion.png").resize(100,100)));
             
             Item_AL.get(0).setVisible(true);
             try{
-                Thread.sleep(1000);         /// 1000 for debug only, use rand_time
+                Thread.sleep(rand_time);         /// 1000 for debug only, use rand_time
             }
             catch(Exception e) {}
             Thread item = new Thread(){
@@ -36,25 +37,25 @@ public class itemdrop extends Thread {
                     Random r = new Random();
                     Boolean floor = false;
                     int CurX = r.nextInt(main.get_framewidth());
-                    int CurY = 100;
+                    int CurY = 50;
                     
                     //Random ran_item = new Random(3);
-                    //int rand_item = (int) Math.floor(Math.random()*(3-0+1)+0);
+                    int rand_item = (int) Math.floor(Math.random()*(3-0+1)+0);
                     //Item_AL.get(0);
-                    pane.add(Item_AL.get(0)); ///Note change 0 to rand_item
+                    pane.add(Item_AL.get(rand_item)); ///Note change 0 to rand_item
                     while(!floor){
                         
-                        Item_AL.get(0).setBounds(CurX,CurY,100,100);
+                        Item_AL.get(rand_item).setBounds(CurX,CurY,100,100);
                         if(CurY < main.get_frameheight() - 150){        //Move item down
-                            CurY += 20;
+                            CurY += 10;
                         }
                         else{
                             floor = true;                               //item on the floor
-                            pane.remove(Item_AL.get(0));
+                            pane.remove(Item_AL.get(rand_item));
                         }
                         pane.repaint();
                         try{
-                            Thread.sleep(20);
+                            Thread.sleep(40);
                         }
                         catch(Exception e) {}
                     }

@@ -49,6 +49,7 @@ public class MainApplication extends JFrame {
     ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     ArrayList<JLabel> custom_info_AL = new ArrayList<JLabel>();
+    ArrayList<JLabel> itemdrop_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
     ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
 
@@ -481,7 +482,7 @@ public class MainApplication extends JFrame {
         // drawpane.validate();
         // readyGoSound.playOnce();
         // }
-        itemDrop = new itemdrop(drawpane,this);
+        itemDrop = new itemdrop(drawpane,this,itemdrop_AL);
         itemDrop.start();
         
         wbox_AL.clear();
@@ -826,9 +827,8 @@ public class MainApplication extends JFrame {
 
     public void read_picture() {
         for (int i = 0; i < poke_list.length; i++) {
-
-            JLabel label = new JLabel(new ImageIcon(poke_list[i]));
-            JLabel info = new JLabel(new ImageIcon(custom_info[i]));
+            JLabel label = new JLabel(new MyImageIcon(poke_list[i]));
+            JLabel info = new JLabel(new MyImageIcon(custom_info[i]));
             label.setOpaque(false);
             label.setLayout(null);
             label.setHorizontalTextPosition(JLabel.CENTER);
@@ -840,6 +840,15 @@ public class MainApplication extends JFrame {
             info.setBounds(frameWidth - 350, 100, 267, 320);
             custom_info_AL.add(info);
             // poke_list_AL.add(poke_list[i]);
+        }
+
+        for(int i=0;i<itemdrop_list.length;i++){
+            JLabel item_label = new JLabel(new MyImageIcon(itemdrop_list[i]).resize(100,100));
+            item_label.setOpaque(false);
+            item_label.setLayout(null);
+            item_label.setHorizontalTextPosition(JLabel.CENTER);
+            item_label.setSize(200, 200);
+            itemdrop_AL.add(item_label);
         }
     }
 
