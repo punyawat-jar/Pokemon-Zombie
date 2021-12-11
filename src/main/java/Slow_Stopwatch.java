@@ -37,7 +37,7 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
     @Override
     public void mouseClicked(MouseEvent e) {
         // TODO Auto-generated method stub
-
+        //program.slowSpeed();
         amount--;
     }
 

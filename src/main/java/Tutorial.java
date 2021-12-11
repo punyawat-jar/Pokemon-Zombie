@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+
 import java.util.*;
 
 public class Tutorial extends JFrame{
@@ -93,6 +95,7 @@ public class Tutorial extends JFrame{
             MyImageIcon pic = new MyImageIcon(p[i]).resize(600, 324);;
 
             JLabel label = new JLabel(pic);
+            //label.setBorder(new BevelBorder(BevelBorder, highlight, shadow);
             label.setBounds(100,30,600,324);
             pic_AL.add(label);
         }

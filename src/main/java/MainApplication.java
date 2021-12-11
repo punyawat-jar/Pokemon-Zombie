@@ -434,43 +434,48 @@ public class MainApplication extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected == "Beginner") {
-                    themePicLabel_AL.get(0).setVisible(true);
-                    themePicLabel_AL.get(1).setVisible(false);
-                    themePicLabel_AL.get(2).setVisible(false);
-                    themePicLabel_AL.get(3).setVisible(false);
-                    themePicLabel_AL.get(4).setVisible(false);
+                    set_example_pane(0);
+                    // themePicLabel_AL.get(0).setVisible(true);
+                    // themePicLabel_AL.get(1).setVisible(false);
+                    // themePicLabel_AL.get(2).setVisible(false);
+                    // themePicLabel_AL.get(3).setVisible(false);
+                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Medium") {
-                    themePicLabel_AL.get(1).setVisible(true);
-                    themePicLabel_AL.get(0).setVisible(false);
-                    themePicLabel_AL.get(2).setVisible(false);
-                    themePicLabel_AL.get(3).setVisible(false);
-                    themePicLabel_AL.get(4).setVisible(false);
+                    set_example_pane(1);
+                    // themePicLabel_AL.get(1).setVisible(true);
+                    // themePicLabel_AL.get(0).setVisible(false);
+                    // themePicLabel_AL.get(2).setVisible(false);
+                    // themePicLabel_AL.get(3).setVisible(false);
+                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Hard") {
-                    themePicLabel_AL.get(2).setVisible(true);
-                    themePicLabel_AL.get(0).setVisible(false);
-                    themePicLabel_AL.get(1).setVisible(false);
-                    themePicLabel_AL.get(3).setVisible(false);
-                    themePicLabel_AL.get(4).setVisible(false);
+                    set_example_pane(2);
+                    // themePicLabel_AL.get(2).setVisible(true);
+                    // themePicLabel_AL.get(0).setVisible(false);
+                    // themePicLabel_AL.get(1).setVisible(false);
+                    // themePicLabel_AL.get(3).setVisible(false);
+                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Nightmare") {
-                    themePicLabel_AL.get(3).setVisible(true);
-                    themePicLabel_AL.get(0).setVisible(false);
-                    themePicLabel_AL.get(1).setVisible(false);
-                    themePicLabel_AL.get(2).setVisible(false);
-                    themePicLabel_AL.get(4).setVisible(false);
+                    set_example_pane(3);
+                    // themePicLabel_AL.get(3).setVisible(true);
+                    // themePicLabel_AL.get(0).setVisible(false);
+                    // themePicLabel_AL.get(1).setVisible(false);
+                    // themePicLabel_AL.get(2).setVisible(false);
+                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Boss") {
-                    themePicLabel_AL.get(4).setVisible(true);
-                    themePicLabel_AL.get(0).setVisible(false);
-                    themePicLabel_AL.get(1).setVisible(false);
-                    themePicLabel_AL.get(2).setVisible(false);
-                    themePicLabel_AL.get(3).setVisible(false);
+                    set_example_pane(4);
+                    // themePicLabel_AL.get(4).setVisible(true);
+                    // themePicLabel_AL.get(0).setVisible(false);
+                    // themePicLabel_AL.get(1).setVisible(false);
+                    // themePicLabel_AL.get(2).setVisible(false);
+                    // themePicLabel_AL.get(3).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 repaint();
@@ -514,6 +519,18 @@ public class MainApplication extends JFrame {
         drawpane.add(play);
         drawpane.add(backbtn);
     }// end mode Panel
+
+    public void set_example_pane(int i){
+        themePicLabel_AL.get(i).setVisible(true);
+        for(int j=0;j<4;j++){
+            if(j == i){
+                continue;
+            }
+            else{
+                themePicLabel_AL.get(j).setVisible(false);
+            }
+        }
+    }
 
     public void showReadyGo() {
 
@@ -715,8 +732,53 @@ public class MainApplication extends JFrame {
         // drawpane.remove(wbox_AL.get(i));
         // drawpane.repaint();
         setCount_death();
-
     }
+
+    // class Reminder{
+    //     Timer timer;
+    //     String mode;
+        
+    //     public Reminder(int seconds, String m){
+    //     mode = m;
+    //     timer = new Timer();
+    //     timer.schedule(new RemindTask(), seconds*1000);
+    //     }
+	    
+    // class RemindTask extends TimerTask {
+    //     public void run() {
+    //         System.out.println("Time's up!");
+    //         timer.cancel(); //Terminate the timer thread
+    //         for(int j=0; j<zombielist.size(); j++)
+    //             {
+    //                 if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
+    //                 if(mode == "slow") zombielist.get(j).speedUpToNormal();
+    //                 else if(mode =="speed") zombielist.get(j).slowDownToNormal();
+    //                 else System.out.println("Can't find mode in Reminder");
+                
+    //                 }
+    //             }
+    //     }
+    // }
+    // }//end Class Reminder
+
+    // public void slowSpeed(){
+    //     for(int i=0; i<zombielist.size(); i++)
+    //     {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
+    //         zombielist.get(i).slowDown();
+    //     }
+    //     }
+    //     new Reminder(5,"slow");
+    // }
+
+    // public void fastSpeed(){
+    //     for(int i=0; i<zombielist.size(); i++)
+    //     {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
+    //         zombielist.get(i).speedUp();
+    //     }
+    //     }
+    //     new Reminder(6,"speed");
+    // }
+
 
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
