@@ -298,7 +298,7 @@ public class MainApplication extends JFrame {
         JLabel rlabel = new JLabel();
 
         rlabel.setLayout(new FlowLayout());
-        rlabel.setBounds(frameWidth - 900, frameHeight / 2, 500, 35);
+        rlabel.setBounds(frameWidth - 950, frameHeight / 2, 500, 35);
         rlabel.setOpaque(true);
         rlabel.setBackground(Color.lightGray);
 
