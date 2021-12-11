@@ -269,13 +269,17 @@ public class MainApplication extends JFrame {
     }
 
     public void credit(){
+        MyImageIcon creditImg = new MyImageIcon("bg/Credit.gif");
+        JLabel creditLabel  = new JLabel(creditImg);
+        creditLabel.setBounds(280, 120, 850, 480);
         JButton backbtn = new JButton();
-        backbtn.setBounds(frameWidth / 4, frameHeight - 300 / 1, 200, 50);
+        backbtn.setBounds(frameWidth / 4-80, frameHeight - 160 / 1, 200, 50);
         backbtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
                 backbtn.setVisible(false);
+                creditLabel.setVisible(false);
                 repaint();
                 mainmanu();
 
@@ -283,6 +287,7 @@ public class MainApplication extends JFrame {
         });
         setUpButton(backbtn, backButton);
         drawpane.add(backbtn);
+        drawpane.add(creditLabel);
         validate();
         repaint();
     }
