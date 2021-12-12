@@ -77,7 +77,7 @@ public class MainApplication extends JFrame {
     private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
             "Vocab/Boss.txt" };
     private String[] itemdrop_list = { "item_fall/bomb.png", "item_fall/potion.png", "item_fall/slow_stopwatch.png",
-            "item_fall/speed_stopwatch.png", "item_fall/bomb.png", };
+            "item_fall/speed_stopwatch.png"};
 
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
@@ -756,23 +756,19 @@ public class MainApplication extends JFrame {
     // }
     // }//end Class Reminder
 
-    // public void slowSpeed(){
-    // for(int i=0; i<zombielist.size(); i++)
-    // {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    // zombielist.get(i).slowDown();
-    // }
-    // }
-    // new Reminder(5,"slow");
-    // }
+    public void slowSpeed(){
+    for(int i=0; i<zombielist.size(); i++){
+        zombielist.get(i).slowDown();
+    }
+    //new Reminder(5,"slow");
+    }
 
-    // public void fastSpeed(){
-    // for(int i=0; i<zombielist.size(); i++)
-    // {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    // zombielist.get(i).speedUp();
-    // }
-    // }
-    // new Reminder(6,"speed");
-    // }
+    public void fastSpeed(){
+        for(int i=0; i<zombielist.size(); i++){
+        zombielist.get(i).speedUp();
+    }
+    //new Reminder(6,"speed");
+    }
 
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
@@ -1025,15 +1021,15 @@ public class MainApplication extends JFrame {
                         }
                     });
                     break;
-                case 4:
-                    item_label.addMouseListener(new MouseAdapter() {
-                        public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world5");
-                            item_label.setVisible(false);
-                            ding.playOnce();
-                        }
-                    });
-                    break;
+                // case 4:
+                //     item_label.addMouseListener(new MouseAdapter() {
+                //         public void mouseEntered(MouseEvent e) {
+                //             System.out.println("Hello world5");
+                //             item_label.setVisible(false);
+                //             ding.playOnce();
+                //         }
+                //     });
+                //     break;
             }
 
             itemdrop_AL.add(item_label);
