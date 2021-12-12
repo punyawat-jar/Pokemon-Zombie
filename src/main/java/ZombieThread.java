@@ -27,7 +27,7 @@ class ZombieThread extends Thread {
     private MyImageIcon readyGoImg;
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
-    private int zombTimeWait;
+    private int zombTimeWait,normal_speed;
     private Keyboard_bar keyb;
     private String name;
 
@@ -478,19 +478,21 @@ class ZombieThread extends Thread {
         return zombTimeWait;
     }
 
-    // public int slowDown(){
-    // zombSpeed += 30;
-    // System.out.println(name + " is slowing down");
-    // int curX = zombCurX;
-    // return curX;
-    // }
+    public int slowDown(){
+    normal_speed = zombSpeed;
+    zombSpeed += 30;
+    System.out.println(name + " is slowing down");
+    int curX = zombCurX;
+    return curX;
+    }
 
-    // public int speedUp(){
-    // zombSpeed -= 6;
-    // System.out.println(name + " is Speeding Up!");
-    // int curX = zombCurX;
-    // return curX;
-    // }
+    public int speedUp(){
+    normal_speed = zombSpeed;
+    zombSpeed -= 6;
+    System.out.println(name + " is Speeding Up!");
+    int curX = zombCurX;
+    return curX;
+    }
 
     // public void slowDownToNormal(){
     // zombSpeed += 6;
