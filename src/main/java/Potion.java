@@ -52,19 +52,16 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
         if (this.getBounds().intersects(player.getLabel().getBounds()) && player.getHP() < 5 && amount != 0) {
             player.heal(pane);
             amount--;
@@ -80,20 +77,17 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
         curX = curX + e.getX();
         curY = curY + e.getY();
         setLocation(curX, curY);
@@ -101,7 +95,6 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 

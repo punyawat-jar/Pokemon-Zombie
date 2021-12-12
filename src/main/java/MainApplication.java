@@ -189,8 +189,6 @@ public class MainApplication extends JFrame {
         nightmareSong = new MySoundEffect("song/nightmare_song.wav");
         bossSong = new MySoundEffect("song/boss_song.wav");
 
-        // menuSong.playLoop();
-
         mainmanu();
         validate();
 
@@ -391,14 +389,6 @@ public class MainApplication extends JFrame {
         repaint();
     }
 
-    // public void radiobox_message(int i){
-    // JLabel messagebox = new JLabel();
-    // messagebox.setIcon(new MyImageIcon("Wbox/wbox.png").resize(120, 40));
-    // messagebox.setBounds(100,200,120,40);
-    // messagebox.setVisible(true);
-    // drawpane.add(messagebox);
-    // }
-
     public void showThemeMode() {
         int themeWidth = frameWidth / 3, themeHeight = frameHeight / 3;
         JLabel tempLabel = new JLabel();
@@ -435,47 +425,22 @@ public class MainApplication extends JFrame {
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected == "Beginner") {
                     setex_pane(0);
-                    // themePicLabel_AL.get(0).setVisible(true);
-                    // themePicLabel_AL.get(1).setVisible(false);
-                    // themePicLabel_AL.get(2).setVisible(false);
-                    // themePicLabel_AL.get(3).setVisible(false);
-                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Medium") {
                     setex_pane(1);
-                    // themePicLabel_AL.get(1).setVisible(true);
-                    // themePicLabel_AL.get(0).setVisible(false);
-                    // themePicLabel_AL.get(2).setVisible(false);
-                    // themePicLabel_AL.get(3).setVisible(false);
-                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Hard") {
                     setex_pane(2);
-                    // themePicLabel_AL.get(2).setVisible(true);
-                    // themePicLabel_AL.get(0).setVisible(false);
-                    // themePicLabel_AL.get(1).setVisible(false);
-                    // themePicLabel_AL.get(3).setVisible(false);
-                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Nightmare") {
                     setex_pane(3);
-                    // themePicLabel_AL.get(3).setVisible(true);
-                    // themePicLabel_AL.get(0).setVisible(false);
-                    // themePicLabel_AL.get(1).setVisible(false);
-                    // themePicLabel_AL.get(2).setVisible(false);
-                    // themePicLabel_AL.get(4).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Boss") {
                     setex_pane(4);
-                    // themePicLabel_AL.get(4).setVisible(true);
-                    // themePicLabel_AL.get(0).setVisible(false);
-                    // themePicLabel_AL.get(1).setVisible(false);
-                    // themePicLabel_AL.get(2).setVisible(false);
-                    // themePicLabel_AL.get(3).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 set_example_pane();
@@ -570,14 +535,6 @@ public class MainApplication extends JFrame {
         gameResult = "";
         countStageEnd = 0;
         showReadyGo();
-        // comeIn = false;
-        // if (comeIn == false) {
-        // comeIn = true;
-        // readyGoLabel.setBounds(525, 230, 380, 214);
-        // drawpane.add(readyGoLabel);
-        // drawpane.validate();
-        // readyGoSound.playOnce();
-        // }
         itemDrop = new itemdrop(drawpane, this, itemdrop_AL);
         itemDrop.start();
 
@@ -690,16 +647,12 @@ public class MainApplication extends JFrame {
         bomb = new Bomb(program, drawpane, zombielist, player, keybar, wbox_AL);
         slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist, keybar);
         speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist, keybar);
-        // player = new Player();
-        // player.draw_player(drawpane);
-        // player.draw_healthbar(drawpane);
 
         setup_thread_list();
 
     }
 
     public void createZombieThread(String mode) {
-        // ArrayList<ZombieThread> allZombThread = new ArrayList<ZombieThread>();
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
@@ -707,89 +660,24 @@ public class MainApplication extends JFrame {
 
             zombielist.add(zombThread);
 
-            // System.out.println("i main = " + i);
         }
-        // allZombThread.add(zombThread);
-        // }
-        // for (int i = 0; i < 10; i++) {
-        // try {
-        // allZombThread.get(i).join();
-        // } catch (InterruptedException e) {
-        // System.out.println("Join " + i + " Interrupted: " + e);
-        // }
-        // }
-        // System.out.println("Join Complete");
 
     }
 
-    // public void pause() {
-    // for (int i = 0; i < zombielist.size(); i++) {
-    // if (zombielist.get(i).getPauseGame() == false) {
-    // zombielist.get(i).setPauseGame(true);
-    // } else if (zombielist.get(i).getPauseGame() == true) {
-    // zombielist.get(i).setPauseGame(false);
-    // }
-    // }
-    // }
-
     public void kill_zombie(int i) {
-        // drawpane.remove(mobLabel.get(i));
-        // for (int j = 0; j < zombielist.size(); j++) {
         zombielist.get(i).kill_monster(i);
-        // }
-        // wbox_AL.get(i).setvisible(false);
-        // drawpane.remove(wbox_AL.get(i));
-        // drawpane.repaint();
         setCount_death();
     }
 
-    // class Reminder{
-    // Timer timer;
-    // String mode;
-
-    // public Reminder(int seconds, String m){
-    // mode = m;
-    // timer = new Timer();
-    // timer.schedule(new RemindTask(), seconds*1000);
-    // }
-
-    // class RemindTask extends TimerTask {
-    // public void run() {
-    // System.out.println("Time's up!");
-    // timer.cancel(); //Terminate the timer thread
-    // for(int j=0; j<zombielist.size(); j++)
-    // {
-    // if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    // if(mode == "slow") zombielist.get(j).speedUpToNormal();
-    // else if(mode =="speed") zombielist.get(j).slowDownToNormal();
-    // else System.out.println("Can't find mode in Reminder");
-
-    // }
-    // }
-    // }
-    // }
-    // }//end Class Reminder
-
     public void slowSpeed() {
 
-        // new Reminder(5,"slow");
     }
 
     public void fastSpeed() {
         for (int i = 0; i < zombielist.size(); i++) {
             zombielist.get(i).speedUp();
         }
-        // new Reminder(6,"speed");
     }
-
-    // public void joinThread(int n) {
-    // for (int i = 0; i < n; i++) {
-    // try {
-    // mobThread.get(i).join();
-    // } catch (InterruptedException e) {
-    // }
-    // }
-    // }
 
     public void setup_thread_list() {
         threadlist.add(0);
@@ -800,17 +688,13 @@ public class MainApplication extends JFrame {
 
     public void print_list_thread() {
         for (int i = 0; i < threadlist.size(); i++) {
-            // System.out.println("->>>>>>>>" + threadlist.get(i));
         }
     }
-
-    // wbox_AL.get(i).wbox_move(mobCurX.get(i),mobCurY.get(i)-50);
 
     public void setPBar() {
         if (count < 10) {
             count += 1;
             PBar.setValue(count * 10);
-            // System.out.println("Add Count + = 1");
         }
 
     }
@@ -844,15 +728,6 @@ public class MainApplication extends JFrame {
     public Player getPlayer() {
         return player;
     }
-
-    // public void kill_monster(int i) {
-    // drawpane.remove(mobLabel.get(i));
-    // wbox_AL.get(i).setvisible(false);
-    // // drawpane.remove(wbox_AL.get(i));
-    // drawpane.repaint();
-    // setCount_death();
-
-    // }
 
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
@@ -985,7 +860,6 @@ public class MainApplication extends JFrame {
             info.setHorizontalTextPosition(JLabel.CENTER);
             info.setBounds(frameWidth - 350, 100, 267, 320);
             custom_info_AL.add(info);
-            // poke_list_AL.add(poke_list[i]);
         }
 
         for (int i = 0; i < itemdrop_list.length; i++) {
@@ -1033,15 +907,6 @@ public class MainApplication extends JFrame {
                         }
                     });
                     break;
-                // case 4:
-                // item_label.addMouseListener(new MouseAdapter() {
-                // public void mouseEntered(MouseEvent e) {
-                // System.out.println("Hello world5");
-                // item_label.setVisible(false);
-                // ding.playOnce();
-                // }
-                // });
-                // break;
             }
 
             itemdrop_AL.add(item_label);
@@ -1052,8 +917,6 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < vocabFilename_list.length; i++) {
             enforceFile(vocabFilename_list[i]);
         }
-        // System.out.printf("----------------------------------------------\n");
-        // printReadFile();
     }
 
     public void enforceFile(String fname) {
@@ -1136,307 +999,3 @@ public class MainApplication extends JFrame {
         use_slow = x;
     }
 }// end Class MainApplication
-
-// class Vocab {
-// private String mode;
-// private int sizeList;
-// private ArrayList<String> vocabList = new ArrayList<String>();
-// private Random random = new Random();
-
-// public Vocab() {
-// }
-
-// public Vocab(String m, ArrayList<String> li) {
-// mode = m;
-// vocabList = li;
-// sizeList = vocabList.size();
-// }
-
-// public String getMode() {
-// return mode;
-// }
-
-// public String randomWord() { // Random word
-// int ran = random.nextInt(sizeList);
-// return vocabList.get(ran);
-// }
-
-// public void printFileWord() { // check Reading File
-// System.out.printf("====== Mode %-9s reading... =====\n", mode);
-// for (int i = 0; i < vocabList.size(); i++) {
-// System.out.printf("\t [%8s] %-15s \n", mode, vocabList.get(i));
-// }
-// System.out.println("");
-// }
-// }
-
-// class Player {
-// private int HP, Score;
-// private int playerwidth = 200, playerhight = 165, healthbarwidth = 180,
-// healthbarhight = 30;
-// private MyImageIcon player, healthbar_pic;
-// private JLabel playerLabel, HP_Label;
-// private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
-// String[] HP_bar = { "health bar/H0.png", "health bar/1.png", "health
-// bar/H2.png", "health bar/H3.png",
-// "health bar/H4.png", "health bar/H5.png" };
-
-// public Player(JLabel x) {
-// player = new MyImageIcon("pokemon/pikachuready.png").resize(playerwidth,
-// playerhight);
-// playerLabel = new JLabel(player);
-// playerLabel.setBounds(0, 440, playerwidth, playerhight);
-// x.add(playerLabel);
-// x.validate();
-
-// for (int i = 0; i < HP_bar.length; i++) {
-// healthbar_pic = new MyImageIcon(HP_bar[i]).resize(healthbarwidth,
-// healthbarhight);
-// HP_Label = new JLabel(healthbar_pic);
-
-// HP_Label.setBounds(45, 50, healthbarwidth, healthbarhight);
-// // HP_Label.setBounds(45,420,healthbarwidth,healthbarhight);
-// HP_AL.add(HP_Label);
-// }
-// HP = HP_AL.size() - 1;
-// x.add(HP_AL.get(5));
-// }
-
-// public void hitplayer(JLabel x) {
-// x.remove(HP_AL.get(HP));
-// HP -= 1;
-// x.add(HP_AL.get(HP));
-// }
-
-// public int getHP() {
-// return HP;
-// }
-
-// public void setscore(int x) {
-// this.Score = x;
-// }
-
-// public JLabel getLabel() {
-// return playerLabel;
-// }
-// }// end Player
-
-// class ZombieThread extends Thread {
-// JLabel zombLabel = new JLabel();
-// JLabel playerLabel = new JLabel(); // For Check Intersect
-// int zombCurX, zombCurY;
-// int zombWidth, zombHeight;
-// int zombSpeed;
-// int low, high;
-// JLabel tempPane;
-// boolean pauseGame = false;
-// MainApplication program;
-// MySoundEffect hurtSound;
-// static String mode;
-
-// // -------------------------------- ZombieThread Constructor
-// // --------------------------
-// public ZombieThread(String n, JLabel zl, JLabel pl, int zs, JLabel pane,
-// MySoundEffect hs, String m) {
-// super(n);
-// zombLabel = zl;
-// zombCurX = zl.getX();
-// zombCurY = zl.getY();
-// zombWidth = zl.getWidth();
-// zombHeight = zl.getHeight();
-// playerLabel = pl;
-// zombSpeed = zs;
-// tempPane = pane;
-// hurtSound = hs;
-// mode = m;
-// System.out.println("mode = " + mode);
-// System.out.println("zombCur X = " + zombCurX + ", zombCurY = " + zombCurY + "
-// zombWidth = " + zombWidth
-// + " , zombHeight" + zombHeight);
-
-// zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
-// tempPane.add(zombLabel);
-// tempPane.validate();
-// start();
-// }
-
-// public void setPauseGame(boolean b) {
-// pauseGame = b;
-// }
-
-// // ------------------------- For randoming time Zombie Appear
-// ----------------
-// // Use static method to lock class * If lock only Obj. all other thread will
-// // work and wait together.
-// synchronized public static void waitGetIn() {
-// if (Thread.currentThread().getName() != "Zombie0") {
-// Random r = new Random();
-// int low = 5000;
-// int high = 15000;
-// int timeWait = r.nextInt(high - low) + low;
-// try {
-// Thread.sleep(timeWait);
-// } catch (InterruptedException e) {
-// }
-// }
-// }
-
-// synchronized public static void waitGetInHard() {
-// if (Thread.currentThread().getName() != "Zombie0") {
-// Random r = new Random();
-// int low = 5000;
-// int high = 10000;
-// int timeWait = r.nextInt(high - low) + low;
-// try {
-// Thread.sleep(timeWait);
-// } catch (InterruptedException e) {
-// }
-// }
-// }
-
-// synchronized public static void waitGetInNightmare() {
-// if (Thread.currentThread().getName() != "Zombie0") {
-// Random r = new Random();
-// int low = 4000;
-// int high = 7500;
-// int timeWait = r.nextInt(high - low) + low;
-// try {
-// Thread.sleep(timeWait);
-// } catch (InterruptedException e) {
-// }
-// }
-// }
-
-// // -------------------- If zombie not hit pikachu, it walks to left
-// // --------------------
-// public void move() {
-// while (!(zombLabel.getBounds().intersects(playerLabel.getBounds()))) {
-
-// zombLabel.setLocation(zombCurX, zombCurY);
-// if (!pauseGame) {
-// zombCurX = zombCurX - 5;
-// zombLabel.repaint();
-// } else {
-// System.out.println("Pause ZombieThread: " +
-// Thread.currentThread().getName());
-// }
-// zombLabel.repaint();
-// try {
-// Thread.sleep(zombSpeed);
-// } catch (InterruptedException e) {
-// e.printStackTrace();
-// }
-// System.out.println("thread = " + this.getName() + " move");
-// } // end while
-
-// }
-
-// public void run() {
-// System.out.println("thread = " + this.getName());
-// if (mode == "Nightmare") {
-// waitGetInNightmare();
-// } else if (mode == "Hard") {
-// waitGetInHard();
-// } else {
-// waitGetIn();
-// }
-// move();
-// // --------- Remove Zombie when Hit Pikachu & decrease heart
-// if (zombLabel.getBounds().intersects(playerLabel.getBounds())) {
-// hurtSound.playOnce();
-// tempPane.remove(zombLabel);
-// tempPane.repaint();
-// }
-
-// } // end run
-// }
-
-// // ----------------- Special Class Zone ----------------
-// class MyImageIcon extends ImageIcon {
-// public MyImageIcon(String fname) {
-// super(fname);
-// }
-
-// public MyImageIcon(Image image) {
-// super(image);
-// }
-
-// public MyImageIcon resize(int width, int height) {
-// Image oldimg = this.getImage();
-// Image newimg = oldimg.getScaledInstance(width, height,
-// java.awt.Image.SCALE_SMOOTH);
-// return new MyImageIcon(newimg);
-// }
-// };
-
-// class MySoundEffect {
-// private Clip clip;
-
-// public MySoundEffect(String filename) {
-// try {
-// java.io.File file = new java.io.File(filename);
-// AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
-// clip = AudioSystem.getClip();
-// clip.open(audioStream);
-// } catch (Exception e) {
-// e.printStackTrace();
-// }
-// }
-
-// public void playOnce() {
-// clip.setMicrosecondPosition(0);
-// clip.start();
-// }
-
-// public void playLoop() {
-// clip.loop(Clip.LOOP_CONTINUOUSLY);
-// }
-
-// public void stop() {
-// clip.stop();
-// }
-// }
-
-// class Keyboard_bar {
-// private JTextArea typearea;
-// private int width, height;
-
-// public Keyboard_bar() {
-// typearea = new JTextArea();
-// typearea.setBounds(50, 100, 500, 30);
-// typearea.setFont(new Font("SanSerif", Font.BOLD, 25));
-// // typearea.grabFocus();
-// typearea.addKeyListener(new KeyListener() {
-// public void keyPressed(KeyEvent e) {
-// if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-// System.out.println("Hello world");
-// }
-// }
-
-// public void keyTyped(KeyEvent e) {
-// }
-
-// public void keyReleased(KeyEvent e) {
-// }
-// });
-// }
-
-// public JTextArea getTypearea() {
-// return typearea;
-// }
-
-// public void setPane(JLabel x) {
-// x.add(typearea);
-// }
-
-// public void setposition(int x, int y) {
-// typearea.setBounds(x, y, width, height);
-// }
-// }
-
-// class Item {
-// private int amount = 0;
-// private int width = 100, length = 100;
-// private ImageIcon img;
-
-// }

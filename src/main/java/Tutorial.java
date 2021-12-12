@@ -5,40 +5,38 @@ import javax.swing.border.BevelBorder;
 
 import java.util.*;
 
-public class Tutorial extends JFrame{
+public class Tutorial extends JFrame {
 
     private JPanel Tcontentpane;
-    private JLabel Tdrawpane,bgImg;
-    private String[] p = {"tutorial/1.png","tutorial/2.png","tutorial/3.png","tutorial/4.png"};
+    private JLabel Tdrawpane, bgImg;
+    private String[] p = { "tutorial/1.png", "tutorial/2.png", "tutorial/3.png", "tutorial/4.png" };
     private MyImageIcon bg, prevButton, nextButton;
     private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
     private int count = 0;
     private int frameWidth = 800, frameHeight = 600;
     private MySoundEffect buttonSound;
 
-    
-
-    public static void main(String[] args){
+    public static void main(String[] args) {
         new Tutorial();
     }
 
-    public Tutorial(){
+    public Tutorial() {
         setTitle("Tutorial");
-        setBounds(50,50,frameWidth,frameHeight);
+        setBounds(50, 50, frameWidth, frameHeight);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         Tcontentpane = (JPanel) getContentPane();
         Tcontentpane.setLayout(new BorderLayout());
-        
+
         AddComponents();
     }
 
-    public void AddComponents(){
+    public void AddComponents() {
         setUpCursor(Tcontentpane);
         Tdrawpane = new JLabel();
         Tdrawpane.setLayout(null);
-        Tcontentpane.add(Tdrawpane,BorderLayout.CENTER);
+        Tcontentpane.add(Tdrawpane, BorderLayout.CENTER);
 
         Tdrawpane.setIcon(new ImageIcon("bg/view.gif"));
         prevButton = new MyImageIcon("button_and_cursor/PreviousButton.png").resize(138, 50);
@@ -50,7 +48,7 @@ public class Tutorial extends JFrame{
         JButton button2 = new JButton("Previous");
         setUpButton(button1, nextButton);
         setUpButton(button2, prevButton);
-        button1.setBounds((frameWidth / 2) + 120, (frameHeight / 2) + 150, 145, 50);     ///Size and position of btn
+        button1.setBounds((frameWidth / 2) + 120, (frameHeight / 2) + 150, 145, 50); /// Size and position of btn
         button2.setBounds((frameWidth / 2) - 220, (frameHeight / 2) + 150, 145, 50);
 
         Tdrawpane.add(button1);
@@ -59,50 +57,52 @@ public class Tutorial extends JFrame{
         readpic();
         Tdrawpane.add(pic_AL.get(0));
 
-        button1.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        button1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                if(count<pic_AL.size()-1){;
+                if (count < pic_AL.size() - 1) {
+                    ;
                     Tdrawpane.remove(pic_AL.get(count));
-                    count+=1;
+                    count += 1;
                     Tdrawpane.add(pic_AL.get(count));
                     repaint();
-                    ///Use arraylist to create list picture label then use add/remove
+                    /// Use arraylist to create list picture label then use add/remove
                 }
-                
+
             }
         });
 
-        button2.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        button2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 buttonSound.playOnce();
-                if(count>0){
+                if (count > 0) {
                     Tdrawpane.remove(pic_AL.get(count));
-                    count-=1;
+                    count -= 1;
                     Tdrawpane.add(pic_AL.get(count));
-                    
+
                     repaint();
                 }
             }
         });
-        
+
         validate();
         repaint();
     }
 
-    public void readpic(){
-        for(int i=0;i<p.length;i++){
-            MyImageIcon pic = new MyImageIcon(p[i]).resize(600, 324);;
+    public void readpic() {
+        for (int i = 0; i < p.length; i++) {
+            MyImageIcon pic = new MyImageIcon(p[i]).resize(600, 324);
+            ;
 
             JLabel label = new JLabel(pic);
-            //label.setBorder(new BevelBorder(BevelBorder, highlight, shadow);
-            label.setBounds(100,30,600,324);
+            label.setBounds(100, 30, 600, 324);
             pic_AL.add(label);
         }
     }
 
-    //-------------------------------- Set up Cursor & Button ------------------------
-    public void setUpButton(JButton button, MyImageIcon img){
+    // -------------------------------- Set up Cursor & Button
+    // ------------------------
+    public void setUpButton(JButton button, MyImageIcon img) {
         button.setIcon(img);
         button.setOpaque(false);
         button.setContentAreaFilled(false);
@@ -110,10 +110,10 @@ public class Tutorial extends JFrame{
         button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
-    public void setUpCursor(JPanel mainpane){
+    public void setUpCursor(JPanel mainpane) {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image image = toolkit.getImage("button_and_cursor/normalCursor.png");
-        Cursor c = toolkit.createCustomCursor(image , new Point(mainpane.getX(), mainpane.getY()), "img");
+        Cursor c = toolkit.createCustomCursor(image, new Point(mainpane.getX(), mainpane.getY()), "img");
         mainpane.setCursor(c);
     }
 }
