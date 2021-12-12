@@ -50,7 +50,6 @@ public class MainApplication extends JFrame {
     ArrayList<JLabel> custom_info_AL = new ArrayList<JLabel>();
     ArrayList<JLabel> itemdrop_AL = new ArrayList<JLabel>();
     ArrayList<Integer> threadlist = new ArrayList<Integer>();
-    int itemAmount[] = { 0, 0, 0, 0 }; // potion speed slow bomb
     ArrayList<ZombieThread> zombielist = new ArrayList<ZombieThread>();
     ArrayList<JLabel> themePicLabel_AL = new ArrayList<JLabel>();
 
@@ -59,10 +58,10 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
-    private int selected_rbox = 0;
+    private int selected_rbox = 0, ex_pane;
     private JButton end_btn;
     private itemdrop itemDrop;
-    private boolean ismove = true;
+    private boolean ismove = true, use_speed = false, use_slow = false;
     private Player player;
     private Wordbox wbox;
     private Bomb bomb;
@@ -78,7 +77,7 @@ public class MainApplication extends JFrame {
     private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
             "Vocab/Boss.txt" };
     private String[] itemdrop_list = { "item_fall/bomb.png", "item_fall/potion.png", "item_fall/slow_stopwatch.png",
-            "item_fall/speed_stopwatch.png", "item_fall/bomb.png", };
+            "item_fall/speed_stopwatch.png" };
 
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
@@ -177,7 +176,7 @@ public class MainApplication extends JFrame {
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
         normalHitSound = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
         softHitSound = new MySoundEffect("sound_effect/SoftHit_soundeffect.wav");
-        criHitSound = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
+        // criHitSound = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
         gameOverSound = new MySoundEffect("sound_effect/GameOver_soundeffect.wav");
         winSound = new MySoundEffect("sound_effect/Win_soundeffect.wav");
         usedItemSound = new MySoundEffect("sound_effect/UsedItem_soundeffect.wav");
@@ -364,9 +363,6 @@ public class MainApplication extends JFrame {
                 drawpane.remove(custom_poke_AL.get(count_pic));
                 drawpane.remove(custom_info_AL.get(count_pic));
                 rlabel.setVisible(false);
-                for (int i = 0; i < itemAmount.length; i++) {
-                    itemAmount[i] = 0;
-                }
                 repaint();
                 mainmanu();
 
@@ -380,14 +376,6 @@ public class MainApplication extends JFrame {
                 drawpane.remove(custom_poke_AL.get(count_pic));
                 drawpane.remove(custom_info_AL.get(count_pic));
                 rlabel.setVisible(false);
-                if (count_pic != 0) {
-                    itemAmount[count_pic - 1] += 2;
-                }
-                for (int i = 0; i < itemAmount.length; i++) {
-                    System.out.printf("%d, ", itemAmount[i]);
-                }
-                System.out.println();
-                System.out.println();
                 repaint();
                 mode_panel();
             }
@@ -446,7 +434,7 @@ public class MainApplication extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected == "Beginner") {
-                    set_example_pane(0);
+                    setex_pane(0);
                     // themePicLabel_AL.get(0).setVisible(true);
                     // themePicLabel_AL.get(1).setVisible(false);
                     // themePicLabel_AL.get(2).setVisible(false);
@@ -455,7 +443,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Medium") {
-                    set_example_pane(1);
+                    setex_pane(1);
                     // themePicLabel_AL.get(1).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(2).setVisible(false);
@@ -464,7 +452,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Hard") {
-                    set_example_pane(2);
+                    setex_pane(2);
                     // themePicLabel_AL.get(2).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(1).setVisible(false);
@@ -473,7 +461,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Nightmare") {
-                    set_example_pane(3);
+                    setex_pane(3);
                     // themePicLabel_AL.get(3).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(1).setVisible(false);
@@ -482,7 +470,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Boss") {
-                    set_example_pane(4);
+                    setex_pane(4);
                     // themePicLabel_AL.get(4).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(1).setVisible(false);
@@ -490,22 +478,21 @@ public class MainApplication extends JFrame {
                     // themePicLabel_AL.get(3).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
+                set_example_pane();
                 repaint();
                 validate();
             }
         });
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                remove_example_pane();
                 buttonSound.playOnce();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
-                    for (int i = 0; i < 5; i++) {
-                        themePicLabel_AL.get(i).setVisible(false);
-                        drawpane.remove(themePicLabel_AL.get(i));
-                    }
+                    themePicLabel_AL.clear();
                     drawpane.repaint();
                     main_game(modeSelected);
                 }
@@ -514,17 +501,12 @@ public class MainApplication extends JFrame {
 
         backbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                remove_example_pane();
                 buttonSound.playOnce();
                 combo.setVisible(false);
                 play.setVisible(false);
                 backbtn.setVisible(false);
-                for (int i = 0; i < itemAmount.length; i++) {
-                    itemAmount[i] = 0;
-                }
-                for (int i = 0; i < 5; i++) {
-                    themePicLabel_AL.get(i).setVisible(false);
-                    drawpane.remove(themePicLabel_AL.get(i));
-                }
+                themePicLabel_AL.clear();
                 drawpane.repaint();
                 custom();
             }
@@ -535,10 +517,17 @@ public class MainApplication extends JFrame {
         drawpane.add(backbtn);
     }// end mode Panel
 
-    public void set_example_pane(int i) {
-        themePicLabel_AL.get(i).setVisible(true);
+    public void remove_example_pane() {
+
+        themePicLabel_AL.get(ex_pane).setVisible(false);
+        drawpane.remove(themePicLabel_AL.get(ex_pane));
+    }
+
+    public void set_example_pane() {
+        System.out.println(ex_pane);
+        themePicLabel_AL.get(ex_pane).setVisible(true);
         for (int j = 0; j < 4; j++) {
-            if (j == i) {
+            if (j == ex_pane) {
                 continue;
             } else {
                 themePicLabel_AL.get(j).setVisible(false);
@@ -589,6 +578,8 @@ public class MainApplication extends JFrame {
         // drawpane.validate();
         // readyGoSound.playOnce();
         // }
+        itemDrop = new itemdrop(drawpane, this, itemdrop_AL);
+        itemDrop.start();
 
         wbox_AL.clear();
 
@@ -597,10 +588,6 @@ public class MainApplication extends JFrame {
         PBar.setForeground(new Color(255, 199, 56));
         PBar.setStringPainted(false);
         drawpane.add(PBar);
-
-        keybar = new Keyboard_bar(wbox_AL, program);
-        keybar.setPane(drawpane, this);
-        keybar.getTypearea().grabFocus();
 
         end_btn = new JButton();
         setUpButton(end_btn, menuButton);
@@ -637,9 +624,6 @@ public class MainApplication extends JFrame {
             }
         });
         drawpane.add(end_btn);
-        bomb = new Bomb(program, drawpane, zombielist, itemAmount[3]);
-        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist, itemAmount[2]);
-        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist, itemAmount[1]);
 
         switch (mode) {
             case "Beginner":
@@ -649,6 +633,7 @@ public class MainApplication extends JFrame {
                 beginnerSong.playLoop();
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
+
                 createZombieThread(mode);
                 break;
             case "Medium":
@@ -658,6 +643,7 @@ public class MainApplication extends JFrame {
                 mediumSong.playLoop();
                 player = new Player(drawpane, count_pic, 1);
                 input_word(1);
+
                 createZombieThread(mode);
                 break;
             case "Hard":
@@ -667,6 +653,7 @@ public class MainApplication extends JFrame {
                 hardSong.playLoop();
                 player = new Player(drawpane, count_pic, 2);
                 input_word(2);
+
                 createZombieThread(mode);
                 break;
             case "Nightmare":
@@ -676,6 +663,7 @@ public class MainApplication extends JFrame {
                 nightmareSong.playLoop();
                 player = new Player(drawpane, count_pic, 3);
                 input_word(3);
+
                 createZombieThread(mode);
                 break;
             case "Boss":
@@ -686,14 +674,22 @@ public class MainApplication extends JFrame {
                 player = new Player(drawpane, count_pic, 4);
                 input_word(4);
                 // createZombieThread("Nightmare");
-                createZombieThread(mode);
 
+                createZombieThread(mode);
                 break;
         }
-        potion = new Potion(program, drawpane, player, itemAmount[0]);
-        itemDrop = new itemdrop(drawpane, this, itemdrop_AL);
-        itemDrop.start();
+        keybar = new Keyboard_bar(wbox_AL, program);
+        keybar.setPane(drawpane, this);
+        keybar.getTypearea().grabFocus();
 
+        for (int i = 0; i < zombielist.size(); i++) {
+            zombielist.get(i).setkeybr(keybar);
+        }
+
+        potion = new Potion(program, drawpane, player, keybar);
+        bomb = new Bomb(program, drawpane, zombielist, player, keybar, wbox_AL);
+        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist, keybar);
+        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist, keybar);
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
@@ -707,10 +703,11 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
-                    program, wbox_AL, keybar);
+                    program, wbox_AL);
+
             zombielist.add(zombThread);
 
-            System.out.println("i main = " + i);
+            // System.out.println("i main = " + i);
         }
         // allZombThread.add(zombThread);
         // }
@@ -773,23 +770,17 @@ public class MainApplication extends JFrame {
     // }
     // }//end Class Reminder
 
-    // public void slowSpeed(){
-    // for(int i=0; i<zombielist.size(); i++)
-    // {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    // zombielist.get(i).slowDown();
-    // }
-    // }
-    // new Reminder(5,"slow");
-    // }
+    public void slowSpeed() {
 
-    // public void fastSpeed(){
-    // for(int i=0; i<zombielist.size(); i++)
-    // {if(Thread.currentThread().getState()!=Thread.State.TERMINATED){
-    // zombielist.get(i).speedUp();
-    // }
-    // }
-    // new Reminder(6,"speed");
-    // }
+        // new Reminder(5,"slow");
+    }
+
+    public void fastSpeed() {
+        for (int i = 0; i < zombielist.size(); i++) {
+            zombielist.get(i).speedUp();
+        }
+        // new Reminder(6,"speed");
+    }
 
     // public void joinThread(int n) {
     // for (int i = 0; i < n; i++) {
@@ -809,7 +800,7 @@ public class MainApplication extends JFrame {
 
     public void print_list_thread() {
         for (int i = 0; i < threadlist.size(); i++) {
-            System.out.println("->>>>>>>>" + threadlist.get(i));
+            // System.out.println("->>>>>>>>" + threadlist.get(i));
         }
     }
 
@@ -819,7 +810,7 @@ public class MainApplication extends JFrame {
         if (count < 10) {
             count += 1;
             PBar.setValue(count * 10);
-            System.out.println("Add Count + = 1");
+            // System.out.println("Add Count + = 1");
         }
 
     }
@@ -870,6 +861,8 @@ public class MainApplication extends JFrame {
         pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
         drawpane.remove(end_btn);
         pokeGameOverLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
+        bomb.resetbtn();
+        potion.resetbtn();
 
         // Back To Menu
         JButton button1 = new JButton();
@@ -1007,50 +1000,48 @@ public class MainApplication extends JFrame {
                 case 0:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world1");
                             item_label.setVisible(false);
                             ding.playOnce();
-
+                            bomb.setAmount();
                         }
                     });
                     break;
                 case 1:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world2");
                             item_label.setVisible(false);
                             ding.playOnce();
+                            potion.setAmount();
                         }
                     });
                     break;
                 case 2:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world3");
                             item_label.setVisible(false);
                             ding.playOnce();
-
+                            slow_stopwatch.setAmount();
                         }
                     });
                     break;
                 case 3:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world4");
                             item_label.setVisible(false);
                             ding.playOnce();
+                            speed_stopwatch.setAmount();
                         }
                     });
                     break;
-                case 4:
-                    item_label.addMouseListener(new MouseAdapter() {
-                        public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world5");
-                            item_label.setVisible(false);
-                            ding.playOnce();
-                        }
-                    });
-                    break;
+                // case 4:
+                // item_label.addMouseListener(new MouseAdapter() {
+                // public void mouseEntered(MouseEvent e) {
+                // System.out.println("Hello world5");
+                // item_label.setVisible(false);
+                // ding.playOnce();
+                // }
+                // });
+                // break;
             }
 
             itemdrop_AL.add(item_label);
@@ -1103,6 +1094,10 @@ public class MainApplication extends JFrame {
         System.out.println("");
     }
 
+    public int getcount_pic() {
+        return count_pic;
+    }
+
     public void input_word(int n) {
         for (int i = 0; i < 10; i++) {
             if (i == 1) {
@@ -1115,50 +1110,31 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < wbox_AL.size(); i++) {
             System.out.println(i + " = " + wbox_AL.get(i).getWord());
         }
-
     }
 
-    public void fastSpeed() {
-        Thread time = new Thread() {
-            public void run() {
-                for (int i = 0; i < zombielist.size(); i++) {
-                    zombielist.get(i).fastZomb();
-                }
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        };
-        time.start();
+    public void setex_pane(int x) {
+        ex_pane = x;
     }
 
-    public void slowSpeed() {
-        Thread time = new Thread() {
-            public void run() {
-                for (int i = 0; i < zombielist.size(); i++) {
-                    zombielist.get(i).slowZomb();
-                }
-                try {
-                    Thread.sleep(5000);
-
-                } catch (InterruptedException e) {
-                    // TODO: handle exception
-                    e.printStackTrace();
-                }
-            }
-        };
+    public int getex_pane() {
+        return ex_pane;
     }
 
-    public void normalSpeed(ArrayList<Integer> x) {
-        for (int i = 0; i < x.size(); i++) {
-            zombielist.get(i).setZombSpeed(x.get(i));
-        }
-
+    public boolean getUse_speed() {
+        return use_speed;
     }
 
+    public void setUse_speed(boolean x) {
+        use_speed = x;
+    }
+
+    public boolean getUse_slow() {
+        return use_slow;
+    }
+
+    public void setUse_slow(boolean x) {
+        use_slow = x;
+    }
 }// end Class MainApplication
 
 // class Vocab {

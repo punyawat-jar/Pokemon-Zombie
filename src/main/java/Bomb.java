@@ -6,33 +6,55 @@ import javax.sound.sampled.*; // for sounds
 import java.util.*;
 import java.util.Random;
 import java.io.*;
+import java.lang.management.BufferPoolMXBean;
+
 import javax.swing.border.*;
 import javax.swing.event.MouseInputListener;
 
 public class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
     private int amount = 0;
-    private int curX, curY;
+    private int curX, curY, score;
     private int width = 50;
     private int height = 50;
     private MyImageIcon bombIcon;
-    private JLabel BombAmount;
+    private JLabel BombAmount, pane;
     private MainApplication program;
-    private boolean useornot;
+    private Player player;
     private ArrayList<ZombieThread> zombielist;
+    private ArrayList<Wordbox> word_AL;
+    private Keyboard_bar keybr;
+    private MySoundEffect use_Bomb_sound = new MySoundEffect("sound_effect/Explosion.wav");
 
-    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, int a) {
-        amount = a;
+    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, Player p, Keyboard_bar kb,
+            ArrayList<Wordbox> w_AL) {
         this.program = program;
         zombielist = zombie_AL;
+        player = p;
+        pane = x;
+        word_AL = w_AL;
+        keybr = kb;
         bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);
-        curX = program.getWidth() - (width / 2) * 3;
+        curX = program.getWidth() - (width / 2) * 12;
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(bombIcon);
+        if (program.getcount_pic() == 1) {
+            amount = 2;
+        }
+
+        BombAmount = new JLabel("x" + amount + "");
+        BombAmount.setBounds(1075, 80, 50, 20);
+        BombAmount.setForeground(Color.WHITE);
+        BombAmount.setBackground(null);
+        BombAmount.setFont(new Font("SanSerif", Font.BOLD, 25));
+
         addMouseListener(this);
         addMouseMotionListener(this);
-        x.add(this);
-        x.validate();
+
+        pane.add(BombAmount);
+        pane.add(this);
+        pane.validate();
+        pane.repaint();
     }
 
     @Override
@@ -50,15 +72,29 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
-        for (int i = 0; i < 2; i++) {
-            if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program.getWidth()) {// true
-                program.kill_zombie(program.threadlist.get(program.getCount_death()));
+
+        if (amount != 0 && (!program.getUse_speed() || !program.getUse_slow())) {
+            try {
+                for (int i = 0; i < 2; i++) {
+                    if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program
+                            .getWidth()) {// true
+                        use_Bomb_sound.playOnce();
+                        program.kill_zombie(program.threadlist.get(program.getCount_death()));
+                        word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
+                        ;
+                        player.setscore(score);
+                    }
+                }
                 amount--;
+                BombAmount.setText("x" + amount + "");
+                pane.validate();
+                pane.repaint();
+                keybr.getTypearea().grabFocus();
+            } catch (Exception error) {
             }
+
         }
-        curX = program.getWidth() - (width / 2) * 3;
-        curY = height / 2;
-        setLocation(curX, curY);
+        resetbtn();
     }
 
     @Override
@@ -87,4 +123,16 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     }
 
+    public void setAmount() {
+        amount++;
+        BombAmount.setText("x" + amount + "");
+        pane.repaint();
+        pane.validate();
+    }
+
+    public void resetbtn() {
+        curX = program.getWidth() - (width / 2) * 12;
+        curY = height / 2;
+        setLocation(curX, curY);
+    }
 }

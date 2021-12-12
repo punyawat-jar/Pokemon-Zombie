@@ -27,9 +27,9 @@ class Player {
         mode = m;
         player = new MyImageIcon(list_player[custom]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
-
+        System.out.println("Play heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
         if (mode == 4) {
-            System.out.println("Test");
+    
             playerLabel.setBounds(0, 370, playerwidth, playerhight);
         } else
             playerLabel.setBounds(0, 455, playerwidth, playerhight);
@@ -52,7 +52,6 @@ class Player {
     public void hitplayer(JLabel x) {
         x.remove(HP_AL.get(HP));
         HP -= 1;
-        System.out.println("HP is " + HP);
         x.add(HP_AL.get(HP));
     }
 
@@ -64,9 +63,9 @@ class Player {
         return HP;
     }
 
-    synchronized public void setscore(/* int x */) {
+    synchronized public void setscore(int x) {
         // this.Score = x;
-        Score++;
+        Score+=x;
         System.out.printf("Your Score: %d\n", Score);
     }
 
