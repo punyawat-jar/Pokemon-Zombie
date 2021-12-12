@@ -86,5 +86,8 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
         // TODO Auto-generated method stub
 
     }
+    public void setAmount(){
+        amount++;
+    }
 
 }

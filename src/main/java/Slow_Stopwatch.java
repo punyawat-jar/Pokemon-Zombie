@@ -86,4 +86,8 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
 
     }
 
+    public void setAmount(){
+        amount++;
+    }
+
 }

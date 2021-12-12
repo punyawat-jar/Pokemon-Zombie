@@ -77,7 +77,7 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
     }
-
+    
     @Override
     public void mouseExited(MouseEvent e) {
         // TODO Auto-generated method stub
@@ -98,5 +98,7 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
         // TODO Auto-generated method stub
 
     }
-
+    public void setAmount(){
+        amount++;
+    }
 }

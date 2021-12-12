@@ -96,4 +96,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     }
 
+    public void setAmount(){
+        amount++;
+    }
 }
