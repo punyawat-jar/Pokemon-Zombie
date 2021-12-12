@@ -61,7 +61,7 @@ public class MainApplication extends JFrame {
     private int selected_rbox = 0, ex_pane;
     private JButton end_btn;
     private itemdrop itemDrop;
-    private boolean ismove = true,use_speed = false,use_slow = false;
+    private boolean ismove = true, use_speed = false, use_slow = false;
     private Player player;
     private Wordbox wbox;
     private Bomb bomb;
@@ -77,7 +77,7 @@ public class MainApplication extends JFrame {
     private String[] mode = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt", "Vocab/Nightmare.txt",
             "Vocab/Boss.txt" };
     private String[] itemdrop_list = { "item_fall/bomb.png", "item_fall/potion.png", "item_fall/slow_stopwatch.png",
-            "item_fall/speed_stopwatch.png"};
+            "item_fall/speed_stopwatch.png" };
 
     private String[] vocabFilename_list = { "Vocab/Beginner.txt", "Vocab/Medium.txt", "Vocab/Hard.txt",
             "Vocab/Nightmare.txt",
@@ -176,7 +176,7 @@ public class MainApplication extends JFrame {
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
         normalHitSound = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
         softHitSound = new MySoundEffect("sound_effect/SoftHit_soundeffect.wav");
-        //criHitSound = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
+        // criHitSound = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
         gameOverSound = new MySoundEffect("sound_effect/GameOver_soundeffect.wav");
         winSound = new MySoundEffect("sound_effect/Win_soundeffect.wav");
         usedItemSound = new MySoundEffect("sound_effect/UsedItem_soundeffect.wav");
@@ -402,10 +402,12 @@ public class MainApplication extends JFrame {
     public void showThemeMode() {
         int themeWidth = frameWidth / 3, themeHeight = frameHeight / 3;
         JLabel tempLabel = new JLabel();
-        String []bg = {"bg_border/bg_beginner.png","bg_border/bg_medium.png","bg_border/bg_hard.png","bg_border/bg_nightmare.png","bg_border/bg_boss.png"};
-        for(int i=0 ;i<bg.length;i++){
+        String[] bg = { "bg_border/bg_beginner.png", "bg_border/bg_medium.png", "bg_border/bg_hard.png",
+                "bg_border/bg_nightmare.png", "bg_border/bg_boss.png" };
+        for (int i = 0; i < bg.length; i++) {
             tempLabel = new JLabel(new MyImageIcon(bg[i]).resize(themeWidth, themeHeight));
-            tempLabel.setBounds(frameWidth-themeWidth-255, (frameHeight/2)-(themeHeight/2)-45,themeWidth, themeHeight);
+            tempLabel.setBounds(frameWidth - themeWidth - 255, (frameHeight / 2) - (themeHeight / 2) - 45, themeWidth,
+                    themeHeight);
             themePicLabel_AL.add(tempLabel);
             themePicLabel_AL.get(i).setVisible(false);
             drawpane.add(tempLabel);
@@ -416,15 +418,15 @@ public class MainApplication extends JFrame {
         // mode button
         String[] mode = { "--- Please select difficulty ---", "Beginner", "Medium", "Hard", "Nightmare", "Boss" };
         combo = new JComboBox(mode);
-        combo.setBounds(frameWidth / 4, (frameHeight / 4)+115, 200, 50);
-        
+        combo.setBounds(frameWidth / 4, (frameHeight / 4) + 115, 200, 50);
+
         // Play button
         JButton play = new JButton();
         JButton backbtn = new JButton();
         setUpButton(play, playButton);
         setUpButton(backbtn, backButton);
-        play.setBounds((frameWidth / 2), (frameHeight / 2)+130, 500, 50);
-        backbtn.setBounds((frameWidth / 2)-240, (frameHeight / 2)+130, 200, 50);
+        play.setBounds((frameWidth / 2), (frameHeight / 2) + 130, 500, 50);
+        backbtn.setBounds((frameWidth / 2) - 240, (frameHeight / 2) + 130, 200, 50);
 
         showThemeMode();
 
@@ -515,11 +517,12 @@ public class MainApplication extends JFrame {
         drawpane.add(backbtn);
     }// end mode Panel
 
-    public void remove_example_pane(){
-        
+    public void remove_example_pane() {
+
         themePicLabel_AL.get(ex_pane).setVisible(false);
         drawpane.remove(themePicLabel_AL.get(ex_pane));
     }
+
     public void set_example_pane() {
         System.out.println(ex_pane);
         themePicLabel_AL.get(ex_pane).setVisible(true);
@@ -586,8 +589,6 @@ public class MainApplication extends JFrame {
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
-        
-
         end_btn = new JButton();
         setUpButton(end_btn, menuButton);
         end_btn.setBounds((frameWidth / 2) - 700, (frameHeight / 2) + 290, 200, 50);
@@ -623,8 +624,6 @@ public class MainApplication extends JFrame {
             }
         });
         drawpane.add(end_btn);
-        
-        
 
         switch (mode) {
             case "Beginner":
@@ -634,7 +633,7 @@ public class MainApplication extends JFrame {
                 beginnerSong.playLoop();
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
-                
+
                 createZombieThread(mode);
                 break;
             case "Medium":
@@ -644,7 +643,7 @@ public class MainApplication extends JFrame {
                 mediumSong.playLoop();
                 player = new Player(drawpane, count_pic, 1);
                 input_word(1);
-                
+
                 createZombieThread(mode);
                 break;
             case "Hard":
@@ -654,7 +653,7 @@ public class MainApplication extends JFrame {
                 hardSong.playLoop();
                 player = new Player(drawpane, count_pic, 2);
                 input_word(2);
-               
+
                 createZombieThread(mode);
                 break;
             case "Nightmare":
@@ -664,7 +663,7 @@ public class MainApplication extends JFrame {
                 nightmareSong.playLoop();
                 player = new Player(drawpane, count_pic, 3);
                 input_word(3);
-               
+
                 createZombieThread(mode);
                 break;
             case "Boss":
@@ -675,22 +674,22 @@ public class MainApplication extends JFrame {
                 player = new Player(drawpane, count_pic, 4);
                 input_word(4);
                 // createZombieThread("Nightmare");
-                
+
                 createZombieThread(mode);
                 break;
-            }
+        }
         keybar = new Keyboard_bar(wbox_AL, program);
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
-        
-        for(int i =0;i<zombielist.size();i++){
+
+        for (int i = 0; i < zombielist.size(); i++) {
             zombielist.get(i).setkeybr(keybar);
         }
 
-        potion = new Potion(program, drawpane, player,keybar);
-        bomb = new Bomb(program, drawpane, zombielist,player,keybar,wbox_AL);
-        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist,keybar);
-        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist,keybar);
+        potion = new Potion(program, drawpane, player, keybar);
+        bomb = new Bomb(program, drawpane, zombielist, player, keybar, wbox_AL);
+        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist, keybar);
+        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist, keybar);
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
@@ -705,7 +704,7 @@ public class MainApplication extends JFrame {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
                     program, wbox_AL);
-            
+
             zombielist.add(zombThread);
 
             // System.out.println("i main = " + i);
@@ -771,16 +770,16 @@ public class MainApplication extends JFrame {
     // }
     // }//end Class Reminder
 
-    public void slowSpeed(){
+    public void slowSpeed() {
 
-    //new Reminder(5,"slow");
+        // new Reminder(5,"slow");
     }
 
-    public void fastSpeed(){
-        for(int i=0; i<zombielist.size(); i++){
-        zombielist.get(i).speedUp();
-    }
-    //new Reminder(6,"speed");
+    public void fastSpeed() {
+        for (int i = 0; i < zombielist.size(); i++) {
+            zombielist.get(i).speedUp();
+        }
+        // new Reminder(6,"speed");
     }
 
     // public void joinThread(int n) {
@@ -801,7 +800,7 @@ public class MainApplication extends JFrame {
 
     public void print_list_thread() {
         for (int i = 0; i < threadlist.size(); i++) {
-            //System.out.println("->>>>>>>>" + threadlist.get(i));
+            // System.out.println("->>>>>>>>" + threadlist.get(i));
         }
     }
 
@@ -811,7 +810,7 @@ public class MainApplication extends JFrame {
         if (count < 10) {
             count += 1;
             PBar.setValue(count * 10);
-            //System.out.println("Add Count + = 1");
+            // System.out.println("Add Count + = 1");
         }
 
     }
@@ -1035,14 +1034,14 @@ public class MainApplication extends JFrame {
                     });
                     break;
                 // case 4:
-                //     item_label.addMouseListener(new MouseAdapter() {
-                //         public void mouseEntered(MouseEvent e) {
-                //             System.out.println("Hello world5");
-                //             item_label.setVisible(false);
-                //             ding.playOnce();
-                //         }
-                //     });
-                //     break;
+                // item_label.addMouseListener(new MouseAdapter() {
+                // public void mouseEntered(MouseEvent e) {
+                // System.out.println("Hello world5");
+                // item_label.setVisible(false);
+                // ding.playOnce();
+                // }
+                // });
+                // break;
             }
 
             itemdrop_AL.add(item_label);
@@ -1094,7 +1093,8 @@ public class MainApplication extends JFrame {
         }
         System.out.println("");
     }
-    public int getcount_pic(){
+
+    public int getcount_pic() {
         return count_pic;
     }
 
@@ -1111,24 +1111,28 @@ public class MainApplication extends JFrame {
             System.out.println(i + " = " + wbox_AL.get(i).getWord());
         }
     }
-    public void setex_pane(int x){
+
+    public void setex_pane(int x) {
         ex_pane = x;
     }
 
-    public int getex_pane(){
+    public int getex_pane() {
         return ex_pane;
     }
 
-    public boolean getUse_speed(){
+    public boolean getUse_speed() {
         return use_speed;
     }
-    public void setUse_speed(boolean x){
+
+    public void setUse_speed(boolean x) {
         use_speed = x;
     }
-    public boolean getUse_slow(){
+
+    public boolean getUse_slow() {
         return use_slow;
     }
-    public void setUse_slow(boolean x){
+
+    public void setUse_slow(boolean x) {
         use_slow = x;
     }
 }// end Class MainApplication

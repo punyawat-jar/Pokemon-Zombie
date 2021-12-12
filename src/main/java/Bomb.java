@@ -17,7 +17,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     private int width = 50;
     private int height = 50;
     private MyImageIcon bombIcon;
-    private JLabel BombAmount,pane;
+    private JLabel BombAmount, pane;
     private MainApplication program;
     private Player player;
     private ArrayList<ZombieThread> zombielist;
@@ -25,7 +25,8 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     private Keyboard_bar keybr;
     private MySoundEffect use_Bomb_sound = new MySoundEffect("sound_effect/Explosion.wav");
 
-    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL,Player p,Keyboard_bar kb,ArrayList<Wordbox> w_AL) {
+    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, Player p, Keyboard_bar kb,
+            ArrayList<Wordbox> w_AL) {
         this.program = program;
         zombielist = zombie_AL;
         player = p;
@@ -37,15 +38,15 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(bombIcon);
-        if(program.getcount_pic() == 1){
+        if (program.getcount_pic() == 1) {
             amount = 2;
         }
-        
-        BombAmount = new JLabel("x"+amount+"");
-        BombAmount.setBounds(1075,80,50,20);
+
+        BombAmount = new JLabel("x" + amount + "");
+        BombAmount.setBounds(1075, 80, 50, 20);
         BombAmount.setForeground(Color.WHITE);
         BombAmount.setBackground(null);
-        BombAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
+        BombAmount.setFont(new Font("SanSerif", Font.BOLD, 25));
 
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -72,23 +73,24 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
 
-        if(amount!=0 && (!program.getUse_speed() || !program.getUse_slow())){
-            try{
+        if (amount != 0 && (!program.getUse_speed() || !program.getUse_slow())) {
+            try {
                 for (int i = 0; i < 2; i++) {
-                    if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program.getWidth() ) {// true
+                    if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program
+                            .getWidth()) {// true
                         use_Bomb_sound.playOnce();
                         program.kill_zombie(program.threadlist.get(program.getCount_death()));
-                        word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);;
+                        word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
                         player.setscore(1);
                     }   
                 }
                 amount--;
-                BombAmount.setText("x"+amount+"");
+                BombAmount.setText("x" + amount + "");
                 pane.validate();
                 pane.repaint();
                 keybr.getTypearea().grabFocus();
+            } catch (Exception error) {
             }
-            catch (Exception error) {}
 
         }
         resetbtn();
@@ -120,14 +122,14 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     }
 
-    public void setAmount(){
+    public void setAmount() {
         amount++;
-        BombAmount.setText("x"+amount+"");
+        BombAmount.setText("x" + amount + "");
         pane.repaint();
         pane.validate();
     }
 
-    public void resetbtn(){
+    public void resetbtn() {
         curX = program.getWidth() - (width / 2) * 12;
         curY = height / 2;
         setLocation(curX, curY);

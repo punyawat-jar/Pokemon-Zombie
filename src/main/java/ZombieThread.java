@@ -347,6 +347,18 @@ class ZombieThread extends Thread {
         return randomNum;
     }
 
+    public void fastZomb() {
+        zombSpeed = zombSpeed / 4;
+    }
+
+    public void slowZomb() {
+        zombSpeed = zombSpeed * 4;
+    }
+
+    public int get_zombSpd() {
+        return zombSpeed;
+    }
+
     public void setZombSpeed(int spd) { // Can use for slowing down item
         zombSpeed = spd;
     }
