@@ -27,7 +27,7 @@ class ZombieThread extends Thread {
     private MyImageIcon readyGoImg;
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
-    private int zombTimeWait,normal_speed;
+    private int zombTimeWait, normal_speed;
     private Keyboard_bar keybar;
     private String name;
 
@@ -347,18 +347,6 @@ class ZombieThread extends Thread {
         return randomNum;
     }
 
-    public void fastZomb() {
-        zombSpeed = zombSpeed / 4;
-    }
-
-    public void slowZomb() {
-        zombSpeed = zombSpeed * 4;
-    }
-
-    public int get_zombSpd() {
-        return zombSpeed;
-    }
-
     public void setZombSpeed(int spd) { // Can use for slowing down item
         zombSpeed = spd;
     }
@@ -366,8 +354,9 @@ class ZombieThread extends Thread {
     public void run() {
 
         // System.out.println("mode = " + mode);
-        // System.out.println("zombCurX = " + zombCurX + ", zombCurY = " + zombCurY + " zombWidth = " + zombWidth
-                // + " , zombHeight" + zombHeight);
+        // System.out.println("zombCurX = " + zombCurX + ", zombCurY = " + zombCurY + "
+        // zombWidth = " + zombWidth
+        // + " , zombHeight" + zombHeight);
 
         // System.out.println("Thread : " + Thread.currentThread().getName());
 
@@ -385,7 +374,6 @@ class ZombieThread extends Thread {
             keybar.clearTypearea();
             kill_monster(i);
             program.setCount_death(); // death++
-            
 
         }
 
@@ -405,15 +393,15 @@ class ZombieThread extends Thread {
             program.setGameResult("Win");
             program.addCountStageEnd();
         }
-        // System.out.printf("Count  -----------------------> %d \n", program.getCount_death());
-        
+        // System.out.printf("Count -----------------------> %d \n",
+        // program.getCount_death());
+
         if ((program.getGameResult() == "GameOver" || program.getGameResult() == "Win")
                 && program.getCountStageEnd() == 1) {
             // program.setCountStageEnd(0);
             program.stageEnd(mode);
         }
         // --------- Remove Zombie when Hit Pikachu & decrease heart
-
 
         // -------------------------
 
@@ -450,7 +438,7 @@ class ZombieThread extends Thread {
             }
         }
         // System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting"
-                // + timeWait / 1000 + " sec");
+        // + timeWait / 1000 + " sec");
     }
 
     // ----------------- If zombie not hit pikachu, it walks toleft----------------
@@ -481,16 +469,16 @@ class ZombieThread extends Thread {
         return zombTimeWait;
     }
 
-    public void slowDown(){
-        Thread T = new Thread(){
-            public void run(){
+    public void slowDown() {
+        Thread T = new Thread() {
+            public void run() {
                 normal_speed = zombSpeed;
                 zombSpeed += 10;
                 program.setUse_slow(true);
-                try{
+                try {
                     Thread.sleep(3000);
+                } catch (Exception e) {
                 }
-                catch(Exception e) {}
                 program.setUse_slow(false);
                 zombSpeed = normal_speed;
                 // System.out.println(name + " is slowing down");
@@ -500,16 +488,16 @@ class ZombieThread extends Thread {
 
     }
 
-    public void speedUp(){
-        Thread T = new Thread(){
-            public void run(){
+    public void speedUp() {
+        Thread T = new Thread() {
+            public void run() {
                 normal_speed = zombSpeed;
                 zombSpeed -= 5;
                 program.setUse_speed(true);
-                try{
+                try {
                     Thread.sleep(3000);
+                } catch (Exception e) {
                 }
-                catch(Exception e) {}
                 program.setUse_speed(false);
                 zombSpeed = normal_speed;
                 // System.out.println(name + " is speed up");
@@ -518,10 +506,9 @@ class ZombieThread extends Thread {
         T.start();
     }
 
-    public void setkeybr(Keyboard_bar key){
+    public void setkeybr(Keyboard_bar key) {
         keybar = key;
     }
-
 
 }
 
