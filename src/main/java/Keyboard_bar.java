@@ -12,16 +12,19 @@ import javax.swing.event.CaretListener;
 
 class Keyboard_bar {
     private JTextArea typearea;
-    private int width, height;
+    private int width,height,score;
     private MainApplication main;
     private ArrayList<Wordbox> word_AL;
     private MySoundEffect correct, wrong;
-    Compare_text compare;
+    private Compare_text compare;
+    private boolean use_speed = false;
+    private Player player;
 
     // private String a,b;
-    public Keyboard_bar(ArrayList<Wordbox> wAL, MainApplication m) {
+    public Keyboard_bar(ArrayList<Wordbox> wAL, MainApplication m,Player p) {
         word_AL = wAL;
         main = m;
+        player = p;
         typearea = new JTextArea();
         typearea.setBounds(450, 600, 505, 40);
         typearea.setBackground(new Color(255, 221, 89, 215));
@@ -54,22 +57,26 @@ class Keyboard_bar {
                     // for(int i =0;i<10;i++){
                     // System.out.println("WordAL = " + word_AL.get(i).getWord());
                     // }
+                    if(main.getUse_speed()){
+                        score = 2;
+                    }
+                    else score = 1;
 
-                    if (typearea.getText().trim()
-                            .equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
-
-                        // score++
-                        main.getPlayer().setscore();
+                    if (typearea.getText().trim().equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
+                        System.out.println("Score ->>>>>>>>>>" + score);
+                        player.setscore(score);
+                        word_AL.get(main.threadlist.get(main.getCount_death())).setvisible(false);;
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
+                        System.out.println("Current score -------------> " + player.getScore());
 
                         correct.playOnce();
                         // for(int i =0;i<main.threadlist.size();i++){
                         // System.out.println(main.threadlist.get(i) + " = " +
                         // main.zombielist.get(i).getState());
                         // }
-                        System.out.println("count is = " + main.getCount_death());
-                        System.out.println("thread is = " + main.threadlist);
-                        System.out.println("mY name is your");
+                        // System.out.println("count is = " + main.getCount_death());
+                        // System.out.println("thread is = " + main.threadlist);
+                        // System.out.println("mY name is your");
 
                     } else {
                         wrong.playOnce();
@@ -107,6 +114,9 @@ class Keyboard_bar {
 
     public void clearTypearea() {
         typearea.setText(null);
+    }
+    public void setUse_speed(boolean x){
+        use_speed = x;
     }
 }
 

@@ -15,19 +15,26 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     private int width = 50;
     private int height = 50;
     private MyImageIcon SpeedIcon;
-    private JLabel SpeedAmount;
+    private JLabel SpeedAmount,pane;
     private MainApplication program;
     private ArrayList<ZombieThread> zombielist;
+    private Keyboard_bar keybr;
+    private Boolean useitem;
 
-    public Speed_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
+    public Speed_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL,Keyboard_bar kb) {
         this.program = program;
         zombielist = zombie_AL;
+        pane = x;
+        keybr = kb;
         SpeedIcon = new MyImageIcon("items/speed_stopwatch.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(SpeedIcon);
 
+        if(program.getcount_pic() == 4){
+            amount = 2;
+        }
         
         SpeedAmount = new JLabel("x"+amount+"");
         SpeedAmount.setBounds(1300,80,50,20);
@@ -38,18 +45,25 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
         addMouseListener(this);
         addMouseMotionListener(this);
 
-        x.add(SpeedAmount);
-        x.add(this);
-        x.validate();
+        pane.add(SpeedAmount);
+        pane.add(this);
+        pane.validate();
+        pane.repaint();
 
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        for(int i=0; i<zombielist.size(); i++){
-            zombielist.get(i).speedUp();
+        if(amount != 0 && !program.getUse_speed() ){    
+            for(int i=0; i<zombielist.size(); i++){
+                zombielist.get(i).speedUp();
+            }
+            amount--;
+            SpeedAmount.setText("x"+amount+"");
+            pane.validate();
+            pane.repaint();
+            keybr.getTypearea().grabFocus();
         }
-        amount--;
     }
 
     @Override
@@ -89,6 +103,9 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     }
     public void setAmount(){
         amount++;
+        SpeedAmount.setText("x"+amount+"");
+        pane.repaint();
+        pane.validate();
     }
 
 }

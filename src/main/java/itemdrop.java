@@ -25,7 +25,7 @@ public class itemdrop extends Thread {
     public void run(){
         while(!end){
             int rand_time = (int) Math.floor(Math.random()*(25000-18000+1)+18000);
-            System.out.println("Rand time is =================" + rand_time);
+            // System.out.println("Rand time is =================" + rand_time);
             floor = false;
             //Item_AL.add(new JLabel(new MyImageIcon("item_fall/potion.png").resize(100,100)));
             //Item_AL.get(rand_time).setVisible(true);
@@ -37,7 +37,7 @@ public class itemdrop extends Thread {
                 public void run(){
                     int CurX = (int) Math.floor(Math.random()*((main.get_framewidth()-100)-100+1)+100);
                     int CurY = 50;
-                    System.out.println("Curx is ==========" + CurX);
+                    // System.out.println("Curx is ==========" + CurX);
                     //Random ran_item = new Random(3);
                     int rand_item = (int) Math.floor(Math.random()*(3-0+1)+0);
                     //Item_AL.get(0);

@@ -61,7 +61,7 @@ public class MainApplication extends JFrame {
     private int selected_rbox = 0;
     private JButton end_btn;
     private itemdrop itemDrop;
-    private boolean ismove = true;
+    private boolean ismove = true,use_speed = false,use_slow = false;
     private Player player;
     private Wordbox wbox;
     private Bomb bomb;
@@ -482,16 +482,16 @@ public class MainApplication extends JFrame {
         });
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < 5; i++) {
+                    themePicLabel_AL.get(i).setVisible(false);
+                    drawpane.remove(themePicLabel_AL.get(i));
+                }
                 buttonSound.playOnce();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
-                    for (int i = 0; i < 5; i++) {
-                        themePicLabel_AL.get(i).setVisible(false);
-                        drawpane.remove(themePicLabel_AL.get(i));
-                    }
                     drawpane.repaint();
                     main_game(modeSelected);
                 }
@@ -583,9 +583,7 @@ public class MainApplication extends JFrame {
         PBar.setStringPainted(false);
         drawpane.add(PBar);
 
-        keybar = new Keyboard_bar(wbox_AL, program);
-        keybar.setPane(drawpane, this);
-        keybar.getTypearea().grabFocus();
+        
 
         end_btn = new JButton();
         setUpButton(end_btn, menuButton);
@@ -623,8 +621,7 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
         
-        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist);
-        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist);
+       
 
         switch (mode) {
             case "Beginner":
@@ -634,6 +631,7 @@ public class MainApplication extends JFrame {
                 beginnerSong.playLoop();
                 player = new Player(drawpane, count_pic, 0);
                 input_word(0);
+                
                 createZombieThread(mode);
                 break;
             case "Medium":
@@ -643,6 +641,7 @@ public class MainApplication extends JFrame {
                 mediumSong.playLoop();
                 player = new Player(drawpane, count_pic, 1);
                 input_word(1);
+                
                 createZombieThread(mode);
                 break;
             case "Hard":
@@ -652,6 +651,7 @@ public class MainApplication extends JFrame {
                 hardSong.playLoop();
                 player = new Player(drawpane, count_pic, 2);
                 input_word(2);
+               
                 createZombieThread(mode);
                 break;
             case "Nightmare":
@@ -661,6 +661,7 @@ public class MainApplication extends JFrame {
                 nightmareSong.playLoop();
                 player = new Player(drawpane, count_pic, 3);
                 input_word(3);
+               
                 createZombieThread(mode);
                 break;
             case "Boss":
@@ -671,13 +672,19 @@ public class MainApplication extends JFrame {
                 player = new Player(drawpane, count_pic, 4);
                 input_word(4);
                 // createZombieThread("Nightmare");
+                
                 createZombieThread(mode);
-
                 break;
-        }
-        bomb = new Bomb(program, drawpane, zombielist,player);
-        potion = new Potion(program, drawpane, player);
+            }
 
+        keybar = new Keyboard_bar(wbox_AL, program, player);
+        keybar.setPane(drawpane, this);
+        keybar.getTypearea().grabFocus();
+
+        potion = new Potion(program, drawpane, player,keybar);
+        bomb = new Bomb(program, drawpane, zombielist,player,keybar,wbox_AL);
+        slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist,keybar);
+        speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist,keybar);
         // player = new Player();
         // player.draw_player(drawpane);
         // player.draw_healthbar(drawpane);
@@ -694,7 +701,7 @@ public class MainApplication extends JFrame {
                     program, wbox_AL, keybar);
             zombielist.add(zombThread);
 
-            System.out.println("i main = " + i);
+            // System.out.println("i main = " + i);
         }
         // allZombThread.add(zombThread);
         // }
@@ -787,7 +794,7 @@ public class MainApplication extends JFrame {
 
     public void print_list_thread() {
         for (int i = 0; i < threadlist.size(); i++) {
-            System.out.println("->>>>>>>>" + threadlist.get(i));
+            //System.out.println("->>>>>>>>" + threadlist.get(i));
         }
     }
 
@@ -797,7 +804,7 @@ public class MainApplication extends JFrame {
         if (count < 10) {
             count += 1;
             PBar.setValue(count * 10);
-            System.out.println("Add Count + = 1");
+            //System.out.println("Add Count + = 1");
         }
 
     }
@@ -848,6 +855,8 @@ public class MainApplication extends JFrame {
         pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
         drawpane.remove(end_btn);
         pokeGameOverLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
+        bomb.resetbtn();
+        potion.resetbtn();
 
         // Back To Menu
         JButton button1 = new JButton();
@@ -985,38 +994,36 @@ public class MainApplication extends JFrame {
                 case 0:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world1");
                             item_label.setVisible(false);
                             ding.playOnce();
-
+                            bomb.setAmount();
                         }
                     });
                     break;
                 case 1:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world2");
                             item_label.setVisible(false);
                             ding.playOnce();
+                            potion.setAmount();
                         }
                     });
                     break;
                 case 2:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world3");
                             item_label.setVisible(false);
                             ding.playOnce();
-
+                            slow_stopwatch.setAmount();
                         }
                     });
                     break;
                 case 3:
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
-                            System.out.println("Hello world4");
                             item_label.setVisible(false);
                             ding.playOnce();
+                            speed_stopwatch.setAmount();
                         }
                     });
                     break;
@@ -1080,6 +1087,9 @@ public class MainApplication extends JFrame {
         }
         System.out.println("");
     }
+    public int getcount_pic(){
+        return count_pic;
+    }
 
     public void input_word(int n) {
         for (int i = 0; i < 10; i++) {
@@ -1094,6 +1104,18 @@ public class MainApplication extends JFrame {
             System.out.println(i + " = " + wbox_AL.get(i).getWord());
         }
 
+    }
+    public boolean getUse_speed(){
+        return use_speed;
+    }
+    public void setUse_speed(boolean x){
+        use_speed = x;
+    }
+    public boolean getUse_slow(){
+        return use_slow;
+    }
+    public void setUse_slow(boolean x){
+        use_slow = x;
     }
 }// end Class MainApplication
 

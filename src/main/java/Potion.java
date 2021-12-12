@@ -15,20 +15,24 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     private int width = 50;
     private int height = 50;
     private MyImageIcon PotionIcon;
-    private JLabel PotionAmount;
+    private JLabel PotionAmount,pane;
     private MainApplication program;
     private Player player;
-    private JLabel pane;
+    private Keyboard_bar keybr;
 
-    public Potion(MainApplication program, JLabel x, Player p) {
+    public Potion(MainApplication program, JLabel x, Player p,Keyboard_bar kb) {
         this.program = program;
         player = p;
         pane = x;
+        keybr = kb;
         PotionIcon = new MyImageIcon("items/potion.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 9;
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(PotionIcon);
+        if(program.getcount_pic() == 2){
+            amount = 2;
+        }
 
         PotionAmount = new JLabel("x"+amount+"");
         PotionAmount.setBounds(1150,80,50,20);
@@ -39,10 +43,10 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
         addMouseListener(this);
         addMouseMotionListener(this);
 
-        x.add(PotionAmount);
-        x.add(this);
-        x.validate();
-
+        pane.add(PotionAmount);
+        pane.add(this);
+        pane.validate();
+        pane.repaint();
     }
 
     @Override
@@ -60,14 +64,15 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     @Override
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
-        if (this.getBounds().intersects(player.getLabel().getBounds()) && player.getHP() < 5) {
-            // System.out.println("as;dfljas;dflj");
+        if (this.getBounds().intersects(player.getLabel().getBounds()) && player.getHP() < 5 && amount!=0) {
             player.heal(pane);
             amount--;
+            PotionAmount.setText("x"+amount+"");
+            pane.validate();
+            pane.repaint();
+            keybr.getTypearea().grabFocus();
         }
-        curX = program.getWidth() - (width / 2) * 12;
-        curY = height / 2;
-        setLocation(curX, curY);
+        resetbtn();
 
     }
 
@@ -87,7 +92,6 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     @Override
     public void mouseDragged(MouseEvent e) {
         // TODO Auto-generated method stub
-        System.out.println("Heal======================================");
         curX = curX + e.getX();
         curY = curY + e.getY();
         setLocation(curX, curY);
@@ -100,5 +104,13 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     }
     public void setAmount(){
         amount++;
+        PotionAmount.setText("x"+amount+"");
+        pane.repaint();
+        pane.validate();
+    }
+    public void resetbtn(){
+        curX = program.getWidth() - (width / 2) * 9;
+        curY = height / 2;
+        setLocation(curX, curY);
     }
 }

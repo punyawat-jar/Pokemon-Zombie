@@ -63,9 +63,9 @@ class Player {
         return HP;
     }
 
-    synchronized public void setscore(/* int x */) {
+    synchronized public void setscore(int x) {
         // this.Score = x;
-        Score++;
+        Score+=x;
         System.out.printf("Your Score: %d\n", Score);
     }
 

@@ -15,19 +15,24 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
     private int width = 50;
     private int height = 50;
     private MyImageIcon SlowIcon;
-    private JLabel SlowAmount;
+    private JLabel SlowAmount,pane;
     private MainApplication program;
     private ArrayList<ZombieThread> zombielist;
+    private Keyboard_bar keybr;
 
-    public Slow_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
+    public Slow_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, Keyboard_bar kb) {
         this.program = program;
         zombielist = zombie_AL;
+        pane = x;
+        keybr = kb;
         SlowIcon = new MyImageIcon("items/slow_stopwatch.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 6;
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(SlowIcon);
-
+        if(program.getcount_pic() == 3){
+            amount = 2;
+        }
         SlowAmount = new JLabel("x"+amount+"");
         SlowAmount.setBounds(1225,80,50,20);
         SlowAmount.setForeground(Color.WHITE);
@@ -37,18 +42,24 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
         addMouseListener(this);
         addMouseMotionListener(this);
 
-        x.add(SlowAmount);
-        x.add(this);
-        x.validate();
-
+        pane.add(SlowAmount);
+        pane.add(this);
+        pane.validate();
+        pane.repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        for(int i=0; i<zombielist.size(); i++){
-            zombielist.get(i).slowDown();
+        if(amount != 0 && !program.getUse_speed()){
+            for(int i=0; i<zombielist.size(); i++){
+                zombielist.get(i).slowDown();
+            }
+            amount--;
+            SlowAmount.setText("x"+amount+"");
+            pane.validate();
+            pane.repaint();
+            keybr.getTypearea().grabFocus();
         }
-        amount--;
     }
 
     @Override
@@ -89,6 +100,9 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
 
     public void setAmount(){
         amount++;
+        SlowAmount.setText("x"+amount+"");
+        pane.repaint();
+        pane.validate();
     }
 
 }
