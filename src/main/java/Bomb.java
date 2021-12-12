@@ -25,13 +25,13 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
         this.program = program;
         zombielist = zombie_AL;
         bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);
-        curX = program.getWidth() - (width / 2) * 3;
+        curX = program.getWidth() - (width / 2) * 12;
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(bombIcon);
         
         BombAmount = new JLabel("x"+amount+"");
-        BombAmount.setBounds(1300,20,50,135);
+        BombAmount.setBounds(1075,80,50,20);
         BombAmount.setForeground(Color.WHITE);
         BombAmount.setBackground(null);
         BombAmount.setFont(new Font("SanSerif", Font.BOLD , 25));

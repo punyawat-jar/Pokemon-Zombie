@@ -29,7 +29,7 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
         setIcon(SlowIcon);
 
         SlowAmount = new JLabel("x"+amount+"");
-        SlowAmount.setBounds(1225,20,50,135);
+        SlowAmount.setBounds(1225,80,50,20);
         SlowAmount.setForeground(Color.WHITE);
         SlowAmount.setBackground(null);
         SlowAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
