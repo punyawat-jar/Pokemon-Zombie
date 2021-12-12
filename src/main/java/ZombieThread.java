@@ -27,7 +27,7 @@ class ZombieThread extends Thread {
     private MyImageIcon readyGoImg;
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
-    private int zombTimeWait,normal_speed;
+    private int zombTimeWait, normal_speed;
     private Keyboard_bar keybar;
     private String name;
 
@@ -52,20 +52,14 @@ class ZombieThread extends Thread {
         wbox = wb;
         setUpZombie(pane);
         pane.add(zombLabel);
-        // pane.validate();
         hurtSound = new MySoundEffect("sound_effect/Hurt_soundeffect.wav");
         start();
     }// end Constructor
 
     public void setUpZombie(JLabel pane) {
         if (i == 0) {
-            // readyGoLabel.setBounds(525, 230, 380, 214);
-            // tempPane.add(readyGoLabel);
-            // tempPane.validate();
-            // readyGoSound.playOnce();
         }
         if (mode == "Beginner") {
-            // for (int i = 0; i < 10; i++) {
             int zombie = randomNum(4);
             switch (zombie) {
                 case 0:
@@ -111,7 +105,6 @@ class ZombieThread extends Thread {
         } // end Beginner
         else if (mode == "Medium") {
 
-            // for (int i = 0; i < 10; i++) {
             int zombie = randomNum(4);
             switch (zombie) {
                 case 0:
@@ -195,7 +188,6 @@ class ZombieThread extends Thread {
                 zombLabel = new JLabel(zombImg);
                 zombCurY = pane.getHeight() - 145 - zombHeight;
                 zombSpeed = 23;
-                // break;
             }
             zombLabel.setBounds(zombCurX, zombCurY, zombWidth, zombHeight);
         } // end Hard
@@ -343,20 +335,7 @@ class ZombieThread extends Thread {
     public int randomNum(int amount) {
         Random random = new Random();
         int randomNum = random.nextInt(amount);
-        // System.out.println(randomNum);
         return randomNum;
-    }
-
-    public void fastZomb() {
-        zombSpeed = zombSpeed / 4;
-    }
-
-    public void slowZomb() {
-        zombSpeed = zombSpeed * 4;
-    }
-
-    public int get_zombSpd() {
-        return zombSpeed;
     }
 
     public void setZombSpeed(int spd) { // Can use for slowing down item
@@ -364,12 +343,6 @@ class ZombieThread extends Thread {
     }
 
     public void run() {
-
-        // System.out.println("mode = " + mode);
-        // System.out.println("zombCurX = " + zombCurX + ", zombCurY = " + zombCurY + " zombWidth = " + zombWidth
-                // + " , zombHeight" + zombHeight);
-
-        // System.out.println("Thread : " + Thread.currentThread().getName());
 
         waitGetIn(i, zombTimeWait);
 
@@ -385,7 +358,6 @@ class ZombieThread extends Thread {
             keybar.clearTypearea();
             kill_monster(i);
             program.setCount_death(); // death++
-            
 
         }
 
@@ -393,10 +365,8 @@ class ZombieThread extends Thread {
             kill_monster(i);
             tempPane.remove(zombLabel);
             tempPane.repaint();
-            // removeZombie(10);
             program.setGameResult("GameOver");
             program.addCountStageEnd();
-            // return;
         }
 
         else if (program.getCount_death() == 10) { // Win
@@ -405,30 +375,24 @@ class ZombieThread extends Thread {
             program.setGameResult("Win");
             program.addCountStageEnd();
         }
-        // System.out.printf("Count  -----------------------> %d \n", program.getCount_death());
-        
+
         if ((program.getGameResult() == "GameOver" || program.getGameResult() == "Win")
                 && program.getCountStageEnd() == 1) {
-            // program.setCountStageEnd(0);
             program.stageEnd(mode);
         }
         // --------- Remove Zombie when Hit Pikachu & decrease heart
-
 
         // -------------------------
 
     }// end run
 
     public void kill_monster(int i) {
-        wbox.get(i).setvisible(false);
         tempPane.remove(zombLabel);
+        wbox.get(i).setvisible(false);
         tempPane.repaint();
         killed = true;
     }
 
-    // public void setkill_thread(boolean x){
-    // kill_thread = x;
-    // }
     // -------------------- For randoming time Zombie Appear--------------
     // Use static method to lock class * If lock only Obj. all other thread will
     // work and wait together.
@@ -439,23 +403,18 @@ class ZombieThread extends Thread {
                 Thread.sleep(timeWait);
             } catch (InterruptedException e) {
 
-                // System.out.println("Thread " + i + " wake up.");
             }
         } else {
             try {
                 Thread.sleep(timeWait);
             } catch (InterruptedException e) {
 
-                // System.out.println("Thread " + i + " wake up.");
             }
         }
-        // System.out.println("Thread: " + Thread.currentThread().getName() + " Waiting"
-                // + timeWait / 1000 + " sec");
     }
 
     // ----------------- If zombie not hit pikachu, it walks toleft----------------
     public void move(Player player, int i) {
-        // System.out.println("Thread: Zombie" + i + " -> move");
         // While not Hit player & player not die. walk left
         while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())) &&
                 player.getHP() != 0 && killed == false) {
@@ -482,16 +441,16 @@ class ZombieThread extends Thread {
         return zombTimeWait;
     }
 
-    public void slowDown(){
-        Thread T = new Thread(){
-            public void run(){
+    public void slowDown() {
+        Thread T = new Thread() {
+            public void run() {
                 normal_speed = zombSpeed;
                 zombSpeed += 10;
                 program.setUse_slow(true);
-                try{
+                try {
                     Thread.sleep(3000);
+                } catch (Exception e) {
                 }
-                catch(Exception e) {}
                 program.setUse_slow(false);
                 zombSpeed = normal_speed;
                 // System.out.println(name + " is slowing down");
@@ -501,16 +460,16 @@ class ZombieThread extends Thread {
 
     }
 
-    public void speedUp(){
-        Thread T = new Thread(){
-            public void run(){
+    public void speedUp() {
+        Thread T = new Thread() {
+            public void run() {
                 normal_speed = zombSpeed;
                 zombSpeed -= 5;
                 program.setUse_speed(true);
-                try{
+                try {
                     Thread.sleep(3000);
+                } catch (Exception e) {
                 }
-                catch(Exception e) {}
                 program.setUse_speed(false);
                 zombSpeed = normal_speed;
                 // System.out.println(name + " is speed up");
@@ -519,10 +478,9 @@ class ZombieThread extends Thread {
         T.start();
     }
 
-    public void setkeybr(Keyboard_bar key){
+    public void setkeybr(Keyboard_bar key) {
         keybar = key;
     }
-
 
 }
 

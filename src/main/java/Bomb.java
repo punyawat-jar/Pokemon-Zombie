@@ -59,19 +59,16 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
 
         if (amount != 0 && (!program.getUse_speed() || !program.getUse_slow())) {
             try {
@@ -82,7 +79,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
                         program.kill_zombie(program.threadlist.get(program.getCount_death()));
                         word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
                         player.setscore(1);
-                    }   
+                    }
                 }
                 amount--;
                 BombAmount.setText("x" + amount + "");
@@ -98,19 +95,16 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
         setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
         curX = curX + e.getX();
         curY = curY + e.getY();
         setLocation(curX, curY);
@@ -118,7 +112,6 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
