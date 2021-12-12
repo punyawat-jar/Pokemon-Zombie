@@ -51,10 +51,8 @@ public class Wordbox {
     }
 
     public void setvisible(boolean x) {
-        System.out.println("111 Word box --------------------------------> " + wlabel.isVisible());
         wlabel.setVisible(x);
-        pane.repaint();
-        System.out.println("222 Word box --------------------------------> " + wlabel.isVisible());
+        System.out.println("Word box --------------------------------> " + wlabel.isVisible());
 
     }
 

@@ -48,9 +48,10 @@ class Keyboard_bar {
 
                     if (typearea.getText().trim()
                             .equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
+                        word_AL.get(main.threadlist.get(main.getCount_death())).setvisible(false);
+                        System.out.println();
                         System.out.println("Score ->>>>>>>>>>" + score);
                         main.getPlayer().setscore(score);
-                        word_AL.get(main.threadlist.get(main.getCount_death())).setvisible(false);
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
                         System.out.println("Current score -------------> " + main.getPlayer().getScore());
 

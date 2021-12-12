@@ -78,7 +78,6 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
                         use_Bomb_sound.playOnce();
                         program.kill_zombie(program.threadlist.get(program.getCount_death()));
                         word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
-                        ;
                         player.setscore(1);
                     }
                 }
