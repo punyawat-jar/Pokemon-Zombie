@@ -28,12 +28,12 @@ class ZombieThread extends Thread {
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
     private int zombTimeWait,normal_speed;
-    private Keyboard_bar keyb;
+    private Keyboard_bar keybar;
     private String name;
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
-            MainApplication prog, ArrayList<Wordbox> wb, Keyboard_bar k) {
+            MainApplication prog, ArrayList<Wordbox> wb) {
         super(n);
         name = n;
         // The temp use for run();
@@ -43,7 +43,6 @@ class ZombieThread extends Thread {
         tempPane = pane;
         tempCount = count;
         tempProgressBar = PBar;
-        keyb = k;
         zombCurX = pane.getWidth();
         mode = m;
         readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
@@ -371,7 +370,7 @@ class ZombieThread extends Thread {
             tempPlayer.hitplayer(tempPane);
             tempPane.remove(zombLabel);
             tempPane.repaint();
-            keyb.clearTypearea();
+            keybar.clearTypearea();
             kill_monster(i);
             program.setCount_death(); // death++
             
@@ -506,6 +505,11 @@ class ZombieThread extends Thread {
         };
         T.start();
     }
+
+    public void setkeybr(Keyboard_bar key){
+        keybar = key;
+    }
+
 
 }
 

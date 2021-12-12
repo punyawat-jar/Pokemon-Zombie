@@ -679,10 +679,13 @@ public class MainApplication extends JFrame {
                 createZombieThread(mode);
                 break;
             }
-            keybar = new Keyboard_bar(wbox_AL, program);
-            keybar.setPane(drawpane, this);
-            keybar.getTypearea().grabFocus();
-
+        keybar = new Keyboard_bar(wbox_AL, program);
+        keybar.setPane(drawpane, this);
+        keybar.getTypearea().grabFocus();
+        
+        for(int i =0;i<zombielist.size();i++){
+            zombielist.get(i).setkeybr(keybar);
+        }
 
         potion = new Potion(program, drawpane, player,keybar);
         bomb = new Bomb(program, drawpane, zombielist,player,keybar,wbox_AL);
@@ -701,7 +704,8 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < 10; i++) {
 
             ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
-                    program, wbox_AL, keybar);
+                    program, wbox_AL);
+            
             zombielist.add(zombThread);
 
             // System.out.println("i main = " + i);
