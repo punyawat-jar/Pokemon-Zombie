@@ -23,14 +23,14 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
         this.program = program;
         zombielist = zombie_AL;
         SpeedIcon = new MyImageIcon("items/speed_stopwatch.png").resize(width, height);
-        curX = program.getWidth() - (width / 2) * 9;
+        curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(SpeedIcon);
 
         
         SpeedAmount = new JLabel("x"+amount+"");
-        SpeedAmount.setBounds(1150,20,50,135);
+        SpeedAmount.setBounds(1300,80,50,20);
         SpeedAmount.setForeground(Color.WHITE);
         SpeedAmount.setBackground(null);
         SpeedAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
@@ -86,6 +86,9 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     public void mouseMoved(MouseEvent e) {
         // TODO Auto-generated method stub
 
+    }
+    public void setAmount(){
+        amount++;
     }
 
 }
