@@ -622,7 +622,7 @@ public class MainApplication extends JFrame {
             }
         });
         drawpane.add(end_btn);
-        bomb = new Bomb(program, drawpane, zombielist);
+        
         slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist);
         speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist);
 
@@ -675,6 +675,7 @@ public class MainApplication extends JFrame {
 
                 break;
         }
+        bomb = new Bomb(program, drawpane, zombielist,player);
         potion = new Potion(program, drawpane, player);
 
         // player = new Player();
@@ -757,9 +758,7 @@ public class MainApplication extends JFrame {
     // }//end Class Reminder
 
     public void slowSpeed(){
-    for(int i=0; i<zombielist.size(); i++){
-        zombielist.get(i).slowDown();
-    }
+
     //new Reminder(5,"slow");
     }
 

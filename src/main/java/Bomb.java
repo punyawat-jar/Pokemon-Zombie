@@ -19,11 +19,13 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     private MyImageIcon bombIcon;
     private JLabel BombAmount;
     private MainApplication program;
+    private Player player;
     private ArrayList<ZombieThread> zombielist;
 
-    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL) {
+    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL,Player p) {
         this.program = program;
         zombielist = zombie_AL;
+        player = p;
         bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 3;
         curY = height / 2;
@@ -60,8 +62,9 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     public void mouseReleased(MouseEvent e) {
         // TODO Auto-generated method stub
         for (int i = 0; i < 2; i++) {
-            if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program.getWidth()) {// true
+            if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program.getWidth() ) {// true
                 program.kill_zombie(program.threadlist.get(program.getCount_death()));
+                player.setscore();
                 amount--;
             }
         }

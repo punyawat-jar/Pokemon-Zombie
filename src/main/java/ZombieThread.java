@@ -478,20 +478,37 @@ class ZombieThread extends Thread {
         return zombTimeWait;
     }
 
-    public int slowDown(){
-    normal_speed = zombSpeed;
-    zombSpeed += 30;
-    System.out.println(name + " is slowing down");
-    int curX = zombCurX;
-    return curX;
+    public void slowDown(){
+        Thread T = new Thread(){
+            public void run(){
+                normal_speed = zombSpeed;
+                zombSpeed += 10;
+                try{
+                    Thread.sleep(3000);
+                }
+                catch(Exception e) {}
+                zombSpeed = normal_speed;
+                System.out.println(name + " is slowing down");
+            }
+        };
+        T.start();
+
     }
 
-    public int speedUp(){
-    normal_speed = zombSpeed;
-    zombSpeed -= 6;
-    System.out.println(name + " is Speeding Up!");
-    int curX = zombCurX;
-    return curX;
+    public void speedUp(){
+        Thread T = new Thread(){
+            public void run(){
+                normal_speed = zombSpeed;
+                zombSpeed -= 5;
+                try{
+                    Thread.sleep(3000);
+                }
+                catch(Exception e) {}
+                zombSpeed = normal_speed;
+                System.out.println(name + " is speed up");
+            }
+        };
+        T.start();
     }
 
     // public void slowDownToNormal(){
