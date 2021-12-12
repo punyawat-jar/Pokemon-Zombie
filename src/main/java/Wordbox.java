@@ -61,7 +61,8 @@ public class Wordbox {
     }
 
     public void setvisible(boolean x) {
-        wlabel.setVisible(x);
+        wlabel.setVisible(x); 
+        System.out.println("Word box --------------------------------> " + wlabel.isVisible());
         
     }
     public void setfontcolor(Color x){

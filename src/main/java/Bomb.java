@@ -13,7 +13,7 @@ import javax.swing.event.MouseInputListener;
 
 public class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
     private int amount = 0;
-    private int curX, curY,score;
+    private int curX, curY;
     private int width = 50;
     private int height = 50;
     private MyImageIcon bombIcon;
@@ -79,7 +79,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
                         use_Bomb_sound.playOnce();
                         program.kill_zombie(program.threadlist.get(program.getCount_death()));
                         word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);;
-                        player.setscore(score);
+                        player.setscore(1);
                     }   
                 }
                 amount--;

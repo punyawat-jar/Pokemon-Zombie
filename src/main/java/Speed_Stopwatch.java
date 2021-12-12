@@ -55,7 +55,7 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(amount != 0 && !program.getUse_speed() ){    
+        if(amount != 0 && !program.getUse_speed() ){
             for(int i=0; i<zombielist.size(); i++){
                 zombielist.get(i).speedUp();
             }
