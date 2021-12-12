@@ -6,6 +6,8 @@ import javax.sound.sampled.*; // for sounds
 import java.util.*;
 import java.util.Random;
 import java.io.*;
+import java.lang.management.BufferPoolMXBean;
+
 import javax.swing.border.*;
 import javax.swing.event.MouseInputListener;
 
@@ -27,8 +29,17 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(bombIcon);
+        
+        BombAmount = new JLabel("x"+amount+"");
+        BombAmount.setBounds(1300,20,50,135);
+        BombAmount.setForeground(Color.WHITE);
+        BombAmount.setBackground(null);
+        BombAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
+
         addMouseListener(this);
         addMouseMotionListener(this);
+
+        x.add(BombAmount);
         x.add(this);
         x.validate();
     }

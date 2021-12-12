@@ -27,8 +27,17 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(SlowIcon);
+
+        SlowAmount = new JLabel("x"+amount+"");
+        SlowAmount.setBounds(1225,20,50,135);
+        SlowAmount.setForeground(Color.WHITE);
+        SlowAmount.setBackground(null);
+        SlowAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
+
         addMouseListener(this);
         addMouseMotionListener(this);
+
+        x.add(SlowAmount);
         x.add(this);
         x.validate();
 
