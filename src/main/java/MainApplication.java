@@ -895,36 +895,20 @@ public class MainApplication extends JFrame {
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win
             System.out.printf("--------------- WIN [score = %2d]---------------\n\n", player.getScore());
-            drawpane.add(pokeWinLabel);
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-            drawpane.remove(pokeWinLabel);
-            validate();
-            repaint();
-
             drawpane.add(winLabel);
             winSound.playOnce();
             gameEnd = false;
             gameResult = "";
-        } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
-            System.out.printf("--------------- GAME OVER [score = %2d]---------------\n\n", player.getScore());
-            drawpane.add(pokeGameOverLabel);
-            try {
-                Thread.sleep(1500);
-            } catch (InterruptedException e) {
-                System.out.println(e);
-            }
-            drawpane.remove(pokeGameOverLabel);
             validate();
             repaint();
-
+        } else if (player.getHP() == 0 && gameEnd == true && gameResult == "GameOver") { // gameOver
+            System.out.printf("--------------- GAME OVER [score = %2d]---------------\n\n", player.getScore());
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
             gameEnd = false;
             gameResult = "";
+            validate();
+            repaint();
         }
 
         button1.addActionListener(new ActionListener() { // Back to Menu

@@ -462,8 +462,9 @@ class ZombieThread extends Thread {
             zombLabel.setLocation(zombCurX, zombCurY);
             zombCurX = zombCurX - 1;
             zombLabel.repaint();
-            wbox.get(i).wbox_move(zombCurX - 10, zombCurY);
-
+            if(killed == false){
+                wbox.get(i).wbox_move(zombCurX - 10, zombCurY);
+            }
             zombLabel.repaint();
             try {
                 Thread.sleep(zombSpeed);
