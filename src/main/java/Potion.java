@@ -19,6 +19,7 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
     private MainApplication program;
     private Player player;
     private Keyboard_bar keybr;
+    private MySoundEffect use_potion_sound = new MySoundEffect("sound_effect/usepotion_soundeffect.wav");
 
     public Potion(MainApplication program, JLabel x, Player p,Keyboard_bar kb) {
         this.program = program;
@@ -68,6 +69,7 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
             player.heal(pane);
             amount--;
             PotionAmount.setText("x"+amount+"");
+            use_potion_sound.playOnce();
             pane.validate();
             pane.repaint();
             keybr.getTypearea().grabFocus();

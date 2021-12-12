@@ -1,1 +1,1 @@
-CurX 
+private MySoundEffect use_potion_sound = new MySoundEffect("sound_effect/usepotion_soundeffect.wav");

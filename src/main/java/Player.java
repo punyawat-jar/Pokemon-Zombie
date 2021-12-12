@@ -27,7 +27,7 @@ class Player {
         mode = m;
         player = new MyImageIcon(list_player[custom]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
-
+        System.out.println("Play heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
         if (mode == 4) {
     
             playerLabel.setBounds(0, 370, playerwidth, playerhight);

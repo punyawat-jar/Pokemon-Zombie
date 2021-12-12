@@ -58,7 +58,7 @@ public class MainApplication extends JFrame {
     private int frameWidth = 1366, frameHeight = 768;
     private int itemWidth = 40, itemHeight = 50;
     private int score = 0, count = 0, count_pic = 0, count_death = 0;
-    private int selected_rbox = 0;
+    private int selected_rbox = 0, ex_pane;
     private JButton end_btn;
     private itemdrop itemDrop;
     private boolean ismove = true,use_speed = false,use_slow = false;
@@ -176,7 +176,7 @@ public class MainApplication extends JFrame {
         buttonSound = new MySoundEffect("sound_effect/button_soundeffect.wav");
         normalHitSound = new MySoundEffect("sound_effect/NormalHit_soundeffect.wav");
         softHitSound = new MySoundEffect("sound_effect/SoftHit_soundeffect.wav");
-        criHitSound = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
+        //criHitSound = new MySoundEffect("sound_effect/CriticalHit_soundeffect.wav");
         gameOverSound = new MySoundEffect("sound_effect/GameOver_soundeffect.wav");
         winSound = new MySoundEffect("sound_effect/Win_soundeffect.wav");
         usedItemSound = new MySoundEffect("sound_effect/UsedItem_soundeffect.wav");
@@ -406,8 +406,8 @@ public class MainApplication extends JFrame {
         for(int i=0 ;i<bg.length;i++){
             tempLabel = new JLabel(new MyImageIcon(bg[i]).resize(themeWidth, themeHeight));
             tempLabel.setBounds(frameWidth-themeWidth-255, (frameHeight/2)-(themeHeight/2)-45,themeWidth, themeHeight);
-           themePicLabel_AL.add(tempLabel);
-           themePicLabel_AL.get(i).setVisible(false);
+            themePicLabel_AL.add(tempLabel);
+            themePicLabel_AL.get(i).setVisible(false);
             drawpane.add(tempLabel);
         }
     }// end showThemeMode
@@ -417,7 +417,7 @@ public class MainApplication extends JFrame {
         String[] mode = { "--- Please select difficulty ---", "Beginner", "Medium", "Hard", "Nightmare", "Boss" };
         combo = new JComboBox(mode);
         combo.setBounds(frameWidth / 4, (frameHeight / 4)+115, 200, 50);
-
+        
         // Play button
         JButton play = new JButton();
         JButton backbtn = new JButton();
@@ -432,7 +432,7 @@ public class MainApplication extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected == "Beginner") {
-                    set_example_pane(0);
+                    setex_pane(0);
                     // themePicLabel_AL.get(0).setVisible(true);
                     // themePicLabel_AL.get(1).setVisible(false);
                     // themePicLabel_AL.get(2).setVisible(false);
@@ -441,7 +441,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Medium") {
-                    set_example_pane(1);
+                    setex_pane(1);
                     // themePicLabel_AL.get(1).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(2).setVisible(false);
@@ -450,7 +450,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Hard") {
-                    set_example_pane(2);
+                    setex_pane(2);
                     // themePicLabel_AL.get(2).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(1).setVisible(false);
@@ -459,7 +459,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Nightmare") {
-                    set_example_pane(3);
+                    setex_pane(3);
                     // themePicLabel_AL.get(3).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(1).setVisible(false);
@@ -468,7 +468,7 @@ public class MainApplication extends JFrame {
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Boss") {
-                    set_example_pane(4);
+                    setex_pane(4);
                     // themePicLabel_AL.get(4).setVisible(true);
                     // themePicLabel_AL.get(0).setVisible(false);
                     // themePicLabel_AL.get(1).setVisible(false);
@@ -476,22 +476,21 @@ public class MainApplication extends JFrame {
                     // themePicLabel_AL.get(3).setVisible(false);
                     System.out.printf("----- %s show -----\n", modeSelected);
                 }
+                set_example_pane();
                 repaint();
                 validate();
             }
         });
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for (int i = 0; i < 5; i++) {
-                    themePicLabel_AL.get(i).setVisible(false);
-                    drawpane.remove(themePicLabel_AL.get(i));
-                }
+                remove_example_pane();
                 buttonSound.playOnce();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
+                    themePicLabel_AL.clear();
                     drawpane.repaint();
                     main_game(modeSelected);
                 }
@@ -500,14 +499,12 @@ public class MainApplication extends JFrame {
 
         backbtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                remove_example_pane();
                 buttonSound.playOnce();
                 combo.setVisible(false);
                 play.setVisible(false);
                 backbtn.setVisible(false);
-                for (int i = 0; i < 5; i++) {
-                    themePicLabel_AL.get(i).setVisible(false);
-                    drawpane.remove(themePicLabel_AL.get(i));
-                }
+                themePicLabel_AL.clear();
                 drawpane.repaint();
                 custom();
             }
@@ -518,10 +515,16 @@ public class MainApplication extends JFrame {
         drawpane.add(backbtn);
     }// end mode Panel
 
-    public void set_example_pane(int i) {
-        themePicLabel_AL.get(i).setVisible(true);
+    public void remove_example_pane(){
+        
+        themePicLabel_AL.get(ex_pane).setVisible(false);
+        drawpane.remove(themePicLabel_AL.get(ex_pane));
+    }
+    public void set_example_pane() {
+        System.out.println(ex_pane);
+        themePicLabel_AL.get(ex_pane).setVisible(true);
         for (int j = 0; j < 4; j++) {
-            if (j == i) {
+            if (j == ex_pane) {
                 continue;
             } else {
                 themePicLabel_AL.get(j).setVisible(false);
@@ -621,7 +624,7 @@ public class MainApplication extends JFrame {
         });
         drawpane.add(end_btn);
         
-       
+        
 
         switch (mode) {
             case "Beginner":
@@ -676,10 +679,10 @@ public class MainApplication extends JFrame {
                 createZombieThread(mode);
                 break;
             }
+            keybar = new Keyboard_bar(wbox_AL, program);
+            keybar.setPane(drawpane, this);
+            keybar.getTypearea().grabFocus();
 
-        keybar = new Keyboard_bar(wbox_AL, program, player);
-        keybar.setPane(drawpane, this);
-        keybar.getTypearea().grabFocus();
 
         potion = new Potion(program, drawpane, player,keybar);
         bomb = new Bomb(program, drawpane, zombielist,player,keybar,wbox_AL);
@@ -1103,8 +1106,15 @@ public class MainApplication extends JFrame {
         for (int i = 0; i < wbox_AL.size(); i++) {
             System.out.println(i + " = " + wbox_AL.get(i).getWord());
         }
-
     }
+    public void setex_pane(int x){
+        ex_pane = x;
+    }
+
+    public int getex_pane(){
+        return ex_pane;
+    }
+
     public boolean getUse_speed(){
         return use_speed;
     }

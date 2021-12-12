@@ -23,7 +23,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     private ArrayList<ZombieThread> zombielist;
     private ArrayList<Wordbox> word_AL;
     private Keyboard_bar keybr;
-    // private boolean use_speed = false;
+    private MySoundEffect use_Bomb_sound = new MySoundEffect("sound_effect/Explosion.wav");
 
     public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL,Player p,Keyboard_bar kb,ArrayList<Wordbox> w_AL) {
         this.program = program;
@@ -74,9 +74,9 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
         if(amount!=0 && (!program.getUse_speed() || !program.getUse_slow())){
             try{
-                
                 for (int i = 0; i < 2; i++) {
                     if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program.getWidth() ) {// true
+                        use_Bomb_sound.playOnce();
                         program.kill_zombie(program.threadlist.get(program.getCount_death()));
                         word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);;
                         player.setscore(score);

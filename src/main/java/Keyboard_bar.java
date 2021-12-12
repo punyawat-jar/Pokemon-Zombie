@@ -18,13 +18,11 @@ class Keyboard_bar {
     private MySoundEffect correct, wrong;
     private Compare_text compare;
     private boolean use_speed = false;
-    private Player player;
 
     // private String a,b;
-    public Keyboard_bar(ArrayList<Wordbox> wAL, MainApplication m,Player p) {
+    public Keyboard_bar(ArrayList<Wordbox> wAL, MainApplication m) {
         word_AL = wAL;
         main = m;
-        player = p;
         typearea = new JTextArea();
         typearea.setBounds(450, 600, 505, 40);
         typearea.setBackground(new Color(255, 221, 89, 215));
@@ -64,10 +62,10 @@ class Keyboard_bar {
 
                     if (typearea.getText().trim().equals(word_AL.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
                         System.out.println("Score ->>>>>>>>>>" + score);
-                        player.setscore(score);
+                        main.getPlayer().setscore(score);
                         word_AL.get(main.threadlist.get(main.getCount_death())).setvisible(false);;
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
-                        System.out.println("Current score -------------> " + player.getScore());
+                        System.out.println("Current score -------------> " + main.getPlayer().getScore());
 
                         correct.playOnce();
                         // for(int i =0;i<main.threadlist.size();i++){

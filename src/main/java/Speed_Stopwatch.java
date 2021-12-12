@@ -20,6 +20,7 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
     private ArrayList<ZombieThread> zombielist;
     private Keyboard_bar keybr;
     private Boolean useitem;
+    private MySoundEffect use_Speed_sound = new MySoundEffect("sound_effect/speedUp.wav");
 
     public Speed_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL,Keyboard_bar kb) {
         this.program = program;
@@ -60,6 +61,7 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
             }
             amount--;
             SpeedAmount.setText("x"+amount+"");
+            use_Speed_sound.playOnce();
             pane.validate();
             pane.repaint();
             keybr.getTypearea().grabFocus();

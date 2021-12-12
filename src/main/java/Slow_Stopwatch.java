@@ -19,6 +19,7 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
     private MainApplication program;
     private ArrayList<ZombieThread> zombielist;
     private Keyboard_bar keybr;
+    private MySoundEffect use_Slow_sound = new MySoundEffect("sound_effect/slowDown.wav");
 
     public Slow_Stopwatch(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, Keyboard_bar kb) {
         this.program = program;
@@ -56,6 +57,7 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
             }
             amount--;
             SlowAmount.setText("x"+amount+"");
+            use_Slow_sound.playOnce();
             pane.validate();
             pane.repaint();
             keybr.getTypearea().grabFocus();
