@@ -27,8 +27,18 @@ public class Speed_Stopwatch extends JButton implements MouseInputListener, Mous
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(SpeedIcon);
+
+        
+        SpeedAmount = new JLabel("x"+amount+"");
+        SpeedAmount.setBounds(1150,20,50,135);
+        SpeedAmount.setForeground(Color.WHITE);
+        SpeedAmount.setBackground(null);
+        SpeedAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
+
         addMouseListener(this);
         addMouseMotionListener(this);
+
+        x.add(SpeedAmount);
         x.add(this);
         x.validate();
 

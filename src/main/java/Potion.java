@@ -29,8 +29,17 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(PotionIcon);
+
+        PotionAmount = new JLabel("x"+amount+"");
+        PotionAmount.setBounds(1075,20,50,135);
+        PotionAmount.setForeground(Color.WHITE);
+        PotionAmount.setBackground(null);
+        PotionAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
+
         addMouseListener(this);
         addMouseMotionListener(this);
+
+        x.add(PotionAmount);
         x.add(this);
         x.validate();
 
