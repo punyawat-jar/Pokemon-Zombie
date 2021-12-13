@@ -25,10 +25,10 @@ public class itemdrop extends Thread {
 
     public void run() {
         while (!end) {
-            int rand_time = (int) Math.floor(Math.random() * (25000 - 18000 + 1) + 18000);
+            int rand_time = (int) Math.floor(Math.random() * (20000 - 18000 + 1) + 18000);
             
             try {
-                Thread.sleep(10000); /// 10000 for debug only, use rand_time
+                Thread.sleep(rand_time); /// 10000 for debug only, use rand_time
             } catch (Exception e) {
             }
             item = new Thread() {
@@ -36,14 +36,14 @@ public class itemdrop extends Thread {
                     int CurX = (int) Math.floor(Math.random() * ((main.get_framewidth() - 200) - 450 + 1) + 450);
                     int CurY = 50;
                     int rand_item = (int) Math.floor(Math.random() * (3 - 0 + 1) + 0);
-                    System.out.println("CurX is ==================== " + CurX);
+                    // System.out.println("CurX is ==================== " + CurX);
                     pane.add(Item_AL.get(rand_item));
                     Item_AL.get(rand_item).setVisible(true);
                     floor = false;
                     while (!floor) {
                         Item_AL.get(rand_item).setBounds(CurX, CurY, 100, 100);
                         if (CurY < main.get_frameheight() - 150) { // Move item down
-                            System.out.println("CurY is == " + CurY + "frameheight()-150 ==" + (main.get_frameheight() - 150));
+                            // System.out.println("CurY is == " + CurY + "frameheight()-150 ==" + (main.get_frameheight() - 150));
                             CurY += 10;
                             pane.repaint();
                             pane.validate();
@@ -72,7 +72,6 @@ public class itemdrop extends Thread {
     }
 
     public void setEndgame(boolean e) {
-        item.interrupt();
         end = e;
     }
 }
