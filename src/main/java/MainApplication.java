@@ -6,8 +6,12 @@ import javax.sound.sampled.*; // for sounds
 import java.util.*;
 import java.util.Random;
 import java.io.*;
+import java.text.NumberFormat;
+
 import javax.swing.border.*;
 import java.util.Timer;
+import java.math.RoundingMode;
+import java.text.NumberFormat; 
 
 //Main Frame
 public class MainApplication extends JFrame {
@@ -755,9 +759,6 @@ public class MainApplication extends JFrame {
     public void stageEnd(String mode) {
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
-        pokeWinLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
-        drawpane.remove(end_btn);
-        pokeGameOverLabel.setBounds((frameWidth / 2) - 640, (frameHeight / 2) - 400, 1281, 720);
         bomb.resetbtn();
         potion.resetbtn();
 
@@ -765,6 +766,12 @@ public class MainApplication extends JFrame {
         JButton button1 = new JButton();
         setUpButton(button1, menuButton);
         button1.setBounds((frameWidth / 2) - 100, (frameHeight / 2) + 30, 200, 50);
+
+        //adding commas to Score
+        NumberFormat scoreFormat = NumberFormat.getInstance();
+        scoreFormat.setGroupingUsed(true);
+        int tempScore = player.getScore();
+        scoreFormat.format(tempScore);
 
         // Show Score
         JTextField scoreText = new JTextField("  SCORE : " + player.getScore(), 10);
@@ -777,7 +784,7 @@ public class MainApplication extends JFrame {
         scorePanel.setBounds((frameWidth / 2) - 100, 350, 200, 30);
         scorePanel.add(scoreText, BorderLayout.CENTER);
 
-        // ----------------Stop All sound in game-----------------------------
+        // ------------stop All sound in game and reset Componet----------------
         beginnerSong.stop();
         mediumSong.stop();
         hardSong.stop();
