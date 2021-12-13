@@ -45,7 +45,7 @@ public class MainApplication extends JFrame {
     JLabel winLabel, gameOverLabel, pokeWinLabel, pokeGameOverLabel;
 
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
-    ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
+    // ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
     ArrayList<JLabel> custom_poke_AL = new ArrayList<JLabel>();
     ArrayList<JLabel> custom_info_AL = new ArrayList<JLabel>();
     ArrayList<JLabel> itemdrop_AL = new ArrayList<JLabel>();
@@ -63,7 +63,7 @@ public class MainApplication extends JFrame {
     private itemdrop itemDrop;
     private boolean ismove = true, use_speed = false, use_slow = false;
     private Player player;
-    private Wordbox wbox;
+    // private Wordbox wbox;
     private Bomb bomb;
     private Potion potion;
     private Speed_Stopwatch speed_stopwatch;
@@ -538,8 +538,6 @@ public class MainApplication extends JFrame {
         itemDrop = new itemdrop(drawpane, this, itemdrop_AL);
         itemDrop.start();
 
-        wbox_AL.clear();
-
         PBar.setValue(0);
         PBar.setBounds(frameWidth - 460, frameHeight - (50 * 2), 420, 50);
         PBar.setForeground(new Color(255, 199, 56));
@@ -589,9 +587,9 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 beginnerSong.playLoop();
                 player = new Player(drawpane, count_pic, 0);
-                input_word(0);
+                // input_word(0);
 
-                createZombieThread(mode);
+                createZombieThread(mode, 0);
                 break;
             case "Medium":
                 drawpane.setIcon(in_gamebg2Img);
@@ -599,9 +597,9 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 mediumSong.playLoop();
                 player = new Player(drawpane, count_pic, 1);
-                input_word(1);
+                // input_word(1);
 
-                createZombieThread(mode);
+                createZombieThread(mode, 1);
                 break;
             case "Hard":
                 drawpane.setIcon(in_gamebg3Img);
@@ -609,9 +607,9 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 hardSong.playLoop();
                 player = new Player(drawpane, count_pic, 2);
-                input_word(2);
+                // input_word(2);
 
-                createZombieThread(mode);
+                createZombieThread(mode, 2);
                 break;
             case "Nightmare":
                 drawpane.setIcon(in_gamebg4Img);
@@ -619,9 +617,9 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 nightmareSong.playLoop();
                 player = new Player(drawpane, count_pic, 3);
-                input_word(3);
+                // input_word(3);
 
-                createZombieThread(mode);
+                createZombieThread(mode, 3);
                 break;
             case "Boss":
                 drawpane.setIcon(in_gamebg5Img);
@@ -629,13 +627,13 @@ public class MainApplication extends JFrame {
                 contentpane.add(drawpane, BorderLayout.CENTER);
                 bossSong.playLoop();
                 player = new Player(drawpane, count_pic, 4);
-                input_word(4);
+                // input_word(4);
                 // createZombieThread("Nightmare");
 
-                createZombieThread(mode);
+                createZombieThread(mode, 4);
                 break;
         }
-        keybar = new Keyboard_bar(wbox_AL, program);
+        keybar = new Keyboard_bar(zombielist, program);
         keybar.setPane(drawpane, this);
         keybar.getTypearea().grabFocus();
 
@@ -644,7 +642,7 @@ public class MainApplication extends JFrame {
         }
 
         potion = new Potion(program, drawpane, player, keybar);
-        bomb = new Bomb(program, drawpane, zombielist, player, keybar, wbox_AL);
+        bomb = new Bomb(program, drawpane, zombielist, player, keybar);
         slow_stopwatch = new Slow_Stopwatch(program, drawpane, zombielist, keybar);
         speed_stopwatch = new Speed_Stopwatch(program, drawpane, zombielist, keybar);
 
@@ -652,17 +650,41 @@ public class MainApplication extends JFrame {
 
     }
 
-    public void createZombieThread(String mode) {
+    public void createZombieThread(String mode, int n) {
         for (int i = 0; i < 10; i++) {
 
-            ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
-                    program, wbox_AL);
+            if (i == 1) {
+                // ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane,
+                // modeSelected, i, count, PBar,
+                // program, wbox_AL);
+                ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
+                        program, vocabList.get(n + 1).randomWord());
+                zombielist.add(zombThread);
 
-            zombielist.add(zombThread);
+            } else {
+                ZombieThread zombThread = new ZombieThread("Zombie" + i, player, drawpane, modeSelected, i, count, PBar,
+                        program, vocabList.get(n).randomWord());
+                zombielist.add(zombThread);
+
+            }
 
         }
 
     }
+
+    // public void input_word(int n) {
+    // for (int i = 0; i < 10; i++) {
+    // if (i == 1) {
+    // wbox = new Wordbox(drawpane, vocabList.get(n + 1).randomWord(), i, n);
+    // } else {
+    // wbox = new Wordbox(drawpane, vocabList.get(n).randomWord(), i, n);
+    // }
+    // wbox_AL.add(wbox);
+    // }
+    // for (int i = 0; i < wbox_AL.size(); i++) {
+    // System.out.println(i + " = " + wbox_AL.get(i).getWord());
+    // }
+    // }
 
     public void kill_zombie(int i) {
         zombielist.get(i).kill_monster(i);
@@ -943,20 +965,6 @@ public class MainApplication extends JFrame {
 
     public int getcount_pic() {
         return count_pic;
-    }
-
-    public void input_word(int n) {
-        for (int i = 0; i < 10; i++) {
-            if (i == 1) {
-                wbox = new Wordbox(drawpane, vocabList.get(n + 1).randomWord(), i, n);
-            } else {
-                wbox = new Wordbox(drawpane, vocabList.get(n).randomWord(), i, n);
-            }
-            wbox_AL.add(wbox);
-        }
-        for (int i = 0; i < wbox_AL.size(); i++) {
-            System.out.println(i + " = " + wbox_AL.get(i).getWord());
-        }
     }
 
     public void setex_pane(int x) {

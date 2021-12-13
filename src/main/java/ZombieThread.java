@@ -23,17 +23,22 @@ class ZombieThread extends Thread {
     private Player tempPlayer;
     private MySoundEffect hurtSound;
     private JProgressBar tempProgressBar;
-    private ArrayList<Wordbox> wbox = new ArrayList<Wordbox>();
+    // private ArrayList<Wordbox> wbox = new ArrayList<Wordbox>();
     private MyImageIcon readyGoImg;
     private JLabel readyGoLabel;
     private MySoundEffect readyGoSound;
     private int zombTimeWait, normal_speed;
     private Keyboard_bar keybar;
     private String name;
+    // --------------------------------
+    // word box
+    private JLabel wlabel;
+    private String word;
+    private int wlabel_width, wlabel_height;
 
     // ---------------------- ZombieThread Constructor----------------------
     public ZombieThread(String n, Player player, JLabel pane, String m, int order, int count, JProgressBar PBar,
-            MainApplication prog, ArrayList<Wordbox> wb) {
+            MainApplication prog, String w) {
         super(n);
         name = n;
         // The temp use for run();
@@ -48,13 +53,42 @@ class ZombieThread extends Thread {
         readyGoSound = new MySoundEffect("sound_effect/321GoCountdown.wav");
         readyGoImg = new MyImageIcon("sound_effect/321_Go.gif");
         readyGoLabel = new JLabel(readyGoImg);
-
-        wbox = wb;
+        createWordBox(pane, w, order);
         setUpZombie(pane);
         pane.add(zombLabel);
         hurtSound = new MySoundEffect("sound_effect/Hurt_soundeffect.wav");
         start();
     }// end Constructor
+
+    public void createWordBox(JLabel p, String w, int i) {
+        word = w;
+        wlabel = new JLabel(word);
+        wlabel.setLayout(null);
+        wlabel.setForeground(Color.WHITE);
+        if (i == 1) {
+            wlabel.setIcon(new MyImageIcon("Wbox/wbox_boss.png").resize(350, 60));
+            wlabel_width = 350;
+            wlabel_height = 60;
+
+            // wlabel.setSize(350, 60);
+        } else {
+            wlabel.setIcon(new MyImageIcon("Wbox/wbox.png").resize(120, 40));
+            wlabel_width = 120;
+            wlabel_height = 40;
+
+            // wlabel.setSize(120, 40);
+        }
+        wlabel.setHorizontalTextPosition(JLabel.CENTER);
+        // wlabel.setOpaque(false);
+        // wlabel.setVisible(false);
+        wlabel.setBounds(zombCurX, zombCurY, wlabel_width, wlabel_height);
+        p.add(wlabel);
+
+    }
+
+    public void setfontcolor(Color x) {
+        wlabel.setForeground(x);
+    }
 
     public void setUpZombie(JLabel pane) {
         if (i == 0) {
@@ -354,6 +388,7 @@ class ZombieThread extends Thread {
             hurtSound.playOnce();
             tempPlayer.hitplayer(tempPane);
             tempPane.remove(zombLabel);
+            tempPane.remove(wlabel);
             tempPane.repaint();
             keybar.clearTypearea();
             kill_monster(i);
@@ -364,6 +399,7 @@ class ZombieThread extends Thread {
         if (tempPlayer.getHP() == 0) {
             kill_monster(i);
             tempPane.remove(zombLabel);
+            tempPane.remove(wlabel);
             tempPane.repaint();
             program.setGameResult("GameOver");
             program.addCountStageEnd();
@@ -371,6 +407,7 @@ class ZombieThread extends Thread {
 
         else if (program.getCount_death() == 10) { // Win
             tempPane.remove(zombLabel);
+            tempPane.remove(wlabel);
             tempPane.repaint();
             program.setGameResult("Win");
             program.addCountStageEnd();
@@ -388,7 +425,7 @@ class ZombieThread extends Thread {
 
     public void kill_monster(int i) {
         tempPane.remove(zombLabel);
-        wbox.get(i).setvisible(false);
+        tempPane.remove(wlabel);
         tempPane.repaint();
         killed = true;
     }
@@ -418,13 +455,16 @@ class ZombieThread extends Thread {
         // While not Hit player & player not die. walk left
         while (!(zombLabel.getBounds().intersects(player.getLabel().getBounds())) &&
                 player.getHP() != 0 && killed == false) {
+
             zombLabel.setLocation(zombCurX, zombCurY);
+            wlabel.setLocation(zombCurX, zombCurY - 40);
+            wlabel.repaint();
             zombCurX = zombCurX - 1;
             zombLabel.repaint();
-            if(killed == false){
-                wbox.get(i).wbox_move(zombCurX - 10, zombCurY);
-            }
-            zombLabel.repaint();
+            // if (killed == false) {
+            // wbox.get(i).wbox_move(zombCurX - 10, zombCurY);
+            // }
+            // zombLabel.repaint();
             try {
                 Thread.sleep(zombSpeed);
             } catch (InterruptedException e) {
@@ -480,6 +520,10 @@ class ZombieThread extends Thread {
 
     public void setkeybr(Keyboard_bar key) {
         keybar = key;
+    }
+
+    public String getWord() {
+        return word;
     }
 
 }

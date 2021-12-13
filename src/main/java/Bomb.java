@@ -21,17 +21,15 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
     private MainApplication program;
     private Player player;
     private ArrayList<ZombieThread> zombielist;
-    private ArrayList<Wordbox> word_AL;
+    // private ArrayList<Wordbox> word_AL;
     private Keyboard_bar keybr;
     private MySoundEffect use_Bomb_sound = new MySoundEffect("sound_effect/Explosion.wav");
 
-    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, Player p, Keyboard_bar kb,
-            ArrayList<Wordbox> w_AL) {
+    public Bomb(MainApplication program, JLabel x, ArrayList<ZombieThread> zombie_AL, Player p, Keyboard_bar kb) {
         this.program = program;
         zombielist = zombie_AL;
         player = p;
         pane = x;
-        word_AL = w_AL;
         keybr = kb;
         bombIcon = new MyImageIcon("items/bomb.png").resize(width, height);
         curX = program.getWidth() - (width / 2) * 12;
@@ -77,7 +75,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
                             .getWidth()) {// true
                         use_Bomb_sound.playOnce();
                         program.kill_zombie(program.threadlist.get(program.getCount_death()));
-                        word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
+                        // word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
                         player.setscore(1);
                     }
                 }
