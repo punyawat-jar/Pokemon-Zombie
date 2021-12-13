@@ -796,7 +796,6 @@ public class MainApplication extends JFrame {
         count_death = 0;
         drawpane.remove(keybar.getTypearea());
         drawpane.remove(player.getScoreLabel());
-        drawpane.remove(end_btn);
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win

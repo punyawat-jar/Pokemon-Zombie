@@ -103,12 +103,22 @@ class Player {
 
         scoreLabel.setText("score : "+scoreFormat.format(Score));
         scoreLabel.setFont(new Font("SanSerif", Font.BOLD, 25));
-        scoreLabel.setForeground(Color.WHITE);
+
+        //adjust color
+        if(mode == 0 || mode == 1 || mode == 2){
+            scoreLabel.setForeground(Color.WHITE);
+        }
+        else if(mode == 3){
+            scoreLabel.setForeground(Color.YELLOW);
+        }
+        else {
+            scoreLabel.setForeground(Color.BLUE);
+        }
+        
         scoreLabel.setBackground(null);
         scoreLabel.setBounds(45, healthbarhight+55, 200, 30);
         
         x.add(scoreLabel);
         scoreLabel.repaint();
     }
-
 }// end Player
