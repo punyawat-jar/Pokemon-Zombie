@@ -110,9 +110,14 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        curX = curX + e.getX();
-        curY = curY + e.getY();
-        setLocation(curX, curY);
+        if(program.getCount_death() != 10){
+            curX = curX + e.getX();
+            curY = curY + e.getY();
+            setLocation(curX, curY);
+        }
+        else{
+            resetbtn();
+        }
     }
 
     @Override
@@ -132,4 +137,5 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
         curY = height / 2;
         setLocation(curX, curY);
     }
+
 }
