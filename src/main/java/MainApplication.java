@@ -65,7 +65,7 @@ public class MainApplication extends JFrame {
     private int selected_rbox = 0, ex_pane;
     private JButton end_btn;
     private itemdrop itemDrop;
-    private boolean ismove = true, use_speed = false, use_slow = false;
+    private boolean ismove = true, use_speed = false, use_slow = false,END = false;
     private Player player;
     // private Wordbox wbox;
     private Bomb bomb;
@@ -802,6 +802,7 @@ public class MainApplication extends JFrame {
             System.out.printf("--------------- WIN [score = %2d]---------------\n\n", player.getScore());
             drawpane.add(winLabel);
             winSound.playOnce();
+            END = true;
             gameEnd = false;
             gameResult = "";
             validate();
@@ -810,6 +811,7 @@ public class MainApplication extends JFrame {
             System.out.printf("--------------- GAME OVER [score = %2d]---------------\n\n", player.getScore());
             drawpane.add(gameOverLabel);
             gameOverSound.playOnce();
+            END = true;
             gameEnd = false;
             gameResult = "";
             validate();
@@ -819,6 +821,7 @@ public class MainApplication extends JFrame {
         button1.addActionListener(new ActionListener() { // Back to Menu
             public void actionPerformed(ActionEvent e) {
                 gameEnd = false;
+                END = false;
                 // for(int i=0;i<zombielist.size();i++){
                 // zombielist.get(i).interrupt();
                 // zombielist.get(i).setkill_thread(true);
@@ -1001,5 +1004,8 @@ public class MainApplication extends JFrame {
 
     public void setUse_slow(boolean x) {
         use_slow = x;
+    }
+    public boolean getEND(){
+        return END;
     }
 }// end Class MainApplication

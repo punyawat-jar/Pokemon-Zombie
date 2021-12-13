@@ -62,7 +62,7 @@ public class Potion extends JButton implements MouseInputListener, MouseMotionLi
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (this.getBounds().intersects(player.getLabel().getBounds()) && player.getHP() < 5 && amount != 0) {
+        if (this.getBounds().intersects(player.getLabel().getBounds()) && player.getHP() < 5 && amount != 0 && program.getEND() != true) {
             player.heal(pane);
             amount--;
             PotionAmount.setText("x" + amount + "");

@@ -1,1 +1,1 @@
-    drawpane.remove(end_btn);
+program.getEND() != true

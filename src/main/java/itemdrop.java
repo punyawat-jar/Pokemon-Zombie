@@ -30,6 +30,8 @@ public class itemdrop extends Thread {
             try {
                 Thread.sleep(rand_time); /// 10000 for debug only, use rand_time
             } catch (Exception e) {
+
+
             }
             item = new Thread() {
                 public void run() {
@@ -37,9 +39,15 @@ public class itemdrop extends Thread {
                     int CurY = 50;
                     int rand_item = (int) Math.floor(Math.random() * (3 - 0 + 1) + 0);
                     // System.out.println("CurX is ==================== " + CurX);
-                    pane.add(Item_AL.get(rand_item));
-                    Item_AL.get(rand_item).setVisible(true);
-                    floor = false;
+                    if(main.getEND() != true){
+                        pane.add(Item_AL.get(rand_item));
+                        Item_AL.get(rand_item).setVisible(true);
+                        floor = false;
+                    }
+                    else{
+                        Item_AL.get(rand_item).setVisible(false);
+                        floor = true;
+                    }
                     while (!floor) {
                         Item_AL.get(rand_item).setBounds(CurX, CurY, 100, 100);
                         if (CurY < main.get_frameheight() - 150) { // Move item down
@@ -57,6 +65,8 @@ public class itemdrop extends Thread {
                             Thread.sleep(100);
                         } catch (Exception e) {
                         }
+                        
+
                     }
 
                 }

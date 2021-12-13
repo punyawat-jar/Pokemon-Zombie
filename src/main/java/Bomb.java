@@ -67,8 +67,8 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        checkBossDead();
-        if (amount != 0 && (!program.getUse_speed() || !program.getUse_slow())) {
+        // checkBossDead();
+        if (amount != 0 && (!program.getUse_speed() || !program.getUse_slow()) && program.getEND() != true)  {
             try {
                 for (int i = 0; i < 2; i++) {
                     int zombieOrder = program.threadlist.get(program.getCount_death());
@@ -80,10 +80,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
                             score = 5000;
                         else
                             score = 2500;
-                        // word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
-                        System.out.println("score ->>>>>>>>>>>>>>" + score);
                         player.setscore(score);
-                        System.out.println("Current score ---------->" + player.getScore());
                     }
                 }
                 amount--;
@@ -110,14 +107,9 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if(program.getCount_death() != 10){
-            curX = curX + e.getX();
-            curY = curY + e.getY();
-            setLocation(curX, curY);
-        }
-        else{
-            resetbtn();
-        }
+        curX = curX + e.getX();
+        curY = curY + e.getY();
+        setLocation(curX, curY);
     }
 
     @Override
@@ -138,10 +130,5 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
         setLocation(curX, curY);
     }
 
-    public void checkBossDead(){
-        if(program.getCount_death()==10){
-            resetbtn();
-            return ;
-        }
-    }
+
 }
