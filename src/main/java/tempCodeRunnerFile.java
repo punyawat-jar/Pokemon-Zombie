@@ -1,0 +1,1 @@
+    drawpane.remove(end_btn);

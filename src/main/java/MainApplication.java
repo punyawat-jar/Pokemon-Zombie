@@ -11,7 +11,7 @@ import java.text.NumberFormat;
 import javax.swing.border.*;
 import java.util.Timer;
 import java.math.RoundingMode;
-import java.text.NumberFormat; 
+import java.text.NumberFormat;
 
 //Main Frame
 public class MainApplication extends JFrame {
@@ -349,8 +349,8 @@ public class MainApplication extends JFrame {
         read_picture();
 
         // (custom_poke_AL)
-        nextbtn.setBounds(frameWidth / 2, frameHeight - 300 / 1, 200, 50);
-        backbtn.setBounds(frameWidth / 4, frameHeight - 300 / 1, 200, 50);
+        nextbtn.setBounds(frameWidth / 2 + 60, frameHeight - 300 / 1, 200, 50);
+        backbtn.setBounds(frameWidth / 4 + 50, frameHeight - 300 / 1, 200, 50);
         backbtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -396,7 +396,7 @@ public class MainApplication extends JFrame {
                 "bg_border/bg_nightmare.png", "bg_border/bg_boss.png" };
         for (int i = 0; i < bg.length; i++) {
             tempLabel = new JLabel(new MyImageIcon(bg[i]).resize(themeWidth, themeHeight));
-            tempLabel.setBounds(frameWidth - themeWidth - 255, (frameHeight / 2) - (themeHeight / 2) - 45, themeWidth,
+            tempLabel.setBounds(frameWidth - themeWidth - 280, (frameHeight / 2) - (themeHeight / 2) - 65, themeWidth,
                     themeHeight);
             themePicLabel_AL.add(tempLabel);
             themePicLabel_AL.get(i).setVisible(false);
@@ -408,15 +408,15 @@ public class MainApplication extends JFrame {
         // mode button
         String[] mode = { "--- Please select difficulty ---", "Beginner", "Medium", "Hard", "Nightmare", "Boss" };
         combo = new JComboBox(mode);
-        combo.setBounds(frameWidth / 4, (frameHeight / 4) + 115, 200, 50);
+        combo.setBounds(frameWidth / 4, (frameHeight / 4) + 95, 200, 50);
 
         // Play button
         JButton play = new JButton();
         JButton backbtn = new JButton();
         setUpButton(play, playButton);
         setUpButton(backbtn, backButton);
-        play.setBounds((frameWidth / 2), (frameHeight / 2) + 130, 500, 50);
-        backbtn.setBounds((frameWidth / 2) - 240, (frameHeight / 2) + 130, 200, 50);
+        play.setBounds((frameWidth / 2) + 70, (frameHeight / 2) + 100, 500, 50);
+        backbtn.setBounds((frameWidth / 2) - 80, (frameHeight / 2) + 100, 200, 50);
 
         // showThemeMode();
 
@@ -454,11 +454,11 @@ public class MainApplication extends JFrame {
                 remove_example_pane();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
-                    
+
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
-                    
+
                     drawpane.repaint();
                     main_game(modeSelected);
                 }
@@ -472,7 +472,7 @@ public class MainApplication extends JFrame {
                 combo.setVisible(false);
                 play.setVisible(false);
                 backbtn.setVisible(false);
-                
+
                 drawpane.repaint();
                 custom();
             }
@@ -484,7 +484,7 @@ public class MainApplication extends JFrame {
     }// end mode Panel
 
     public void remove_example_pane() {
-        for(int i = 0;i<themePicLabel_AL.size();i++){
+        for (int i = 0; i < themePicLabel_AL.size(); i++) {
             themePicLabel_AL.get(i).setVisible(false);
         }
     }
@@ -752,10 +752,9 @@ public class MainApplication extends JFrame {
         return player;
     }
 
-    public JLabel getDrawpane(){
+    public JLabel getDrawpane() {
         return drawpane;
     }
-
 
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
@@ -769,7 +768,7 @@ public class MainApplication extends JFrame {
         setUpButton(button1, menuButton);
         button1.setBounds((frameWidth / 2) - 100, (frameHeight / 2) + 30, 200, 50);
 
-        //adding commas to Score
+        // adding commas to Score
         NumberFormat scoreFormat = NumberFormat.getInstance();
         scoreFormat.setGroupingUsed(true);
         int playerScore = player.getScore();
