@@ -28,6 +28,7 @@ class Player {
         custom = c;
         mode = m;
         pane = x;
+        scoreLabel = new JLabel();
         player = new MyImageIcon(list_player[custom]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
         // System.out.println("Play heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
@@ -49,8 +50,8 @@ class Player {
         }
         HP = HP_AL.size() - 1;
         x.add(HP_AL.get(5));
+        
         Score = 0;
-
         setscore(0);
     }
 
@@ -71,12 +72,8 @@ class Player {
     synchronized public void setscore(int x) {
         // this.Score = x;
         Score+=x;
-<<<<<<< HEAD
         System.out.printf("Your Score: %d\n", Score);
         showScore(pane);
-=======
-        // System.out.printf("Your Score: %d\n", Score);
->>>>>>> d10ec314dedd1a41eb60fb6d72ef302e33b2e876
     }
 
     public void heal(JLabel x) {
@@ -103,12 +100,8 @@ class Player {
     public void showScore(JLabel x){
         NumberFormat scoreFormat = NumberFormat.getInstance();
         scoreFormat.setGroupingUsed(true);
-        if(Score == 0 ){
-            scoreLabel = new JLabel("score : "+scoreFormat.format(Score));
-        }
-        else{
-            scoreLabel.setText("score : "+scoreFormat.format(Score));
-        }
+
+        scoreLabel.setText("score : "+scoreFormat.format(Score));
         scoreLabel.setFont(new Font("SanSerif", Font.BOLD, 25));
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setBackground(null);
