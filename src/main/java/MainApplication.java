@@ -889,6 +889,7 @@ public class MainApplication extends JFrame {
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             item_label.setVisible(false);
+                            itemDrop.setMouseinteracted(true);
                             ding.playOnce();
                             bomb.setAmount();
                         }
@@ -898,6 +899,7 @@ public class MainApplication extends JFrame {
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             item_label.setVisible(false);
+                            itemDrop.setMouseinteracted(true);
                             ding.playOnce();
                             potion.setAmount();
                         }
@@ -907,6 +909,7 @@ public class MainApplication extends JFrame {
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             item_label.setVisible(false);
+                            itemDrop.setMouseinteracted(true);
                             ding.playOnce();
                             slow_stopwatch.setAmount();
                         }
@@ -916,6 +919,7 @@ public class MainApplication extends JFrame {
                     item_label.addMouseListener(new MouseAdapter() {
                         public void mouseEntered(MouseEvent e) {
                             item_label.setVisible(false);
+                            itemDrop.setMouseinteracted(true);
                             ding.playOnce();
                             speed_stopwatch.setAmount();
                         }
