@@ -27,7 +27,7 @@ class Player {
         mode = m;
         player = new MyImageIcon(list_player[custom]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
-        System.out.println("Play heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+        // System.out.println("Play heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
         if (mode == 4) {
     
             playerLabel.setBounds(0, 370, playerwidth, playerhight);
@@ -66,7 +66,7 @@ class Player {
     synchronized public void setscore(int x) {
         // this.Score = x;
         Score+=x;
-        System.out.printf("Your Score: %d\n", Score);
+        // System.out.printf("Your Score: %d\n", Score);
     }
 
     public void heal(JLabel x) {

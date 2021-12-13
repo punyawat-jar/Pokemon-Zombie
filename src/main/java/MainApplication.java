@@ -116,7 +116,7 @@ public class MainApplication extends JFrame {
         contentpane.setLayout(new BorderLayout());
 
         AddComponents();
-
+        showThemeMode();
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 int exit = JOptionPane.showConfirmDialog(new JFrame(), "Do you want to quit the game?",
@@ -328,7 +328,7 @@ public class MainApplication extends JFrame {
                     JRadioButton x = (JRadioButton) e.getItem();
                     if (x.isSelected()) {
                         for (int i = 0; i < accessory.length; i++) {
-                            System.out.println(poke_list[i] + " " + x.getText());
+                            // System.out.println(poke_list[i] + " " + x.getText());
                             if (accessory[i].toLowerCase().contains(x.getText().toLowerCase())) {
                                 drawpane.remove(custom_poke_AL.get(count_pic));
                                 drawpane.remove(custom_info_AL.get(count_pic));
@@ -418,30 +418,30 @@ public class MainApplication extends JFrame {
         play.setBounds((frameWidth / 2), (frameHeight / 2) + 130, 500, 50);
         backbtn.setBounds((frameWidth / 2) - 240, (frameHeight / 2) + 130, 200, 50);
 
-        showThemeMode();
+        // showThemeMode();
 
         combo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected == "Beginner") {
                     setex_pane(0);
-                    System.out.printf("----- %s show -----\n", modeSelected);
+                    // System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Medium") {
                     setex_pane(1);
-                    System.out.printf("----- %s show -----\n", modeSelected);
+                    // System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Hard") {
                     setex_pane(2);
-                    System.out.printf("----- %s show -----\n", modeSelected);
+                    // System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Nightmare") {
                     setex_pane(3);
-                    System.out.printf("----- %s show -----\n", modeSelected);
+                    // System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 if (modeSelected == "Boss") {
                     setex_pane(4);
-                    System.out.printf("----- %s show -----\n", modeSelected);
+                    // System.out.printf("----- %s show -----\n", modeSelected);
                 }
                 set_example_pane();
                 repaint();
@@ -450,14 +450,15 @@ public class MainApplication extends JFrame {
         });
         play.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                remove_example_pane();
                 buttonSound.playOnce();
+                remove_example_pane();
                 modeSelected = (String) combo.getSelectedItem();
                 if (modeSelected != "--- Please select difficulty ---") {
+                    
                     combo.setVisible(false);
                     play.setVisible(false);
                     backbtn.setVisible(false);
-                    themePicLabel_AL.clear();
+                    
                     drawpane.repaint();
                     main_game(modeSelected);
                 }
@@ -471,7 +472,7 @@ public class MainApplication extends JFrame {
                 combo.setVisible(false);
                 play.setVisible(false);
                 backbtn.setVisible(false);
-                themePicLabel_AL.clear();
+                
                 drawpane.repaint();
                 custom();
             }
@@ -483,25 +484,25 @@ public class MainApplication extends JFrame {
     }// end mode Panel
 
     public void remove_example_pane() {
-
-        themePicLabel_AL.get(ex_pane).setVisible(false);
-        drawpane.remove(themePicLabel_AL.get(ex_pane));
+        for(int i = 0;i<themePicLabel_AL.size();i++){
+            themePicLabel_AL.get(i).setVisible(false);
+        }
     }
 
     public void set_example_pane() {
-        System.out.println(ex_pane);
         themePicLabel_AL.get(ex_pane).setVisible(true);
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < themePicLabel_AL.size(); j++) {
             if (j == ex_pane) {
                 continue;
             } else {
                 themePicLabel_AL.get(j).setVisible(false);
             }
         }
+        drawpane.validate();
+        drawpane.repaint();
     }
 
     public void showReadyGo() {
-
         Thread animation = new Thread() {
             public void run() {
                 JLabel tempLabel;
