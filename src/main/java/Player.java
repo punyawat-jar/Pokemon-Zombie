@@ -104,6 +104,7 @@ class Player {
 
         scoreLabel.setText("score : " + scoreFormat.format(Score));
         scoreLabel.setFont(new Font("SanSerif", Font.BOLD, 25));
+        //System.out.printf("Your Score (in show score) : %d\n",scoreFormat.format(Score));
 
         // adjust color
         if (mode == 0 || mode == 1 || mode == 2) {

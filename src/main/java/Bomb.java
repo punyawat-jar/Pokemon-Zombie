@@ -67,7 +67,7 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        checkBossDead();
         if (amount != 0 && (!program.getUse_speed() || !program.getUse_slow())) {
             try {
                 for (int i = 0; i < 2; i++) {
@@ -131,5 +131,11 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
         curX = program.getWidth() - (width / 2) * 12;
         curY = height / 2;
         setLocation(curX, curY);
+    }
+    public void checkBossDead(){
+        if(program.getCount_death()==10){
+            resetbtn();
+            return ;
+        }
     }
 }
