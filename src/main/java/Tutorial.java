@@ -9,11 +9,13 @@ public class Tutorial extends JFrame {
 
     private JPanel Tcontentpane;
     private JLabel Tdrawpane, bgImg;
-    private String[] p = { "tutorial/1.png", "tutorial/2.png", "tutorial/3.png", "tutorial/4.png" };
+    private String[] p = { "tutorial/1.png", "tutorial/2.png", "tutorial/3.png", "tutorial/4.png", "tutorial/5.png",
+            "tutorial/6.png", "tutorial/7.png", "tutorial/8.png", "tutorial/9.png", "tutorial/10.png",
+            "tutorial/11.png" };
     private MyImageIcon bg, prevButton, nextButton;
     private ArrayList<JLabel> pic_AL = new ArrayList<JLabel>();
     private int count = 0;
-    private int frameWidth = 800, frameHeight = 600;
+    private int frameWidth = 880, frameHeight = 660;
     private MySoundEffect buttonSound;
 
     public static void main(String[] args) {
@@ -48,8 +50,8 @@ public class Tutorial extends JFrame {
         JButton button2 = new JButton("Previous");
         setUpButton(button1, nextButton);
         setUpButton(button2, prevButton);
-        button1.setBounds((frameWidth / 2) + 120, (frameHeight / 2) + 150, 145, 50); /// Size and position of btn
-        button2.setBounds((frameWidth / 2) - 220, (frameHeight / 2) + 150, 145, 50);
+        button1.setBounds((frameWidth / 2) + 132, (frameHeight / 2) + 165, 145, 50); /// Size and position of btn
+        button2.setBounds((frameWidth / 2) - 242, (frameHeight / 2) + 165, 145, 50);
 
         Tdrawpane.add(button1);
         Tdrawpane.add(button2);
@@ -91,11 +93,11 @@ public class Tutorial extends JFrame {
 
     public void readpic() {
         for (int i = 0; i < p.length; i++) {
-            MyImageIcon pic = new MyImageIcon(p[i]).resize(690, 370);
+            MyImageIcon pic = new MyImageIcon(p[i]).resize(721, 387);
             ;
 
             JLabel label = new JLabel(pic);
-            label.setBounds(50, 50, 690,370);
+            label.setBounds(75, 57, 721, 387);
             pic_AL.add(label);
         }
     }
