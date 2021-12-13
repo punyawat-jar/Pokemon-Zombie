@@ -7,12 +7,14 @@ import java.util.*;
 import java.util.Random;
 import java.io.*;
 import javax.swing.border.*;
+import java.math.RoundingMode;
+import java.text.NumberFormat; 
 
 class Player {
     private int HP, Score;
     private int playerwidth = 200, playerhight = 165, healthbarwidth = 180, healthbarhight = 30;
     private MyImageIcon player, healthbar_pic;
-    private JLabel playerLabel, HP_Label;
+    private JLabel playerLabel, HP_Label,pane,scoreLabel ;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
     private String[] poke_list;
     private int custom, mode;
@@ -25,6 +27,7 @@ class Player {
     public Player(JLabel x, int c, int m) {
         custom = c;
         mode = m;
+        pane = x;
         player = new MyImageIcon(list_player[custom]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
         System.out.println("Play heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
@@ -47,6 +50,8 @@ class Player {
         HP = HP_AL.size() - 1;
         x.add(HP_AL.get(5));
         Score = 0;
+
+        setscore(0);
     }
 
     public void hitplayer(JLabel x) {
@@ -67,6 +72,7 @@ class Player {
         // this.Score = x;
         Score+=x;
         System.out.printf("Your Score: %d\n", Score);
+        showScore(pane);
     }
 
     public void heal(JLabel x) {
@@ -85,4 +91,27 @@ class Player {
     public int getScore() {
         return Score;
     }
+
+    public JLabel getScoreLabel(){
+        return scoreLabel;
+    }
+
+    public void showScore(JLabel x){
+        NumberFormat scoreFormat = NumberFormat.getInstance();
+        scoreFormat.setGroupingUsed(true);
+        if(Score == 0 ){
+            scoreLabel = new JLabel("score : "+scoreFormat.format(Score));
+        }
+        else{
+            scoreLabel.setText("score : "+scoreFormat.format(Score));
+        }
+        scoreLabel.setFont(new Font("SanSerif", Font.BOLD, 25));
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setBackground(null);
+        scoreLabel.setBounds(45, healthbarhight+55, 200, 30);
+        
+        x.add(scoreLabel);
+        scoreLabel.repaint();
+    }
+
 }// end Player

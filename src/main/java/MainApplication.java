@@ -751,6 +751,11 @@ public class MainApplication extends JFrame {
         return player;
     }
 
+    public JLabel getDrawpane(){
+        return drawpane;
+    }
+
+
     // ---------------------------- Game Over ------------------------
     public void stageEnd(String mode) {
         winLabel.setBounds((frameWidth / 2) - 280, 130, 620, 200);
@@ -790,6 +795,8 @@ public class MainApplication extends JFrame {
         gameEnd = true;
         count_death = 0;
         drawpane.remove(keybar.getTypearea());
+        drawpane.remove(player.getScoreLabel());
+        drawpane.remove(end_btn);
         resetPBar();
 
         if (player.getHP() > 0 && gameEnd == true && gameResult == "Win") { // Win

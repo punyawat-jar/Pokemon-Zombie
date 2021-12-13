@@ -58,6 +58,7 @@ class Keyboard_bar {
                         System.out.println();
                         System.out.println("Score ->>>>>>>>>>" + score);
                         main.getPlayer().setscore(score);
+
                         main.kill_zombie(main.threadlist.get(main.getCount_death()));
                         System.out.println("Current score -------------> " + main.getPlayer().getScore());
 
