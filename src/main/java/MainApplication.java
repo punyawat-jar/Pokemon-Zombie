@@ -767,7 +767,7 @@ public class MainApplication extends JFrame {
         //adding commas to Score
         NumberFormat scoreFormat = NumberFormat.getInstance();
         scoreFormat.setGroupingUsed(true);
-        int playerScore = 35000;
+        int playerScore = player.getScore();
 
         // Show Score
         JTextField scoreText = new JTextField("  SCORE : " + scoreFormat.format(playerScore), 10);
