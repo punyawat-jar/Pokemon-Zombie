@@ -45,8 +45,8 @@ public class MainApplication extends JFrame {
             nextButton, backButton;
     private MySoundEffect buttonSound, normalHitSound, softHitSound, criHitSound, gameOverSound, winSound,
             usedItemSound, ding;
-    private MyImageIcon winGif, gameOverGif, pokeWinGif, pokeGameOverGif;
-    JLabel winLabel, gameOverLabel, pokeWinLabel, pokeGameOverLabel;
+    private MyImageIcon winGif, gameOverGif;
+    JLabel winLabel, gameOverLabel;
 
     // ArrayList<Thread> mobThread = new ArrayList<Thread>();
     // ArrayList<Wordbox> wbox_AL = new ArrayList<Wordbox>();
@@ -167,12 +167,8 @@ public class MainApplication extends JFrame {
 
         winGif = new MyImageIcon("gameOver/win.gif");
         gameOverGif = new MyImageIcon("gameOver/game_over.gif");
-        pokeWinGif = new MyImageIcon("gameOver/pokeWin.gif");
-        pokeGameOverGif = new MyImageIcon("gameOver/pokeGameOver.gif");
         winLabel = new JLabel(winGif);
         gameOverLabel = new JLabel(gameOverGif);
-        pokeWinLabel = new JLabel(pokeWinGif);
-        pokeGameOverLabel = new JLabel(pokeGameOverGif);
 
         // ------------------------------- Zombie -----------------------------------
 
@@ -770,11 +766,10 @@ public class MainApplication extends JFrame {
         //adding commas to Score
         NumberFormat scoreFormat = NumberFormat.getInstance();
         scoreFormat.setGroupingUsed(true);
-        int tempScore = player.getScore();
-        scoreFormat.format(tempScore);
+        int playerScore = 35000;
 
         // Show Score
-        JTextField scoreText = new JTextField("  SCORE : " + player.getScore(), 10);
+        JTextField scoreText = new JTextField("  SCORE : " + scoreFormat.format(playerScore), 10);
         scoreText.setEditable(false);
         scoreText.setFont(new Font("Comic Sans Ms", Font.BOLD + Font.ITALIC, 25));
         scoreText.setBackground(new Color(255, 255, 255, 100));
