@@ -12,7 +12,7 @@ import javax.swing.border.*;
 import javax.swing.event.MouseInputListener;
 
 public class Bomb extends JButton implements MouseInputListener, MouseMotionListener {
-    private int amount = 0;
+    private int amount = 0,score =0;
     private int curX, curY;
     private int width = 50;
     private int height = 50;
@@ -71,12 +71,17 @@ public class Bomb extends JButton implements MouseInputListener, MouseMotionList
         if (amount != 0 && (!program.getUse_speed() || !program.getUse_slow())) {
             try {
                 for (int i = 0; i < 2; i++) {
-                    if (zombielist.get(program.threadlist.get(program.getCount_death())).getCurX() + 20 < program
+                    int zombieOrder = program.threadlist.get(program.getCount_death());
+                    if (zombielist.get(zombieOrder).getCurX() + 20 < program
                             .getWidth()) {// true
                         use_Bomb_sound.playOnce();
-                        program.kill_zombie(program.threadlist.get(program.getCount_death()));
+                        program.kill_zombie(zombieOrder);
+                        if(zombieOrder == 1) score = 5000;
+                        else score = 2500;
                         // word_AL.get(program.threadlist.get(program.getCount_death())).setvisible(false);
-                        player.setscore(1);
+                        System.out.println("score ->>>>>>>>>>>>>>" + score);
+                        player.setscore(score);
+                        System.out.println("Current score ---------->" + player.getScore());
                     }
                 }
                 amount--;
