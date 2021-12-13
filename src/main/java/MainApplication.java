@@ -396,7 +396,7 @@ public class MainApplication extends JFrame {
                 "bg_border/bg_nightmare.png", "bg_border/bg_boss.png" };
         for (int i = 0; i < bg.length; i++) {
             tempLabel = new JLabel(new MyImageIcon(bg[i]).resize(themeWidth, themeHeight));
-            tempLabel.setBounds(frameWidth - themeWidth - 280, (frameHeight / 2) - (themeHeight / 2) - 65, themeWidth,
+            tempLabel.setBounds(frameWidth - themeWidth - 290, (frameHeight / 2) - (themeHeight / 2) - 65, themeWidth,
                     themeHeight);
             themePicLabel_AL.add(tempLabel);
             themePicLabel_AL.get(i).setVisible(false);
@@ -415,8 +415,8 @@ public class MainApplication extends JFrame {
         JButton backbtn = new JButton();
         setUpButton(play, playButton);
         setUpButton(backbtn, backButton);
-        play.setBounds((frameWidth / 2) + 70, (frameHeight / 2) + 100, 500, 50);
-        backbtn.setBounds((frameWidth / 2) - 80, (frameHeight / 2) + 100, 200, 50);
+        play.setBounds((frameWidth / 2) + 70, (frameHeight / 2) + 90, 500, 50);
+        backbtn.setBounds((frameWidth / 2) - 80, (frameHeight / 2) + 90, 200, 50);
 
         // showThemeMode();
 

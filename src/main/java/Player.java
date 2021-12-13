@@ -8,13 +8,13 @@ import java.util.Random;
 import java.io.*;
 import javax.swing.border.*;
 import java.math.RoundingMode;
-import java.text.NumberFormat; 
+import java.text.NumberFormat;
 
 class Player {
     private int HP, Score;
     private int playerwidth = 200, playerhight = 165, healthbarwidth = 180, healthbarhight = 30;
     private MyImageIcon player, healthbar_pic;
-    private JLabel playerLabel, HP_Label,pane,scoreLabel ;
+    private JLabel playerLabel, HP_Label, pane, scoreLabel;
     private ArrayList<JLabel> HP_AL = new ArrayList<JLabel>();
     private String[] poke_list;
     private int custom, mode;
@@ -31,9 +31,10 @@ class Player {
         scoreLabel = new JLabel();
         player = new MyImageIcon(list_player[custom]).resize(playerwidth, playerhight);
         playerLabel = new JLabel(player);
-        // System.out.println("Play heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
+        // System.out.println("Play
+        // heyqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
         if (mode == 4) {
-    
+
             playerLabel.setBounds(0, 370, playerwidth, playerhight);
         } else
             playerLabel.setBounds(0, 455, playerwidth, playerhight);
@@ -50,7 +51,7 @@ class Player {
         }
         HP = HP_AL.size() - 1;
         x.add(HP_AL.get(5));
-        
+
         Score = 0;
         setscore(0);
     }
@@ -71,7 +72,7 @@ class Player {
 
     synchronized public void setscore(int x) {
         // this.Score = x;
-        Score+=x;
+        Score += x;
         System.out.printf("Your Score: %d\n", Score);
         showScore(pane);
     }
@@ -93,31 +94,29 @@ class Player {
         return Score;
     }
 
-    public JLabel getScoreLabel(){
+    public JLabel getScoreLabel() {
         return scoreLabel;
     }
 
-    public void showScore(JLabel x){
+    public void showScore(JLabel x) {
         NumberFormat scoreFormat = NumberFormat.getInstance();
         scoreFormat.setGroupingUsed(true);
 
-        scoreLabel.setText("score : "+scoreFormat.format(Score));
+        scoreLabel.setText("score : " + scoreFormat.format(Score));
         scoreLabel.setFont(new Font("SanSerif", Font.BOLD, 25));
 
-        //adjust color
-        if(mode == 0 || mode == 1 || mode == 2){
+        // adjust color
+        if (mode == 0 || mode == 1 || mode == 2) {
             scoreLabel.setForeground(Color.WHITE);
+        } else if (mode == 3) {
+            scoreLabel.setForeground(new Color(255, 241, 133));
+        } else {
+            scoreLabel.setForeground(new Color(56, 6, 184));
         }
-        else if(mode == 3){
-            scoreLabel.setForeground(Color.YELLOW);
-        }
-        else {
-            scoreLabel.setForeground(Color.BLUE);
-        }
-        
+
         scoreLabel.setBackground(null);
-        scoreLabel.setBounds(45, healthbarhight+55, 200, 30);
-        
+        scoreLabel.setBounds(45, healthbarhight + 55, 200, 30);
+
         x.add(scoreLabel);
         scoreLabel.repaint();
     }
