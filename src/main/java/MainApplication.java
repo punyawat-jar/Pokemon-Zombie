@@ -1111,6 +1111,7 @@ public class MainApplication extends JFrame {
             System.out.println(i + " = " + wbox_AL.get(i).getWord());
         }
     }
+    
     public void setex_pane(int x){
         ex_pane = x;
     }
