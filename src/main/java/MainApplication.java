@@ -758,7 +758,7 @@ public class MainApplication extends JFrame {
         gameOverLabel.setBounds((frameWidth / 2) - 400, 130, 800, 200);
         bomb.resetbtn();
         potion.resetbtn();
-
+        itemDrop.setEndgame(true);
         // Back To Menu
         JButton button1 = new JButton();
         setUpButton(button1, menuButton);
@@ -779,6 +779,7 @@ public class MainApplication extends JFrame {
         scorePanel.setLayout(new BorderLayout());
         scorePanel.setBounds((frameWidth / 2) - 100, 350, 240, 30);
         scorePanel.add(scoreText, BorderLayout.CENTER);
+        drawpane.remove(end_btn);
 
         // ------------stop All sound in game and reset Componet----------------
         beginnerSong.stop();
@@ -786,7 +787,6 @@ public class MainApplication extends JFrame {
         hardSong.stop();
         nightmareSong.stop();
         bossSong.stop();
-        itemDrop.setEndgame(true);
         comeIn = false;
         gameEnd = true;
         count_death = 0;
