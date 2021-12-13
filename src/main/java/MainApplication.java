@@ -781,7 +781,7 @@ public class MainApplication extends JFrame {
 
         JPanel scorePanel = new JPanel();
         scorePanel.setLayout(new BorderLayout());
-        scorePanel.setBounds((frameWidth / 2) - 100, 350, 200, 30);
+        scorePanel.setBounds((frameWidth / 2) - 100, 350, 240, 30);
         scorePanel.add(scoreText, BorderLayout.CENTER);
 
         // ------------stop All sound in game and reset Componet----------------

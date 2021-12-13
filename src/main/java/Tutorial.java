@@ -91,11 +91,11 @@ public class Tutorial extends JFrame {
 
     public void readpic() {
         for (int i = 0; i < p.length; i++) {
-            MyImageIcon pic = new MyImageIcon(p[i]).resize(600, 324);
+            MyImageIcon pic = new MyImageIcon(p[i]).resize(690, 370);
             ;
 
             JLabel label = new JLabel(pic);
-            label.setBounds(100, 30, 600, 324);
+            label.setBounds(50, 50, 690,370);
             pic_AL.add(label);
         }
     }

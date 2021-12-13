@@ -42,14 +42,19 @@ class Keyboard_bar {
         typearea.addKeyListener(new KeyListener() {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    if (main.getUse_speed()) {
-                        score = 2;
-                    } else
-                        score = 1;
+                    
 
-                    if (typearea.getText().trim()
-                            .equals(zombielist.get(main.threadlist.get(main.getCount_death())).getWord().trim())) {
+                        int zombieOrder = main.threadlist.get(main.getCount_death());
+                    if (typearea.getText().trim().equals(zombielist.get(zombieOrder).getWord().trim())) {
                         // word_AL.get(main.threadlist.get(main.getCount_death())).setvisible(false);
+                        if(zombieOrder == 1) score = 5000;
+                        else score = 2500;
+
+                        if (main.getUse_speed()) {
+                            score = score*2;
+                        } else
+                            score = score*1;
+
                         System.out.println();
                         System.out.println("Score ->>>>>>>>>>" + score);
                         main.getPlayer().setscore(score);
