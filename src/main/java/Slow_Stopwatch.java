@@ -15,7 +15,7 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
     private int width = 50;
     private int height = 50;
     private MyImageIcon SlowIcon;
-    private JLabel SlowAmount,pane;
+    private JLabel SlowAmount, pane;
     private MainApplication program;
     private ArrayList<ZombieThread> zombielist;
     private Keyboard_bar keybr;
@@ -31,14 +31,14 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
         curY = height / 2;
         setBounds(curX, curY, width, height);
         setIcon(SlowIcon);
-        if(program.getcount_pic() == 3){
+        if (program.getcount_pic() == 3) {
             amount = 2;
         }
-        SlowAmount = new JLabel("x"+amount+"");
-        SlowAmount.setBounds(1225,80,50,20);
+        SlowAmount = new JLabel("x" + amount + "");
+        SlowAmount.setBounds(1225, 80, 50, 20);
         SlowAmount.setForeground(Color.WHITE);
         SlowAmount.setBackground(null);
-        SlowAmount.setFont(new Font("SanSerif", Font.BOLD , 25));
+        SlowAmount.setFont(new Font("SanSerif", Font.BOLD, 25));
 
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -51,12 +51,12 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(amount != 0 && !program.getUse_speed()){
-            for(int i=0; i<zombielist.size(); i++){
+        if (amount != 0 && !program.getUse_speed()) {
+            for (int i = 0; i < zombielist.size(); i++) {
                 zombielist.get(i).slowDown();
             }
             amount--;
-            SlowAmount.setText("x"+amount+"");
+            SlowAmount.setText("x" + amount + "");
             use_Slow_sound.playOnce();
             pane.validate();
             pane.repaint();
@@ -66,43 +66,37 @@ public class Slow_Stopwatch extends JButton implements MouseInputListener, Mouse
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
-    public void setAmount(){
+    public void setAmount() {
         amount++;
-        SlowAmount.setText("x"+amount+"");
+        SlowAmount.setText("x" + amount + "");
         pane.repaint();
         pane.validate();
     }
