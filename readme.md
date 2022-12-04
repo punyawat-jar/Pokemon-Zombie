@@ -1,8 +1,8 @@
 # Pokemon Zombie World
-Help pikachu survive in the Zombie World !
+Help Pikachu survive in the Zombie World !
 
 # How to play
-Type the Vocabulary to kill zombeie !
+Type the Vocabulary to kill zombie !  
 Get items and use them to help you in battle !
 
 # Game Preview
