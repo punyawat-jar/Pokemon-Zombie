@@ -7,13 +7,13 @@ Get items and use them to help you in battle !
 
 # Game Preview
 Main Menu
-![main_menu_img](./Cover Picture/pic1.png)
+![main_menu_img](./cover_pic/Pic1.png)
 Choose level you want to play
-![choose_map_img](./Cover Picture/pic3.png)
+![choose_map_img](./cover_pic/Pic3.png)
 Gameplay
-![gameplay_img](./Cover Picture/pic4.png)
+![gameplay_img](./cover_pic/Pic4.png)
 Fight Boss !
-![boss_img](./Cover Picture/pic5.png)
+![boss_img](./cover_pic/Pic5.png)
 
 # Member
 1. Punyawat   Jaroensiripong
