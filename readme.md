@@ -15,6 +15,9 @@ Gameplay
 Fight Boss !
 ![boss_img](./cover_pic/Pic5.png)
 
+# Link Demo
+https://youtu.be/ezXNYLKfMic
+
 # Member
 1. Punyawat   Jaroensiripong
 2. Warunyupa  Lerdseng
