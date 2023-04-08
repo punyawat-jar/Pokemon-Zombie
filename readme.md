@@ -1,12 +1,12 @@
 # Pokemon Zombie World
 Help Pikachu survive in the Zombie World !
 
-# Link Demo
-https://youtu.be/ezXNYLKfMic
-
 # How to play
 Type the Vocabulary to kill zombie !  
 Get items and use them to help you in battle !
+
+# Link Demo
+https://youtu.be/ezXNYLKfMic
 
 # Game Preview
 Main Menu
